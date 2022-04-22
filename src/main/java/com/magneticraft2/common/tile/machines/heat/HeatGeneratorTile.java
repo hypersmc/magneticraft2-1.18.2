@@ -10,6 +10,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -18,45 +20,37 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import static com.magneticraft2.common.systems.heat.BiomHeatHandling.getHeatManagment;
 
 public class HeatGeneratorTile extends TileEntityMagneticraft2 {
-    boolean alreadyset = false;
+    static boolean alreadyset = false;
+    private static BlockPos worldPosition;
+    private static HeatGeneratorTile HGT;
+    public static void self(HeatGeneratorTile self){
+        HeatGeneratorTile.HGT = self;
+    }
+
+
 
     public HeatGeneratorTile(BlockPos pos, BlockState state) {
         super(FinalRegistry.Tile_Heat_Generator.get(), pos, state);
         menuProvider = this;
+        worldPosition = this.getBlockPos();
+        self(this);
     }
+
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         tag.putBoolean("set", alreadyset);
         super.saveAdditional(tag);
     }
-
-    @Override
     public void tick() {
-        if (!level.isClientSide){
-            if (!alreadyset) {
-                //Here we set the default
-                this.addHeatToStorage(getHeatManagment(level, getBlockPos(), "start"));
-                alreadyset = true;
-            }
-            if (getEnergyStorage() < 1) {
-                if (level.getGameTime() % 15 == 0) {
-                    if (this.getHeatStorage() > getHeatManagment(level, getBlockPos(), "min")) {
-                        this.removeHeatFromStorage(getHeatManagment(level, getBlockPos(), "losetick"));
-                    }
-                }
-                return;
-            }
 
-            if (this.getHeatStorage() >= this.getMaxHeatStorage()){
-                this.setHeatHeat(this.getMaxHeatStorage());
-                this.removeHeatFromStorage(getHeatManagment(level, getBlockPos(), "losetick"));
-            }else{
-                this.removeEnergyFromStorage(300);
-                this.addHeatToStorage(getHeatManagment(level, getBlockPos(), "gain"));
-            }
-        }
+
+
     }
+
+
+
+
 
     @Override
     public void registerControllers(AnimationData data) {
@@ -205,5 +199,30 @@ public class HeatGeneratorTile extends TileEntityMagneticraft2 {
         return false;
     }
 
+    public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, E e) {
+        LOGGER.info("setting default for biome: " + level.getBiome(worldPosition));
+        if (!level.isClientSide){
+            if (!alreadyset) {
+                LOGGER.info("setting default for biome: " + level.getBiome(worldPosition));
+                HGT.addHeatToStorage(getHeatManagment(level, worldPosition, "start"));
+                alreadyset = true;
+            }
+            if (HGT.getEnergyStorage() < 1) {
+                if (level.getGameTime() % 15 == 0) {
+                    if (HGT.getHeatStorage() > getHeatManagment(level, worldPosition, "min")) {
+                        HGT.removeHeatFromStorage(getHeatManagment(level, worldPosition, "losetick"));
+                    }
+                }
+                return;
+            }
 
+            if (HGT.getHeatStorage() >= HGT.getMaxHeatStorage()){
+                HGT.setHeatHeat(HGT.getMaxHeatStorage());
+                HGT.removeHeatFromStorage(getHeatManagment(level, worldPosition, "losetick"));
+            }else{
+                HGT.removeEnergyFromStorage(300);
+                HGT.addHeatToStorage(getHeatManagment(level, worldPosition, "gain"));
+            }
+        }
+    }
 }

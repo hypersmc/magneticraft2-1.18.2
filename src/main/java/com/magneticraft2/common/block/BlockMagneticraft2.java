@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.property.Properties;
 import org.jetbrains.annotations.Nullable;
 
-public class BlockMagneticraft2 extends Block implements TOPDriver {
+public abstract class BlockMagneticraft2 extends BaseEntityBlock implements TOPDriver, EntityBlock {
     public BlockMagneticraft2(Properties p_49795_) {
         super(p_49795_);
     }

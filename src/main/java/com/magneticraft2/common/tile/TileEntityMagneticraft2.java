@@ -13,6 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.TickingBlockEntity;
@@ -34,9 +35,10 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nonnull;
 
-public abstract class TileEntityMagneticraft2 extends BlockEntity implements Tickable, IAnimatable, MenuProvider {
+public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IAnimatable, MenuProvider {
     public static final Logger LOGGER = LogManager.getLogger();
     public MenuProvider menuProvider;
+
     //Biomes
     /* Energy */
 
@@ -58,12 +60,12 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements Tic
     public abstract int maxtransferP();
 
     /* Create handlers */
-    private final EnergyStorages energyHandler = createEnergy(); //Energy (RF)
-    private ItemStackHandler itemHandler = createInv(); //Item
-    private HeatStorages heatHandler = createHeat(); //Heat
-    private WattStorages wattHandler = createWatt(); //Watt
-    private FluidStorages fluidHandler = createFluid(); //Fluid
-    private PressureStorages pressureHandler = createPressure(); //Pressure
+    public final EnergyStorages energyHandler = createEnergy(); //Energy (RF)
+    public final ItemStackHandler itemHandler = createInv(); //Item
+    public final HeatStorages heatHandler = createHeat(); //Heat
+    public final WattStorages wattHandler = createWatt(); //Watt
+    public final FluidStorages fluidHandler = createFluid(); //Fluid
+    public final PressureStorages pressureHandler = createPressure(); //Pressure
 
     public abstract boolean itemcape(); //Is the TileEntity capable of Item handling
     public abstract boolean energycape(); //Is the TileEntity capable of Energy (RF) handling
@@ -82,12 +84,12 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements Tic
     public abstract boolean PressureCanSend();
 
     public final AnimationFactory factory = new AnimationFactory(this);
-    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyHandler); //Creating LazyOptional for Energy (RF)
-    private LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler); //Creating LazyOptional for Item
-    private LazyOptional<IHeatStorage> heat = LazyOptional.of(() -> heatHandler); //Creating LazyOptional for Heat
-    private LazyOptional<IWattStorage> watt = LazyOptional.of(() -> wattHandler); //Creating LazyOptional for Wattage/Voltage
-    private LazyOptional<IFluidHandler> fluid = LazyOptional.of(() -> fluidHandler); //Creating LazyOptional for Fluid
-    private LazyOptional<IPressureStorage> pressure = LazyOptional.of(() -> pressureHandler); //Creating LazyOptional for Pressure
+    public final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyHandler); //Creating LazyOptional for Energy (RF)
+    public final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler); //Creating LazyOptional for Item
+    public final LazyOptional<IHeatStorage> heat = LazyOptional.of(() -> heatHandler); //Creating LazyOptional for Heat
+    public final LazyOptional<IWattStorage> watt = LazyOptional.of(() -> wattHandler); //Creating LazyOptional for Wattage/Voltage
+    public final LazyOptional<IFluidHandler> fluid = LazyOptional.of(() -> fluidHandler); //Creating LazyOptional for Fluid
+    public final LazyOptional<IPressureStorage> pressure = LazyOptional.of(() -> pressureHandler); //Creating LazyOptional for Pressure
 
     public TileEntityMagneticraft2(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
@@ -407,7 +409,7 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements Tic
 
     /* Energy */
     public int getEnergyStorage(){
-        return this.energyHandler.getEnergyStored();
+        return energyHandler.getEnergyStored();
     }
     public int getMaxEnergyStorage(){
         return this.energyHandler.getMaxEnergyStored();
@@ -462,4 +464,7 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements Tic
         return pressurecape();
     }
 
+
+    public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, E e) {
+    }
 }
