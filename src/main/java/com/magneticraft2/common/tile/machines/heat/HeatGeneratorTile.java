@@ -1,6 +1,7 @@
 package com.magneticraft2.common.tile.machines.heat;
 
-import com.magneticraft2.client.gui.container.ContainerHeatGenerator;
+import com.magneticraft2.client.gui.container.Heat.ContainerHeatGenerator;
+import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.tile.TileEntityMagneticraft2;
 import net.minecraft.core.BlockPos;
@@ -20,7 +21,8 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import static com.magneticraft2.common.systems.heat.BiomHeatHandling.getHeatManagment;
 
 public class HeatGeneratorTile extends TileEntityMagneticraft2 {
-    static boolean alreadyset = false;
+    boolean alreadyset = false;
+    boolean settings = false;
     private static BlockPos worldPosition;
     private static HeatGeneratorTile HGT;
     public static void self(HeatGeneratorTile self){
@@ -39,18 +41,17 @@ public class HeatGeneratorTile extends TileEntityMagneticraft2 {
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
+        tag.putBoolean("settings", false);
         tag.putBoolean("set", alreadyset);
         super.saveAdditional(tag);
     }
-    public void tick() {
 
-
-
+    @Override
+    public void load(CompoundTag tag) {
+        settings = tag.getBoolean("settings");
+        alreadyset = tag.getBoolean("set");
+        super.load(tag);
     }
-
-
-
-
 
     @Override
     public void registerControllers(AnimationData data) {
@@ -72,11 +73,13 @@ public class HeatGeneratorTile extends TileEntityMagneticraft2 {
     public AbstractContainerMenu createMenu(int i, Inventory playerinv, Player player) {
         return new ContainerHeatGenerator(i,level,getBlockPos(),playerinv,player);
     }
+    protected void melt(BlockState pState, Level pLevel, BlockPos pPos) {
 
+    }
 
     @Override
     public int capacityE() {
-        return 3000;
+        return 50000;
     }
 
     @Override
@@ -116,7 +119,7 @@ public class HeatGeneratorTile extends TileEntityMagneticraft2 {
 
     @Override
     public int invsize() {
-        return 0;
+        return 4;
     }
 
     @Override
@@ -131,7 +134,7 @@ public class HeatGeneratorTile extends TileEntityMagneticraft2 {
 
     @Override
     public boolean itemcape() {
-        return false;
+        return true;
     }
 
     @Override
@@ -199,29 +202,35 @@ public class HeatGeneratorTile extends TileEntityMagneticraft2 {
         return false;
     }
 
+
+
     public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, E e) {
-        LOGGER.info("setting default for biome: " + level.getBiome(worldPosition));
-        if (!level.isClientSide){
-            if (!alreadyset) {
-                LOGGER.info("setting default for biome: " + level.getBiome(worldPosition));
+        if (!level.isClientSide()) {
+            if (!HGT.alreadyset) {
                 HGT.addHeatToStorage(getHeatManagment(level, worldPosition, "start"));
-                alreadyset = true;
+                HGT.alreadyset = true;
+
             }
             if (HGT.getEnergyStorage() < 1) {
                 if (level.getGameTime() % 15 == 0) {
                     if (HGT.getHeatStorage() > getHeatManagment(level, worldPosition, "min")) {
                         HGT.removeHeatFromStorage(getHeatManagment(level, worldPosition, "losetick"));
+
                     }
                 }
+                state = state.setValue(HeatGeneratorBlock.LIT, false);
+                level.setBlock(pos, state, 3);
                 return;
             }
 
-            if (HGT.getHeatStorage() >= HGT.getMaxHeatStorage()){
+            if (HGT.getHeatStorage() >= HGT.getMaxHeatStorage()) {
                 HGT.setHeatHeat(HGT.getMaxHeatStorage());
                 HGT.removeHeatFromStorage(getHeatManagment(level, worldPosition, "losetick"));
-            }else{
-                HGT.removeEnergyFromStorage(300);
+            } else {
+                HGT.removeEnergyFromStorage(getHeatManagment(level, worldPosition, "lose"));
                 HGT.addHeatToStorage(getHeatManagment(level, worldPosition, "gain"));
+                state = state.setValue(HeatGeneratorBlock.LIT, true);
+                level.setBlock(pos, state, 3);
             }
         }
     }

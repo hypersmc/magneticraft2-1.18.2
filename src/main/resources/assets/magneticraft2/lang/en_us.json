@@ -1,0 +1,16 @@
+{
+  "itemGroup.Magneticraft2.Blocks": "Magneticraft2 Blocks",
+  "multiblock.error.mgc2.invalid_block.frame": "Invalid block (%s) for frame at %s",
+  "multiblock.error.mgc2.invalid_block.exterior": "Invalid block (%s) for exterior at %s",
+  "multiblock.error.mgc2.invalid_block.interior": "Invalid block (%s) for interior at %s",
+  "multiblock.error.mgc2.invalid_block.corner": "Invalid block (%s) for corner at %s",
+  "multiblock.error.mgc2.invalid_block.generic": "Invalid block (%s) at %s",
+  "multiblock.error.mgc2.unknown": "An unknown multiblock error has occurred, report to mod author",
+  "multiblock.error.mgc2.null_controller": "The multiblock system has experienced an unknown internal error, report to Magneticraft2",
+  "multiblock.error.mgc2.no.controller": "%s require at least one controller.",
+  "multiblock.error.mgc2.no.powerport": "%s require at least one power port.",
+  "multiblock.error.mgc2.no.heatport": "%s require at least one heat port.",
+  "multiblock.error.mgc2.no.scaffolding": "%s require at least one scaffolding.",
+  "multiblock.error.mgc2.dimensions": "Dimensions not allowed \nActual: %d, %d, %d, \nMin allowed: %d, %d, %d, \nMax allowed: %d, %d, %d,",
+  "multiblock.error.mgc2.dangling_internal_part": "There appears to be another %s inside this one, is something wrong? (%d, %d, %d)."
+}

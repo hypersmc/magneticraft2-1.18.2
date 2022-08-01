@@ -1,5 +1,6 @@
 package com.magneticraft2.common.tile;
 
+import com.magneticraft2.common.block.BlockMagneticraft2;
 import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.systems.heat.CapabilityHeat;
 import com.magneticraft2.common.systems.heat.IHeatStorage;
@@ -10,6 +11,7 @@ import com.magneticraft2.common.systems.watt.IWattStorage;
 import com.magneticraft2.common.utils.*;
 import net.minecraft.client.renderer.texture.Tickable;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
@@ -98,7 +100,7 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
 
     @Nonnull
     @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, Direction dir) {
         if (itemcape()) {
             if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
                 return handler.cast();
@@ -129,8 +131,9 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
                 return pressure.cast();
             }
         }
-        return super.getCapability(cap);
+        return LazyOptional.empty();
     }
+
 
 
 
@@ -345,7 +348,15 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
 
 
 
+    public Direction getFacing() {
+        Level world = getLevel();
+        BlockState state = world.getBlockState(getBlockPos());
+        if (state.hasProperty(BlockMagneticraft2.FACING)) {
+            return state.getValue(BlockMagneticraft2.FACING);
+        }
 
+        return Direction.UP;
+    }
     @Override
     public void load( CompoundTag tag) {
         if (itemcape()) {
@@ -464,7 +475,4 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
         return pressurecape();
     }
 
-
-    public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, E e) {
-    }
 }
