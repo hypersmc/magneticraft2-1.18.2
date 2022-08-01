@@ -170,4 +170,6 @@ public class CrucibleHeaterTile extends TileEntityMagneticraft2 {
 
     public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, E e) {
     }
+
+
 }
