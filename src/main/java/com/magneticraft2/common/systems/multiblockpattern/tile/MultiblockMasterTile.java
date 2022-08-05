@@ -1,4 +1,4 @@
-package com.magneticraft2.common.systems.multiblock;
+package com.magneticraft2.common.systems.multiblockpattern.tile;
 import java.util.ArrayList;
 import java.util.List;
 

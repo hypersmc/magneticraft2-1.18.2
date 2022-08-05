@@ -1,4 +1,4 @@
-package com.magneticraft2.common.systems.multiblock;
+package com.magneticraft2.common.systems.multiblockpattern.tile;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.BlockPos;
@@ -10,5 +10,4 @@ public interface IMultiblock {
     MultiblockMasterTile getMasterTile();
     void setMasterPos(BlockPos pos);
 }
-
 

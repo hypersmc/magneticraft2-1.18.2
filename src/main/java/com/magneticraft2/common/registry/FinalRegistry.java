@@ -1,8 +1,18 @@
 package com.magneticraft2.common.registry;
 
+import com.magneticraft2.common.block.BlockMagneticraft2;
+import com.magneticraft2.common.block.BlockMagneticraft2Pattern;
 import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
 import com.magneticraft2.common.magneticraft2;
+import com.magneticraft2.common.systems.multiblockpattern.MultiblockPatterns;
+import com.magneticraft2.common.systems.multiblockpattern.block.AirLockBlock;
+import com.magneticraft2.common.systems.multiblockpattern.block.MultiblockBlock;
+import com.magneticraft2.common.systems.multiblockpattern.block.testBlock;
+import com.magneticraft2.common.systems.multiblockpattern.item.MultiblockBlockItem;
+import com.magneticraft2.common.systems.multiblockpattern.tile.MultiblockMasterTile;
+import com.magneticraft2.common.systems.multiblockpattern.tile.MultiblockTile;
+import com.magneticraft2.common.systems.multiblockpattern.tile.testBlocktile;
 import com.magneticraft2.common.tile.machines.heat.CrucibleHeaterTile;
 import com.magneticraft2.common.tile.machines.heat.HeatGeneratorTile;
 import net.minecraft.world.entity.EntityType;
@@ -12,7 +22,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.ParallelDispatchEvent;
@@ -21,9 +34,16 @@ import net.minecraftforge.registries.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
+
 import static com.magneticraft2.common.magneticraft2.MOD_ID;
 
 public class FinalRegistry {
+    public static List<Item> BLOCK_ITEMS_LIST = new ArrayList<Item>();
+
     private static final Logger LOGGER = LogManager.getLogger();
     private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID);
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
@@ -62,6 +82,7 @@ public class FinalRegistry {
     }
 
 
+    public static final RegistryObject<Block> air_lock = registerBlockOnly("air_lock", () -> setUpBlock(new AirLockBlock(Prop.Blocks.BASIC_TECH.get())));
 
     public static final RegistryObject<HeatGeneratorBlock> Block_Heat_Generator = BLOCKS.register("heat_generator", HeatGeneratorBlock::new);
     public static final RegistryObject<Item> HEAT_ITEM = fromBlock(Block_Heat_Generator);
@@ -73,29 +94,78 @@ public class FinalRegistry {
     /**
      * Multiblocks blocks
      */
-//    public static final RegistryObject<hgeneratorscaffoldingblock> hgenerator_scaffolding_block = BLOCKS.register("hgenerator_scaffolding_block", hgeneratorscaffoldingblock::new);
-//    public static final RegistryObject<hgeneratorcontrollerblock> hgenerator_controller_block = BLOCKS.register("hgenerator_controller_block", hgeneratorcontrollerblock::new);
-//    public static final RegistryObject<hgeneratorpowerblock> hgenerator_power_block = BLOCKS.register("hgenerator_power_block", hgeneratorpowerblock::new);
-//    public static final RegistryObject<hgeneratorheatblock> hgenerator_heat_block = BLOCKS.register("hgenerator_heat_block", hgeneratorheatblock::new);
+    /**CorePatternSystem**/
+    public static final RegistryObject<Block> multiblock = register("multiblock", () -> setUpBlock(new MultiblockBlock(Prop.Blocks.BASIC_TECH.get().noOcclusion())), false);
+    public static final RegistryObject<Block> multiblock_master = register("multiblock_master", () -> setUpBlock(new MultiblockBlock(Prop.Blocks.BASIC_TECH.get().noOcclusion())), false);
+
+
+    public static final RegistryObject<Block> test_block = registerBlockOnly("test", () -> setUpBlock(new testBlock()));
 
     /**
      * Multiblocks tiles
      */
-//    public static final RegistryObject<BlockEntityType<hgeneratorscaffoldingtile>> hgenerator_scaffolding_tile = TILE_ENTITIES.register("hgenerator_scaffolding_tile", () -> BlockEntityType.Builder.of(hgeneratorscaffoldingtile::new, hgenerator_scaffolding_block.get()).build(null));
-//    public static final RegistryObject<BlockEntityType<hgeneratorcontrollertile>> hgenerator_controller_tile = TILE_ENTITIES.register("hgenerator_controller_tile", () -> BlockEntityType.Builder.of(hgeneratorcontrollertile::new, hgenerator_controller_block.get()).build(null));
-//    public static final RegistryObject<BlockEntityType<hgeneratorpowertile>> hgenerator_power_tile = TILE_ENTITIES.register("hgenerator_power_tile", () -> BlockEntityType.Builder.of(hgeneratorpowertile::new, hgenerator_power_block.get()).build(null));
-//    public static final RegistryObject<BlockEntityType<hgeneratorheattile>> hgenerator_heat_tile = TILE_ENTITIES.register("hgenerator_heat_tile", () -> BlockEntityType.Builder.of(hgeneratorheattile::new, hgenerator_heat_block.get()).build(null));
+    /**CorePatternSystem**/
+    public static final RegistryObject<BlockEntityType<MultiblockMasterTile>> MUTIBLOCK_MASTER = TILE_ENTITIES.register("multiblock_master", () ->  registerTiles(MultiblockMasterTile::new, multiblock_master.get()));
+    public static final RegistryObject<BlockEntityType<MultiblockTile>> MUTIBLOCK = TILE_ENTITIES.register("multiblock", () ->  registerTiles(MultiblockTile::new, multiblock.get()));
+
+
+    public static final RegistryObject<BlockEntityType<testBlocktile>> test_tile = TILE_ENTITIES.register("test_tile", () ->  registerTiles(testBlocktile::new, test_block.get()));
+
+
+
     /**
      * Multiblocks items
      */
-    //
-//    public static final RegistryObject<Item> hgenerator_scaffolding_item = fromBlock(hgenerator_scaffolding_block);
-//    public static final RegistryObject<Item> hgenerator_controller_item = fromBlock(hgenerator_controller_block);
-//    public static final RegistryObject<Item> hgenerator_power_item = fromBlock(hgenerator_power_block);
-//    public static final RegistryObject<Item> hgenerator_heat_item = fromBlock(hgenerator_heat_block);
+    /**CorePatternSystem**/
+
+    public static final RegistryObject<Item> test_item = ITEMS.register("test", () -> createItem(new MultiblockBlockItem(test_block.get(), MultiblockPatterns.test, Prop.Items.SIXTY_FOUR.get())));
+
+
+
 
     public static <B extends Block> RegistryObject<Item> fromBlock(RegistryObject<B> block) {
         return ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(), ITEM_PROPERTIES));
     }
+    private static <T extends Block> T setUpBlock(T block) {
+        return block;
+    }
+    private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> blockSupplier, CreativeModeTab itemGroup){
+        RegistryObject<T> registryObject = BLOCKS.register(id, blockSupplier);
+        ITEMS.register(id, () -> new BlockItem(registryObject.get(), new Item.Properties().tab(itemGroup)));
+        return registryObject;
+    }
+    private static <T extends Block> RegistryObject<T> registerBlockOnly(String id, Supplier<T> blockSupplier){
+        RegistryObject<T> registryObject = BLOCKS.register(id, blockSupplier);
+        return registryObject;
+    }
+    private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> blockSupplier){
+        RegistryObject<T> registryObject = BLOCKS.register(id, blockSupplier);
 
+        ITEMS.register(id, () -> new BlockItem(registryObject.get(), new Item.Properties().tab(FinalRegistry.MC2Blocks)));
+        return registryObject;
+    }
+    private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> blockSupplier, boolean hasItem){
+        RegistryObject<T> registryObject = BLOCKS.register(id, blockSupplier);
+        if (hasItem)
+            ITEMS.register(id, () -> new BlockItem(registryObject.get(), new Item.Properties().tab(FinalRegistry.MC2Blocks)));
+        return registryObject;
+    }
+
+    private static ToIntFunction<BlockState> getLightValueLit(int lightValue) {
+        return (state) -> {
+            return state.getValue(BlockStateProperties.LIT) ? lightValue : 0;
+        };
+    }
+    private static <T extends BlockEntity> BlockEntityType<T> registerTiles(BlockEntityType.BlockEntitySupplier<T> tile, Block... validBlock) {
+        BlockEntityType<T> type = BlockEntityType.Builder.of(tile, validBlock).build(null);
+        for(Block block : validBlock) {
+            if(block instanceof BlockMagneticraft2Pattern) {
+                ((BlockMagneticraft2Pattern)block).setTileEntity(type);
+            }
+        }
+        return type;
+    }
+    private static <T extends Item> T createItem(T item) {
+        return item;
+    }
 }
