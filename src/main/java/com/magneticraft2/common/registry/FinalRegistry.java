@@ -1,18 +1,17 @@
 package com.magneticraft2.common.registry;
 
-import com.magneticraft2.common.block.BlockMagneticraft2;
 import com.magneticraft2.common.block.BlockMagneticraft2Pattern;
 import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
 import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.systems.multiblockpattern.MultiblockPatterns;
 import com.magneticraft2.common.systems.multiblockpattern.block.AirLockBlock;
+import com.magneticraft2.common.systems.multiblockpattern.block.CrucibleMBBlock;
 import com.magneticraft2.common.systems.multiblockpattern.block.MultiblockBlock;
-import com.magneticraft2.common.systems.multiblockpattern.block.testBlock;
 import com.magneticraft2.common.systems.multiblockpattern.item.MultiblockBlockItem;
 import com.magneticraft2.common.systems.multiblockpattern.tile.MultiblockMasterTile;
 import com.magneticraft2.common.systems.multiblockpattern.tile.MultiblockTile;
-import com.magneticraft2.common.systems.multiblockpattern.tile.testBlocktile;
+import com.magneticraft2.common.systems.multiblockpattern.tile.crucibleBlocktile;
 import com.magneticraft2.common.tile.machines.heat.CrucibleHeaterTile;
 import com.magneticraft2.common.tile.machines.heat.HeatGeneratorTile;
 import net.minecraft.world.entity.EntityType;
@@ -99,7 +98,7 @@ public class FinalRegistry {
     public static final RegistryObject<Block> multiblock_master = register("multiblock_master", () -> setUpBlock(new MultiblockBlock(Prop.Blocks.BASIC_TECH.get().noOcclusion())), false);
 
 
-    public static final RegistryObject<Block> test_block = registerBlockOnly("test", () -> setUpBlock(new testBlock()));
+    public static final RegistryObject<Block> cruciblemb_block = registerBlockOnly("cruciblemb", () -> setUpBlock(new CrucibleMBBlock()));
 
     /**
      * Multiblocks tiles
@@ -109,7 +108,7 @@ public class FinalRegistry {
     public static final RegistryObject<BlockEntityType<MultiblockTile>> MUTIBLOCK = TILE_ENTITIES.register("multiblock", () ->  registerTiles(MultiblockTile::new, multiblock.get()));
 
 
-    public static final RegistryObject<BlockEntityType<testBlocktile>> test_tile = TILE_ENTITIES.register("test_tile", () ->  registerTiles(testBlocktile::new, test_block.get()));
+    public static final RegistryObject<BlockEntityType<crucibleBlocktile>> cruciblemb_tile = TILE_ENTITIES.register("cruciblemb_tile", () ->  registerTiles(crucibleBlocktile::new, cruciblemb_block.get()));
 
 
 
@@ -118,7 +117,7 @@ public class FinalRegistry {
      */
     /**CorePatternSystem**/
 
-    public static final RegistryObject<Item> test_item = ITEMS.register("test", () -> createItem(new MultiblockBlockItem(test_block.get(), MultiblockPatterns.test, Prop.Items.SIXTY_FOUR.get())));
+    public static final RegistryObject<Item> cruciblemb_item = ITEMS.register("cruciblemb", () -> createItem(new MultiblockBlockItem(cruciblemb_block.get(), MultiblockPatterns.crucible, Prop.Items.SIXTY_FOUR.get(), "Crucible", "3x3x3")));
 
 
 

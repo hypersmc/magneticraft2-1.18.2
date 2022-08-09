@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MultiblockPatterns {
 
-    public static final MultiblockPattern test = new MultiblockPattern()
+    public static final MultiblockPattern crucible = new MultiblockPattern()
             .addLayer(0, "XXX", "XXX", "XXX")
             .addLayer(1, "XXX", "XXX", "XXX")
             .addLayer(2, "XXX", "XXX", "XXX");

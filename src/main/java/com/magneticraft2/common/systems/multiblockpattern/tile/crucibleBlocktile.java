@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class testBlocktile extends MultiblockMasterTile{
+public class crucibleBlocktile extends MultiblockMasterTile{
     public static final int TAKE_OFF_TIME = 120;
 
 
@@ -16,13 +16,13 @@ public class testBlocktile extends MultiblockMasterTile{
 
     private AABB renderBox;
 
-    public testBlocktile(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
+    public crucibleBlocktile(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state) {
         super(tileEntityTypeIn, pos, state);
     }
-    public testBlocktile(BlockPos pos, BlockState state) {
-        super(FinalRegistry.test_tile.get(), pos, state);
+    public crucibleBlocktile(BlockPos pos, BlockState state) {
+        super(FinalRegistry.cruciblemb_tile.get(), pos, state);
     }
-    public static void tick(Level level, BlockPos pos, BlockState state, testBlocktile blockEntity) {
+    public static void tick(Level level, BlockPos pos, BlockState state, crucibleBlocktile blockEntity) {
 
     }
     @Override

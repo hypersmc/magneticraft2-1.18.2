@@ -12,5 +12,11 @@
   "multiblock.error.mgc2.no.heatport": "%s require at least one heat port.",
   "multiblock.error.mgc2.no.scaffolding": "%s require at least one scaffolding.",
   "multiblock.error.mgc2.dimensions": "Dimensions not allowed \nActual: %d, %d, %d, \nMin allowed: %d, %d, %d, \nMax allowed: %d, %d, %d,",
-  "multiblock.error.mgc2.dangling_internal_part": "There appears to be another %s inside this one, is something wrong? (%d, %d, %d)."
+  "multiblock.error.mgc2.dangling_internal_part": "There appears to be another %s inside this one, is something wrong? (%d, %d, %d).",
+  "message.mgc2.multiblock.invalid_place": "There isn't enough space to place this!",
+  "tooltip.mgc2.multiblock.tooltip": "§7Press §eSHIFT§r §7for more Information!",
+  "tooltip.mgc2.multiblock.tooltip.shift1": "§7Multiblock: %s",
+  "tooltip.mgc2.multiblock.tooltip.shift2": "§7Size: %s",
+  "tooltip.mgc2.multiblock.tooltip.shift3": "§7Place block to build!",
+  "block.magneticraft2.cruciblemb": "§7Crucible"
 }
