@@ -13,6 +13,8 @@ import com.magneticraft2.common.utils.mbthings.Queues;
 import com.magneticraft2.common.utils.mbthings.Util;
 import com.magneticraft2.compatibility.TOP.TOPCompatibility;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -74,7 +76,7 @@ public class magneticraft2 {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void clientSetup(final FMLClientSetupEvent event) {
-
+        ItemBlockRenderTypes.setRenderLayer(FinalRegistry.rice_plant.get(), RenderType.cutout());
     }
 
     public void preinit(FMLCommonSetupEvent event){

@@ -1,5 +1,7 @@
 {
   "itemGroup.Magneticraft2.Blocks": "Magneticraft2 Blocks",
+  "itemGroup.Magneticraft2.Machines": "Magneticraft2 Machines",
+  "itemGroup.Magneticraft2.Plants": "Magneticraft2 Plants & Foods",
   "multiblock.error.mgc2.invalid_block.frame": "Invalid block (%s) for frame at %s",
   "multiblock.error.mgc2.invalid_block.exterior": "Invalid block (%s) for exterior at %s",
   "multiblock.error.mgc2.invalid_block.interior": "Invalid block (%s) for interior at %s",
@@ -18,5 +20,7 @@
   "tooltip.mgc2.multiblock.tooltip.shift1": "§7Multiblock: %s",
   "tooltip.mgc2.multiblock.tooltip.shift2": "§7Size: %s",
   "tooltip.mgc2.multiblock.tooltip.shift3": "§7Place block to build!",
-  "block.magneticraft2.cruciblemb": "§7Crucible"
+  "block.magneticraft2.cruciblemb": "§7Crucible",
+  "item.magneticraft2.rice_seed": "Rice Seed",
+  "item.magneticraft2.rice": "Rice"
 }

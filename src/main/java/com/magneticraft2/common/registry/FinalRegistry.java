@@ -1,6 +1,7 @@
 package com.magneticraft2.common.registry;
 
 import com.magneticraft2.common.block.BlockMagneticraft2Pattern;
+import com.magneticraft2.common.block.crops.RicePlantBlock;
 import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
 import com.magneticraft2.common.magneticraft2;
@@ -15,14 +16,13 @@ import com.magneticraft2.common.systems.multiblockpattern.tile.crucibleBlocktile
 import com.magneticraft2.common.tile.machines.heat.CrucibleHeaterTile;
 import com.magneticraft2.common.tile.machines.heat.HeatGeneratorTile;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -67,12 +67,26 @@ public class FinalRegistry {
     public static final CreativeModeTab MC2Blocks = new CreativeModeTab("Magneticraft2.Blocks") {
         @Override
         public ItemStack makeIcon() {
+            return new ItemStack(cruciblemb_block.get());
+        }
+    };
+    public static final CreativeModeTab MC2Machines = new CreativeModeTab("Magneticraft2.Machines") {
+        @Override
+        public ItemStack makeIcon() {
             return new ItemStack(Block_Heat_Generator.get());
+        }
+    };
+    public static final CreativeModeTab MC2Plants = new CreativeModeTab("Magneticraft2.Plants") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(rice_seed.get());
         }
     };
     public static final Item.Properties ITEM_PROPERTIES = new Item.Properties().tab(MC2Blocks);
 
-
+    public static final RegistryObject<Block> rice_plant = registerBlockWithoutBlockItem("rice_plant", () -> new RicePlantBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT).noOcclusion()));
+    public static final RegistryObject<Item> rice_seed = ITEMS.register("rice_seed", () -> new ItemNameBlockItem(rice_plant.get(), new Item.Properties().tab(MC2Plants)));
+    public static final RegistryObject<Item> rice = ITEMS.register("rice", () -> new Item(new Item.Properties().tab(MC2Plants).food(ModFoods.rice)));
     private static <T extends IForgeRegistryEntry<T>> DeferredRegister<T> create(IForgeRegistry<T> registry) {
         return DeferredRegister.create(registry, magneticraft2.MOD_ID);
     }
@@ -81,18 +95,24 @@ public class FinalRegistry {
     }
 
 
-    public static final RegistryObject<Block> air_lock = registerBlockOnly("air_lock", () -> setUpBlock(new AirLockBlock(Prop.Blocks.BASIC_TECH.get())));
 
     public static final RegistryObject<HeatGeneratorBlock> Block_Heat_Generator = BLOCKS.register("heat_generator", HeatGeneratorBlock::new);
     public static final RegistryObject<Item> HEAT_ITEM = fromBlock(Block_Heat_Generator);
     public static final RegistryObject<BlockEntityType<HeatGeneratorTile>> Tile_Heat_Generator = TILE_ENTITIES.register("heat_generator", () -> BlockEntityType.Builder.of(HeatGeneratorTile::new, Block_Heat_Generator.get()).build(null));
 
-    public static final RegistryObject<CrucibleHeaterBlock> Block_Crucible_Heater = BLOCKS.register("crucible_heater", CrucibleHeaterBlock::new);
+    public static final RegistryObject<CrucibleHeaterBlock> Block_Crucible_Heater = BLOCKS.register ("crucible_heater", CrucibleHeaterBlock::new);
     public static final RegistryObject<Item> CRUCIBLE_HEATER_ITEM = fromBlock(Block_Crucible_Heater);
     public static final RegistryObject<BlockEntityType<CrucibleHeaterTile>> Tile_Crucible_Heater = TILE_ENTITIES.register("crucible_heater", () -> BlockEntityType.Builder.of(CrucibleHeaterTile::new, Block_Crucible_Heater.get()).build(null));
+
+
+
+
+
     /**
      * Multiblocks blocks
      */
+    public static final RegistryObject<Block> air_lock = registerBlockOnly("air_lock", () -> setUpBlock(new AirLockBlock(Prop.Blocks.BASIC_TECH.get())));
+
     /**CorePatternSystem**/
     public static final RegistryObject<Block> multiblock = register("multiblock", () -> setUpBlock(new MultiblockBlock(Prop.Blocks.BASIC_TECH.get().noOcclusion())), false);
     public static final RegistryObject<Block> multiblock_master = register("multiblock_master", () -> setUpBlock(new MultiblockBlock(Prop.Blocks.BASIC_TECH.get().noOcclusion())), false);
@@ -121,7 +141,9 @@ public class FinalRegistry {
 
 
 
-
+    private static <T extends Block> RegistryObject<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {
+        return BLOCKS.register(name, block);
+    }
     public static <B extends Block> RegistryObject<Item> fromBlock(RegistryObject<B> block) {
         return ITEMS.register(block.getId().getPath(), () -> new BlockItem(block.get(), ITEM_PROPERTIES));
     }
