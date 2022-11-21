@@ -165,7 +165,7 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.67'
 
-    implementation fg.deobf('software.bernie.geckolib:geckolib-1.18-forge:3.0.15')
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.55')
     implementation fg.deobf("curse.maven:the-one-probe-245211:3671753")
     implementation fg.deobf("curse.maven:jei-238222:3749770")
 

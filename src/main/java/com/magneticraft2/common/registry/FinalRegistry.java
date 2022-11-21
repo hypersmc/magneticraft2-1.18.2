@@ -4,6 +4,7 @@ import com.magneticraft2.common.block.BlockMagneticraft2Pattern;
 import com.magneticraft2.common.block.crops.RicePlantBlock;
 import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
+import com.magneticraft2.common.block.machines.multiblocks.hgenerator.hgeneratormultiblocktest;
 import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.systems.multiblockpattern.MultiblockPatterns;
 import com.magneticraft2.common.systems.multiblockpattern.block.AirLockBlock;
@@ -95,7 +96,7 @@ public class FinalRegistry {
     }
 
 
-
+    public static final RegistryObject<hgeneratormultiblocktest> Block_hg_test = BLOCKS.register("hg_test", hgeneratormultiblocktest::new);
     public static final RegistryObject<HeatGeneratorBlock> Block_Heat_Generator = BLOCKS.register("heat_generator", HeatGeneratorBlock::new);
     public static final RegistryObject<Item> HEAT_ITEM = fromBlock(Block_Heat_Generator);
     public static final RegistryObject<BlockEntityType<HeatGeneratorTile>> Tile_Heat_Generator = TILE_ENTITIES.register("heat_generator", () -> BlockEntityType.Builder.of(HeatGeneratorTile::new, Block_Heat_Generator.get()).build(null));

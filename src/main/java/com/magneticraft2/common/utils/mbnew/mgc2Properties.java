@@ -2,7 +2,8 @@ package com.magneticraft2.common.utils.mbnew;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.magneticraft2.common.systems.mbsysnew.DirectionUtils;
+
+import com.magneticraft2.common.utils.DirectionUtils;
 import com.mojang.math.Transformation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

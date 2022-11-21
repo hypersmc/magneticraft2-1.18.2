@@ -49,7 +49,7 @@ import java.util.HashMap;
 public class magneticraft2 {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final boolean devmode = true;
-    // used to ensure i dont tick things twice
+    // used to ensure I don't tick things twice
     private static long tick = 0;
     public static final String MOD_ID = "magneticraft2";
 
@@ -94,6 +94,6 @@ public class magneticraft2 {
 
 
 
-    //Multiblockhandling DON'T TOUCH
+    //Multi-block handling DON'T TOUCH
 
 }

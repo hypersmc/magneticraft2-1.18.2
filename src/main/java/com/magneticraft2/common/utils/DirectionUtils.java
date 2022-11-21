@@ -1,4 +1,5 @@
-package com.magneticraft2.common.systems.mbsysnew;
+package com.magneticraft2.common.utils;
+
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.*;
