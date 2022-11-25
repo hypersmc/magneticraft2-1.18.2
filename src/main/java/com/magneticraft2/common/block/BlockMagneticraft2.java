@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -30,16 +31,17 @@ import java.util.List;
 
 public abstract class BlockMagneticraft2 extends BaseEntityBlock implements TOPDriver, EntityBlock, IModularBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static BooleanProperty assembled = BooleanProperty.create("assembled");
+    public static BooleanProperty iscore = BooleanProperty.create("iscore");
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     public static final Logger LOGGER = LogManager.getLogger();
+    public BlockPattern pattern;
     private Int2ObjectMap<BlockModule<?>> modules;
     private List<BlockModule<?>> moduleList;
 
 
     public BlockMagneticraft2(Properties p_49795_) {
         super(p_49795_);
-
-
     }
     @Override
     public BlockModule<?> module(Class<? extends IModularBlock> interfaceClazz) {

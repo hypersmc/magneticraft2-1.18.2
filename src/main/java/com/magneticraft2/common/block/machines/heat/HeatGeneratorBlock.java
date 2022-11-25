@@ -34,11 +34,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.ToIntFunction;
 
 public class HeatGeneratorBlock extends BlockMagneticraft2 implements EntityBlock {
-    public static BooleanProperty assembled = BooleanProperty.create("assembled");
-    private BlockPattern pattern;
+
+
     public HeatGeneratorBlock() {
         super(BlockBehaviour.Properties.of(Material.METAL).strength(3.5F).noOcclusion().requiresCorrectToolForDrops().lightLevel(litBlockEmission(20)));
-        this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(FACING, Direction.NORTH).setValue(assembled, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(FACING, Direction.NORTH).setValue(assembled, false).setValue(iscore, false));
     }
     private static ToIntFunction<BlockState> litBlockEmission(int pLightValue) {
         return (p_50763_) -> {
@@ -54,7 +54,7 @@ public class HeatGeneratorBlock extends BlockMagneticraft2 implements EntityBloc
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(FACING).add(LIT).add(assembled);
+        builder.add(FACING).add(LIT).add(assembled).add(iscore);
     }
 
 

@@ -58,9 +58,15 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
     /* Inv */
     public abstract int invsize();
     /* Pressure */
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public abstract int capacityP();
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public abstract int maxtransferP();
 
     /* Create handlers */
@@ -69,7 +75,10 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
     public final HeatStorages heatHandler = createHeat(); //Heat
     public final WattStorages wattHandler = createWatt(); //Watt
     public final FluidStorages fluidHandler = createFluid(); //Fluid
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public final PressureStorages pressureHandler = createPressure(); //Pressure
 
     public abstract boolean itemcape(); //Is the TileEntity capable of Item handling
@@ -77,7 +86,10 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
     public abstract boolean heatcape(); //Is the TileEntity capable of Heat handling
     public abstract boolean wattcape(); //Is the TileEntity capable of Wattage/Voltage handling
     public abstract boolean fluidcape(); //Is the TileEntity capable of Fluid handling
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public abstract boolean pressurecape(); //Is the TileEntity capable of Pressure handling
 
     public abstract boolean HeatCanReceive();
@@ -86,18 +98,30 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
     public abstract boolean WattCanSend();
     public abstract boolean EnergyCanReceive();
     public abstract boolean EnergyCanSend();
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public abstract boolean PressureCanReceive();
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public abstract boolean PressureCanSend();
-
+    /**
+     * Reworking from AnimationFactory to createFactory
+     */
+    @Deprecated(forRemoval = true)
     public final AnimationFactory factory = new AnimationFactory(this);
     public final LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> energyHandler); //Creating LazyOptional for Energy (RF)
     public final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler); //Creating LazyOptional for Item
     public final LazyOptional<IHeatStorage> heat = LazyOptional.of(() -> heatHandler); //Creating LazyOptional for Heat
     public final LazyOptional<IWattStorage> watt = LazyOptional.of(() -> wattHandler); //Creating LazyOptional for Wattage/Voltage
     public final LazyOptional<IFluidHandler> fluid = LazyOptional.of(() -> fluidHandler); //Creating LazyOptional for Fluid
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public final LazyOptional<IPressureStorage> pressure = LazyOptional.of(() -> pressureHandler); //Creating LazyOptional for Pressure
 
     public TileEntityMagneticraft2(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
@@ -457,11 +481,17 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
     }
 
     /* Pressure */
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public int getPressureStorage(){
         return this.pressureHandler.getPressureStored();
     }
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public int getMaxPressureStorage(){
         return this.pressureHandler.getMaxPressureStored();
     }
@@ -479,7 +509,10 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
     public boolean getWattCap(){
         return wattcape();
     }
-    @Deprecated
+    /**
+     * Pressure system is being removed!
+     */
+    @Deprecated(forRemoval = true)
     public boolean getPressureCap(){
         return pressurecape();
     }
