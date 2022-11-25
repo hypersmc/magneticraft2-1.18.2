@@ -234,4 +234,20 @@ public class HeatGeneratorTile extends TileEntityMagneticraft2 {
             }
         }
     }
+
+    @Override
+    public Level getThisWorld() {
+        return level;
+    }
+
+    @Override
+    public BlockPos getThisPosition() {
+        return worldPosition;
+    }
+
+    @Override
+    public CompoundTag sync() {
+
+        return null;
+    }
 }

@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.ToIntFunction;
 
-public class HeatGeneratorBlock extends BlockMagneticraft2 implements EntityBlock {
+public class HeatGeneratorBlock extends BlockMagneticraft2 {
 
 
     public HeatGeneratorBlock() {
@@ -80,9 +80,12 @@ public class HeatGeneratorBlock extends BlockMagneticraft2 implements EntityBloc
         return new HeatGeneratorTile(pPos, pState);
     }
 
+
+
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult blockHitResult) {
         if (!world.isClientSide) {
+
             BlockEntity tileEntity = world.getBlockEntity(pos);
             if (player.isCrouching()){
                 LOGGER.info("X: " + blockHitResult.getLocation().x());
@@ -116,8 +119,10 @@ public class HeatGeneratorBlock extends BlockMagneticraft2 implements EntityBloc
             }
 
         }
+
         return InteractionResult.SUCCESS;
     }
+
 
     @Nullable
     @Override

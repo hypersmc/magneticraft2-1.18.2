@@ -7,7 +7,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.function.Supplier;
-
+@Deprecated(forRemoval = true)
 public class Prop {
     public static class Blocks{
         public static final Supplier<Block.Properties> BASIC_TECH = () -> Block.Properties.of(Material.METAL)

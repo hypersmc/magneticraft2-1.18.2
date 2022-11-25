@@ -37,7 +37,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nonnull;
 
-public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IAnimatable, MenuProvider {
+public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IAnimatable, MenuProvider, ISync {
     public static final Logger LOGGER = LogManager.getLogger();
     public MenuProvider menuProvider;
 
@@ -480,6 +480,7 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
         return 0;
     }
 
+
     /* Pressure */
     /**
      * Pressure system is being removed!
@@ -516,5 +517,7 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
     public boolean getPressureCap(){
         return pressurecape();
     }
-
+    public void onBlockBreak()
+    {
+    }
 }

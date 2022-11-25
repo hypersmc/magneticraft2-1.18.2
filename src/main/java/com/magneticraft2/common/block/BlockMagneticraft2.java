@@ -4,21 +4,17 @@ import com.magneticraft2.common.systems.heat.CapabilityHeat;
 import com.magneticraft2.common.systems.pressure.CapabilityPressure;
 import com.magneticraft2.common.systems.watt.CapabilityWatt;
 import com.magneticraft2.common.tile.TileEntityMagneticraft2;
-import com.magneticraft2.common.utils.BlockModule;
-import com.magneticraft2.common.utils.IModularBlock;
 import com.magneticraft2.compatibility.TOP.TOPDriver;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -26,31 +22,19 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
 
-
-public abstract class BlockMagneticraft2 extends BaseEntityBlock implements TOPDriver, EntityBlock, IModularBlock {
+public abstract class BlockMagneticraft2 extends BaseEntityBlock implements TOPDriver, EntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static BooleanProperty assembled = BooleanProperty.create("assembled");
     public static BooleanProperty iscore = BooleanProperty.create("iscore");
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger("BlockMGC2Core");
     public BlockPattern pattern;
-    private Int2ObjectMap<BlockModule<?>> modules;
-    private List<BlockModule<?>> moduleList;
+
 
 
     public BlockMagneticraft2(Properties p_49795_) {
         super(p_49795_);
-    }
-    @Override
-    public BlockModule<?> module(Class<? extends IModularBlock> interfaceClazz) {
-        return modules.get(interfaceClazz.hashCode());
-    }
-
-    @Override
-    public List<BlockModule<?>> modules() {
-        return moduleList;
     }
 
 

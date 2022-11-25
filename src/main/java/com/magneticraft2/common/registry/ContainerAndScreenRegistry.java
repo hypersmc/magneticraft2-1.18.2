@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 
 @Mod.EventBusSubscriber(modid = magneticraft2.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ContainerAndScreenRegistry {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger("MGC2-Container&ScreenRegistry");
     private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, magneticraft2.MOD_ID);
     public static void containerRegistry(){
         CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());

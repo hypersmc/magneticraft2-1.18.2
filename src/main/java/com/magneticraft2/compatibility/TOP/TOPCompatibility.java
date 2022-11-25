@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.function.Function;
 
 public class TOPCompatibility {
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger("MGC2-CompatibilityManager");
     private static boolean registered;
     private static final ResourceLocation resource = new ResourceLocation(magneticraft2.MOD_ID, "default");
     public static void register(){

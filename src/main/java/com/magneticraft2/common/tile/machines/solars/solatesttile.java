@@ -1,4 +1,4 @@
-package com.magneticraft2.common.tile.machines.heat;
+package com.magneticraft2.common.tile.machines.solars;
 
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.tile.TileEntityMagneticraft2;
@@ -9,18 +9,21 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class CrucibleHeaterTile extends TileEntityMagneticraft2 {
+public class solatesttile extends TileEntityMagneticraft2 {
+    public float currentAngle;
 
-
-    public CrucibleHeaterTile(BlockPos pos, BlockState state) {
-        super(FinalRegistry.Tile_Crucible_Heater.get(), pos, state);
+    public solatesttile(BlockPos pos, BlockState state) {
+        super(FinalRegistry.Tile_solarBlock.get(), pos, state);
     }
+
+
+
 
     @Override
     public int capacityE() {
@@ -154,7 +157,7 @@ public class CrucibleHeaterTile extends TileEntityMagneticraft2 {
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory, Player pPlayer) {
+    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return null;
     }
 
@@ -168,10 +171,6 @@ public class CrucibleHeaterTile extends TileEntityMagneticraft2 {
         return null;
     }
 
-    public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, E e) {
-    }
-
-
     @Override
     public Level getThisWorld() {
         return level;
@@ -179,7 +178,7 @@ public class CrucibleHeaterTile extends TileEntityMagneticraft2 {
 
     @Override
     public BlockPos getThisPosition() {
-        return worldPosition;
+        return getThisPosition();
     }
 
     @Override

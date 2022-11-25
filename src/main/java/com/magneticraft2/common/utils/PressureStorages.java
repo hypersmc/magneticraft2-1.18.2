@@ -3,7 +3,7 @@ package com.magneticraft2.common.utils;
 import com.magneticraft2.common.systems.pressure.PressureStorage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
-
+@Deprecated(forRemoval = true)
 public class PressureStorages extends PressureStorage implements INBTSerializable<CompoundTag> {
     public PressureStorages(int capacity, int maxTransfer) {
         super(capacity, maxTransfer);

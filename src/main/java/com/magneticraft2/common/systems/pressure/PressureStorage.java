@@ -1,5 +1,5 @@
 package com.magneticraft2.common.systems.pressure;
-@Deprecated
+@Deprecated(forRemoval = true)
 public class PressureStorage implements IPressureStorage{
 
     protected int pressure;
