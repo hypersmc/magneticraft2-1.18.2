@@ -65,9 +65,6 @@ public class generalUtils {
         while (!stack.isEmpty())
         {
             ItemEntity entityitem = new ItemEntity(worldIn, pos.getX() + (double) f, pos.getY() + (double) f1, pos.getZ() + (double) f2, stack.split(RANDOM.nextInt(21) + 10));
-//            entityitem.getDeltaMovement( = RANDOM.nextGaussian() * 0.05000000074505806D;
-//            entityitem.motionY = RANDOM.nextGaussian() * 0.05000000074505806D + 0.20000000298023224D;
-//            entityitem.motionZ = RANDOM.nextGaussian() * 0.05000000074505806D;
             worldIn.addFreshEntity(entityitem);
         }
     }

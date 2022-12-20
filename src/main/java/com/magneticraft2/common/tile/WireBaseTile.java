@@ -12,7 +12,10 @@ public abstract class WireBaseTile<T extends BlockEntity> implements BlockEntity
     public double zPos = 0D;
 
     public WireBaseTile(BlockEntityRendererProvider.Context rendererDispatcherIn) {
+
     }
+
+
 
 
 
