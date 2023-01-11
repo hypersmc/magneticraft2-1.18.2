@@ -20,6 +20,7 @@ public abstract class BlockMagneticraft2Entityless extends Block {
 
 
     public BlockMagneticraft2Entityless(Properties p_49795_) {
+
         super(p_49795_);
     }
 

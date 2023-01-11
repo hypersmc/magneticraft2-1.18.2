@@ -2,7 +2,6 @@ package com.magneticraft2.common.block.wires;
 
 import com.magneticraft2.common.block.BlockMagneticraft2;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
-import com.magneticraft2.common.utils.generalUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;

@@ -3,6 +3,7 @@
   "itemGroup.Magneticraft2.Machines": "Magneticraft2 Machines",
   "itemGroup.Magneticraft2.Plants": "Magneticraft2 Plants & Foods",
   "itemGroup.Magneticraft2.Items": "Magneticraft2 Items",
+  "itemGroup.Magneticraft2.Ores": "Magneticraft2 Ores",
   "multiblock.error.mgc2.invalid_block.frame": "Invalid block (%s) for frame at %s",
   "multiblock.error.mgc2.invalid_block.exterior": "Invalid block (%s) for exterior at %s",
   "multiblock.error.mgc2.invalid_block.interior": "Invalid block (%s) for interior at %s",

@@ -8,11 +8,9 @@ import com.magneticraft2.common.utils.generalUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -68,7 +66,6 @@ public class itemWireCoil extends Item {
                             firstConnectionPos = teT.getConnectorPos();
                             isSecond = true;
                             generalUtils.sendChatMessage(pContext.getPlayer(), "Connection Start");
-
                         }
                         else
                         {
@@ -85,7 +82,6 @@ public class itemWireCoil extends Item {
                             teT.connect(firstConnectionPos);
                             generalUtils.sendChatMessage(pContext.getPlayer(), "Connected Distance: " + distance);
                             itemStack.shrink(1);
-
                         }
                         else
                         {
@@ -156,6 +152,7 @@ public class itemWireCoil extends Item {
         isSecond = false;
         generalUtils.sendChatMessage(player, "Cannot connect");
     }
+    
     private void connectFirst(Level world, BlockPos endPos)
     {
         BlockEntity te = world.getBlockEntity(firstConnectionPos);

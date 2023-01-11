@@ -38,6 +38,10 @@ public class generalUtils {
 
         return buffer[0];
     }
+    public static void sendConsoleMessage(String str)
+    {
+        System.out.println(str);
+    }
     public static void sendChatMessage(Player player, String str)
     {
         if (player == null) Minecraft.getInstance().player.sendMessage(new TextComponent(str), player.getUUID());

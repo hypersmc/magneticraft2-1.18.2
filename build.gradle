@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+
         // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
         maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://maven.parchmentmc.org' }
@@ -102,6 +103,7 @@ minecraft {
         gameTestServer {
             workingDirectory project.file('run')
 
+
             // Recommended logging data for a userdev environment
             // The markers can be added/remove as needed separated by commas.
             // "SCAN": For mods scan.
@@ -174,35 +176,13 @@ repositories {
 
 dependencies {
     implementation 'org.projectlombok:lombok:1.18.20'
-
-    // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.18.2-40.1.67'
-
 
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.55')
     implementation fg.deobf("curse.maven:the-one-probe-245211:3965688")
     implementation fg.deobf("curse.maven:jei-238222:4062344")
-    //implementation fg.deobf("curse.maven:ldlib-626676:4088121")
-    //implementation fg.deobf("curse.maven:multiblocked-604054:4088117")
+    //implementation fg.deobf("curse.maven:roughly-enough-items-310111:4168764")
 
-
-    implementation fg.deobf("com.lowdragmc.ldlib:LowDragLib:1.18.2-0.7.6")
-    implementation fg.deobf("com.lowdragmc.multiblocked:Multiblocked:1.18.2-0.12.4")
-
-
-    // Real mod deobf dependency examples - these get remapped to your current mappings
-    // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
-    // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
-    // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
-
-    // Examples using mod jars from ./libs
-    // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

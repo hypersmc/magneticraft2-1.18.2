@@ -204,6 +204,12 @@ public class BlockEntityHVConnectorBase extends TileEntityMagneticraft2 {
         isMaster = master == this;
         setChanged();
     }
+    public BlockPos getLeftConnectedPos(){
+        return leftConnectionPos;
+    }
+    public BlockPos getRightConnectedPos(){
+        return rightConnectionPos;
+    }
     public boolean isLeftConnected()
     {
         return leftConnected;
@@ -217,11 +223,9 @@ public class BlockEntityHVConnectorBase extends TileEntityMagneticraft2 {
     @Override
     public void onBlockBreak() {
         if (isLeftConnected()){
-            LOGGER.info("trigger1");
             removeCableAndSpawn(leftConnectionPos);
         }
         if (isRightConnected()){{
-            LOGGER.info("trigger2");
             removeCableAndSpawn(rightConnectionPos);
         }}
     }
