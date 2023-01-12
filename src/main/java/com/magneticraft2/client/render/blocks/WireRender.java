@@ -44,12 +44,37 @@ public class WireRender extends WireBaseTile<BlockEntityHVConnectorBase> {
         float startY = sta.getY();
         float startZ = sta.getZ();
 
-        float fX = endX-startX;
-        float fY = (float) (endY - (startY - 1.33D));
-        float fZ = endZ - startZ;
+        float distX = endX-startX;
+        float distY = (float) (endY - (startY - 1.33D));
+        float distZ = endZ - startZ;
+        int i = 24;
+        for (int j = 0; j < i; j++) {
+            if (!sameLevel || j < (i / 2) + 1){
+                float f3 = (float) j / 24.0F;
+                double v = (distY * (f3 * f3 + f3)) * 0.5D;
+                double b = ((24.0F - j) / 18.0F + 0.125F);
+                drawSurfaces(pBufferSource, (float) (x + distX * f3), (float) (y + v + b), (float) (z + distZ * f3), 56, 56, 56,1, 1,1, 1, 1, 1, matrix, normal, poseStack);
+                drawSurfaces(pBufferSource, (float) (x + distX * f3 + 0.025D), (float) (y + v + b + 0.025D), (float) (z + distZ * f3), 56, 56, 56,1, 1,1, 1, 1, 1, matrix, normal, poseStack);
 
-        drawline(pBufferSource, startX, startY, startZ, 56, 56, 56, 255, 1,1,1,1,1,matrix,normal);
-        drawline(pBufferSource, endX, endY, endZ, 56, 56, 56, 255, 1,1,1,1,1,matrix,normal);
+            }
+        }
+
+
+        for (int k = 0; k < i; k++) {
+            if (!sameLevel || k < (i / 2) + 1)
+            {
+
+                float f7 = (float) k / 24.0F;
+                double v = distY * (f7 * f7 + f7) * 0.5D;
+                double b = ((24.0F - k) / 18.0F + 0.125F);
+                drawSurfaces(pBufferSource, (float) (x + distX * f7), (float) (y + v + b + 0.025D), (float) (z + distZ * f7), 43, 43, 43, 1, 1,1, 1, 1, 1, matrix, normal, poseStack);
+                drawSurfaces(pBufferSource, (float) (x + distX * f7 + 0.025D), (float) (y + v + b), (float) (z + distZ * f7 + 0.025D), 43, 43, 43, 1, 1,1, 1, 1, 1, matrix, normal, poseStack);
+
+
+            }
+        }
+
+
 
 
 
@@ -60,10 +85,44 @@ public class WireRender extends WireBaseTile<BlockEntityHVConnectorBase> {
 
 
     }
-    private static void drawline(MultiBufferSource buffer, float x, float y, float z, float r, float g, float b, float alpha, int minU, int maxU, int minV, int maxV, int lmap, Matrix4f matrix, Matrix3f normal)
+    private static void drawSurfaces(MultiBufferSource buffer, float x, float y, float z, float r, float g, float b, float alpha, int minU, int maxU, int minV, int maxV, int lmap, Matrix4f matrix, Matrix3f normal, PoseStack poseStack)
     {
-        VertexConsumer builder = buffer.getBuffer(RenderType.LINES);
-        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).normal(normal, 0.0F, 1.0F, 0.0F).endVertex(); //.uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0, -1, 0)
+
+        VertexConsumer builder = buffer.getBuffer(Sheets.translucentCullBlockSheet());
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+
+        //Top
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+
+        //North
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+
+        //South
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+
+        //West
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+
+        //East
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 0.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.125F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
+        builder.vertex(matrix, x, y, z).color(r, g, b, alpha).uv(0.0F, 1.0F).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(lmap).normal(normal, 0f, 1f, 0f).endVertex();
 
     }
 
@@ -73,7 +132,6 @@ public class WireRender extends WireBaseTile<BlockEntityHVConnectorBase> {
 
         if (te.isRightConnected()){
             renderWire(te.getBlockPos(), te.rightConnectionPos, te.getBlockPos().getX(), te.getBlockPos().getY(), te.getBlockPos().getZ(), pBufferSource, pPoseStack);
-
         }
         if (te.isLeftConnected()){
             renderWire(te.getBlockPos(), te.leftConnectionPos, te.getBlockPos().getX(), te.getBlockPos().getY(), te.getBlockPos().getZ(), pBufferSource, pPoseStack);

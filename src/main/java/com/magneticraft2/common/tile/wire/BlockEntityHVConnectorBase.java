@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -39,26 +40,58 @@ public class BlockEntityHVConnectorBase extends TileEntityMagneticraft2 {
     public BlockEntityHVConnectorBase(BlockPos pos, BlockState state) {
         super(FinalRegistry.Tile_HVConnector_Base.get(), pos, state);
     }
-
     @Override
-    public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        loadClientData(tag);
-        return tag;
+    public Packet<ClientGamePacketListener> getUpdatePacket()
+    {
+        return ClientboundBlockEntityDataPacket.create( this );
     }
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        CompoundTag tag = pkt.getTag();
-        loadClientData(tag);
-        super.onDataPacket(net, pkt);
+        handleUpdateTag( pkt.getTag() );
     }
 
-    @Nullable
     @Override
-    public Packet<ClientGamePacketListener> getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
+    public CompoundTag getUpdateTag()
+    {
+        CompoundTag nbtTagCompound = new CompoundTag();
+        saveAdditional(nbtTagCompound);
+        return nbtTagCompound;
     }
+
+    @Override
+    public void handleUpdateTag(CompoundTag parentNBTTagCompound)
+    {
+        load(parentNBTTagCompound);
+    }
+
+
+//    @Override
+//    public void handleUpdateTag(CompoundTag tag) {
+//        load(tag);
+//    }
+//
+//    @Override
+//    public CompoundTag getUpdateTag() {
+//        CompoundTag tag = super.getUpdateTag();
+//        loadClientData(tag);
+//        return tag;
+//    }
+//
+//    @Override
+//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+//        CompoundTag tag = pkt.getTag();
+//        loadClientData(tag);
+//        handleUpdateTag(tag);
+//        level.sendBlockUpdated( worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL );
+//        super.onDataPacket(net, pkt);
+//    }
+//
+//    @Nullable
+//    @Override
+//    public Packet<ClientGamePacketListener> getUpdatePacket() {
+//        return ClientboundBlockEntityDataPacket.create(this);
+//    }
 
     private void loadClientData(CompoundTag tag) {
         tag.putBoolean("rightCon", rightConnected);
@@ -394,6 +427,7 @@ public class BlockEntityHVConnectorBase extends TileEntityMagneticraft2 {
     @Override
     public CompoundTag sync() {
         LOGGER.info("Init sync");
+        level.sendBlockUpdated( worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL );
         CompoundTag tag = super.getUpdateTag();
         loadClientData(tag);
         return null;

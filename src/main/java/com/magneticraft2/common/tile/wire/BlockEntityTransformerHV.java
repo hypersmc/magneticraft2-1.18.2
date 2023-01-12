@@ -7,12 +7,17 @@ import com.magneticraft2.common.utils.generalUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -35,6 +40,31 @@ public class BlockEntityTransformerHV extends BlockEntityMultiBlockBase<BlockEnt
     private boolean inUse = false;
     public BlockEntityTransformerHV(BlockPos pos, BlockState state) {
         super(FinalRegistry.Tile_HVTransformer.get(), pos, state);
+    }
+
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket()
+    {
+        return ClientboundBlockEntityDataPacket.create( this );
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        handleUpdateTag( pkt.getTag() );
+    }
+
+    @Override
+    public CompoundTag getUpdateTag()
+    {
+        CompoundTag nbtTagCompound = new CompoundTag();
+        saveAdditional(nbtTagCompound);
+        return nbtTagCompound;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag parentNBTTagCompound)
+    {
+        load(parentNBTTagCompound);
     }
 
     private void isOutPut(){
@@ -349,6 +379,10 @@ public class BlockEntityTransformerHV extends BlockEntityMultiBlockBase<BlockEnt
 
     @Override
     public CompoundTag sync() {
+        LOGGER.info("Init sync");
+        level.sendBlockUpdated( worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL );
+        CompoundTag tag = super.getUpdateTag();
+
         return null;
     }
 
