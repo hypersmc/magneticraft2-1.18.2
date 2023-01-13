@@ -18,6 +18,16 @@
   "multiblock.error.mgc2.dimensions": "Dimensions not allowed \nActual: %d, %d, %d, \nMin allowed: %d, %d, %d, \nMax allowed: %d, %d, %d,",
   "multiblock.error.mgc2.dangling_internal_part": "There appears to be another %s inside this one, is something wrong? (%d, %d, %d).",
   "message.mgc2.multiblock.invalid_place": "There isn't enough space to place this!",
+
+
+  "message.magneticraft2.connecteddistance": "Connected distance: %s",
+  "message.magneticraf2.toofar": "Far away from each other, Distance: %s",
+  "message.magneticraft2.connection_in_use": "Connection already in use",
+  "message.magneticraft2.connection_start": "Connection start",
+  "message.magneticraft2.cannot_connect": "Cannot connect",
+  "message.magneticraft2.distance": "Current Wire Distance is:  %s",
+  "message.magneticraft2.connection_start_coords": "Connection start at: %s, %s, %s",
+
   "tooltip.mgc2.multiblock.tooltip": "§7Press §eSHIFT§r §7for more Information!",
   "tooltip.mgc2.multiblock.tooltip.shift1": "§7Multiblock: %s",
   "tooltip.mgc2.multiblock.tooltip.shift2": "§7Size: %s",

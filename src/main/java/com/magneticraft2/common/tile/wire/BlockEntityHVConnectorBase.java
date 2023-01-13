@@ -36,10 +36,13 @@ public class BlockEntityHVConnectorBase extends TileEntityMagneticraft2 {
     private boolean leftConnected;
     private boolean rightConnected;
     private BlockEntityHVConnectorBase master;
+    private boolean startcon;
     private boolean isMaster;
     public BlockEntityHVConnectorBase(BlockPos pos, BlockState state) {
         super(FinalRegistry.Tile_HVConnector_Base.get(), pos, state);
     }
+
+
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket()
     {
@@ -66,32 +69,6 @@ public class BlockEntityHVConnectorBase extends TileEntityMagneticraft2 {
     }
 
 
-//    @Override
-//    public void handleUpdateTag(CompoundTag tag) {
-//        load(tag);
-//    }
-//
-//    @Override
-//    public CompoundTag getUpdateTag() {
-//        CompoundTag tag = super.getUpdateTag();
-//        loadClientData(tag);
-//        return tag;
-//    }
-//
-//    @Override
-//    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-//        CompoundTag tag = pkt.getTag();
-//        loadClientData(tag);
-//        handleUpdateTag(tag);
-//        level.sendBlockUpdated( worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL );
-//        super.onDataPacket(net, pkt);
-//    }
-//
-//    @Nullable
-//    @Override
-//    public Packet<ClientGamePacketListener> getUpdatePacket() {
-//        return ClientboundBlockEntityDataPacket.create(this);
-//    }
 
     private void loadClientData(CompoundTag tag) {
         tag.putBoolean("rightCon", rightConnected);
@@ -207,6 +184,7 @@ public class BlockEntityHVConnectorBase extends TileEntityMagneticraft2 {
         }
         if (madeCon){
             LOGGER.info("none");
+            startcon = false;
             master = null;
             initializeNetworkIfNecessary();
         }
@@ -236,12 +214,6 @@ public class BlockEntityHVConnectorBase extends TileEntityMagneticraft2 {
         this.master = master;
         isMaster = master == this;
         setChanged();
-    }
-    public BlockPos getLeftConnectedPos(){
-        return leftConnectionPos;
-    }
-    public BlockPos getRightConnectedPos(){
-        return rightConnectionPos;
     }
     public boolean isLeftConnected()
     {

@@ -17,6 +17,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.magneticraft2.client.render.blocks.WireRender.BLOCK_ATLAS;
+import static com.magneticraft2.client.render.blocks.WireRender.TEXTURE;
+
 @Mod.EventBusSubscriber(modid = magneticraft2.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Clientsetup {
     private static final Logger LOGGER = LogManager.getLogger("magneticraft2_clientsetup");
@@ -42,7 +45,10 @@ public class Clientsetup {
     public static void TextureStrach(TextureStitchEvent.Pre event) {
         if (event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS))
             event.addSprite(new ResourceLocation("forge:white"));
-
+        if (event.getAtlas().location().equals(BLOCK_ATLAS))
+        {
+            event.addSprite(TEXTURE);
+        }
 
     }
 
