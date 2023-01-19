@@ -18,7 +18,8 @@
   "multiblock.error.mgc2.dimensions": "Dimensions not allowed \nActual: %d, %d, %d, \nMin allowed: %d, %d, %d, \nMax allowed: %d, %d, %d,",
   "multiblock.error.mgc2.dangling_internal_part": "There appears to be another %s inside this one, is something wrong? (%d, %d, %d).",
   "message.mgc2.multiblock.invalid_place": "There isn't enough space to place this!",
-
+  "message.magneticraft2.notdirect": "There is blocks: %s between %s, %s, %s and %s, %s, %s",
+  "message.magneticraft2.blocks": "Blocks: %s",
 
   "message.magneticraft2.connecteddistance": "Connected distance: %s",
   "message.magneticraf2.toofar": "Far away from each other, Distance: %s",

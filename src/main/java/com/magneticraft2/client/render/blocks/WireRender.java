@@ -26,7 +26,11 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/**
+ * @author JumpWatch
+ * @Credits: XFactHD for remaking the wire system
+ * v1.0.0
+ */
 public class WireRender extends WireBaseTile<BlockEntityHVConnectorBase> {
     public static final Logger LOGGER = LogManager.getLogger("MGC2WireRender");
     private static final int WIRE_SEGMENTS = 24;

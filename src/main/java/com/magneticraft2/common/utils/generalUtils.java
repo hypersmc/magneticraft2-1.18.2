@@ -54,6 +54,7 @@ public class generalUtils {
     }
     public static int getDistancePointToPoint(BlockPos pos1, BlockPos pos2)
     {
+
         int deltaX = pos1.getX() - pos2.getX();
         int deltaY = pos1.getY() - pos2.getY();
         int deltaZ = pos1.getZ() - pos2.getZ();
