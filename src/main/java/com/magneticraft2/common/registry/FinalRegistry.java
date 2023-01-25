@@ -1,9 +1,12 @@
 package com.magneticraft2.common.registry;
 
+import com.magneticraft2.common.block.Multiblockfiller;
+import com.magneticraft2.common.block.block_testblock;
 import com.magneticraft2.common.block.crops.RicePlantBlock;
 import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
 import com.magneticraft2.common.block.wires.BlockTransformerHV;
+import com.magneticraft2.common.tile.testblock;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
 import com.magneticraft2.common.tile.wire.BlockEntityTransformerHV;
 import com.magneticraft2.common.block.machines.solarblock;
@@ -220,6 +223,8 @@ public class FinalRegistry {
     public static final RegistryObject<BlockHVConnectorBase> Block_HVConnector_Base = BLOCKS.register("hvconnector_base", BlockHVConnectorBase::new);
     public static final RegistryObject<BlockTransformerHV> Block_Transformer_HV = BLOCKS.register("transformer_hv", BlockTransformerHV::new);
     public static final RegistryObject<solarblock> Block_Solar = BLOCKS.register("solar_block", solarblock::new);
+    public static final RegistryObject<block_testblock> Block_testblock = BLOCKS.register("testblock", block_testblock::new);
+    public static final RegistryObject<Multiblockfiller> Block_Multiblock_filler = BLOCKS.register("multiblock_filler", Multiblockfiller::new);
 
     /**
      * Block-Items
@@ -287,7 +292,7 @@ public class FinalRegistry {
     public static final RegistryObject<BlockEntityType<BlockEntityHVConnectorBase>> Tile_HVConnector_Base = TILE_ENTITIES.register("hvconnector_base", () -> BlockEntityType.Builder.of(BlockEntityHVConnectorBase::new, Block_HVConnector_Base.get()).build(null));
     public static final RegistryObject<BlockEntityType<BlockEntityTransformerHV>> Tile_HVTransformer = TILE_ENTITIES.register("transformer_hv", () -> BlockEntityType.Builder.of(BlockEntityTransformerHV::new, Block_Transformer_HV.get()).build(null));
     public static final RegistryObject<BlockEntityType<solatesttile>> Tile_solarBlock = TILE_ENTITIES.register("solar_block", () -> BlockEntityType.Builder.of(solatesttile::new, Block_Solar.get()).build(null));
-
+    public static final RegistryObject<BlockEntityType<testblock>> Tile_testblock = TILE_ENTITIES.register("testblock", () -> BlockEntityType.Builder.of(testblock::new, Block_testblock.get()).build(null));
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event)
     {
