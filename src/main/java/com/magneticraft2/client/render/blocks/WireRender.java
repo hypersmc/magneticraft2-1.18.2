@@ -1,7 +1,7 @@
 package com.magneticraft2.client.render.blocks;
 
 import com.magneticraft2.common.magneticraft2;
-import com.magneticraft2.common.tile.WireBaseTile;
+import com.magneticraft2.common.tile.RenderBaseTile;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -31,7 +31,7 @@ import org.apache.logging.log4j.Logger;
  * @Credits: XFactHD for remaking the wire system
  * v1.0.0
  */
-public class WireRender extends WireBaseTile<BlockEntityHVConnectorBase> {
+public class WireRender extends RenderBaseTile<BlockEntityHVConnectorBase> {
     public static final Logger LOGGER = LogManager.getLogger("MGC2WireRender");
     private static final int WIRE_SEGMENTS = 24;
     private static final int WIRE_SEGMENTS_HALF = WIRE_SEGMENTS / 2;

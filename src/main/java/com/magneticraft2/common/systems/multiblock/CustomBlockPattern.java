@@ -3,6 +3,7 @@ package com.magneticraft2.common.systems.multiblock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,17 +18,30 @@ import java.util.function.Predicate;
  */
 public class CustomBlockPattern {
     private final List<String> rows;
-    private final Map<Character, Predicate<BlockState>> predicates;
+    private final Map<Character, Predicate<BlockInWorld >> predicates;
 
-    private CustomBlockPattern(List<String> rows, Map<Character, Predicate<BlockState>> predicates) {
+    private CustomBlockPattern(List<String> rows, Map<Character, Predicate<BlockInWorld >> predicates) {
         this.rows = rows;
         this.predicates = predicates;
     }
 
+
     public static CustomBlockPatternBuilder builder() {
         return new CustomBlockPatternBuilder();
     }
-
+    public void markInvalidBlocks(Level world, BlockPos startPos) {
+        for (int y = 0; y < rows.size(); y++) {
+            for (int x = 0; x < rows.get(y).length(); x++) {
+                for (int z = 0; z < rows.size(); z++) {
+                    BlockPos pos = startPos.offset(x, y, z);
+                    BlockState state = world.getBlockState(pos);
+                    if (!matches(world, pos)) {
+                        //mark the block with custom render
+                    }
+                }
+            }
+        }
+    }
     public boolean matches(Level world, BlockPos pos) {
         for (int y = 0; y < rows.size(); y++) {
             String row = rows.get(y);
@@ -37,8 +51,8 @@ public class CustomBlockPattern {
                     continue;
                 }
                 BlockPos offsetPos = pos.offset(x, y, 0);
-                BlockState state = world.getBlockState(offsetPos);
-                if (!predicates.getOrDefault(c, s -> false).test(state)) {
+                BlockInWorld blockInWorld = new BlockInWorld(world, offsetPos, true);;
+                if (!predicates.getOrDefault(c, s -> false).test(blockInWorld)) {
                     return false;
                 }
             }
@@ -48,7 +62,7 @@ public class CustomBlockPattern {
 
     public static class CustomBlockPatternBuilder {
         private final List<String> rows = new ArrayList<>();
-        private final Map<Character, Predicate<BlockState>> predicates = new HashMap<>();
+        private final Map<Character, Predicate<BlockInWorld >> predicates = new HashMap<>();
 
         private CustomBlockPatternBuilder() { }
 
@@ -57,7 +71,7 @@ public class CustomBlockPattern {
             return this;
         }
 
-        public CustomBlockPatternBuilder where(char c, Predicate<BlockState> predicate) {
+        public CustomBlockPatternBuilder where(char c, Predicate<BlockInWorld> predicate) {
             predicates.put(c, predicate);
             return this;
         }

@@ -21,6 +21,8 @@
   "message.magneticraft2.notdirect": "There is blocks: %s between %s, %s, %s and %s, %s, %s",
   "message.magneticraft2.blocks": "Blocks: %s",
 
+
+  "message.magneticraft2.multiblock.Debug": "Multiblock debug info: isformed %s,  ",
   "message.magneticraft2.connecteddistance": "Connected distance: %s",
   "message.magneticraf2.toofar": "Far away from each other, Distance: %s",
   "message.magneticraft2.connection_in_use": "Connection already in use",

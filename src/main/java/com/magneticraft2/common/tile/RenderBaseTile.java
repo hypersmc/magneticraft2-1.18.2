@@ -9,11 +9,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public abstract class WireBaseTile<T extends BlockEntity> implements BlockEntityRenderer<T> {
+public abstract class RenderBaseTile<T extends BlockEntity> implements BlockEntityRenderer<T> {
     public double xPos = 0D;
     public double zPos = 0D;
 
-    public WireBaseTile(BlockEntityRendererProvider.Context rendererDispatcherIn) {
+    public RenderBaseTile(BlockEntityRendererProvider.Context rendererDispatcherIn) {
 
     }
 

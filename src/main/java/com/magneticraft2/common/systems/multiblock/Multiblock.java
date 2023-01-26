@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -12,6 +13,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.intellij.lang.annotations.Identifier;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import java.util.Map;
  * v1.0.0
  */
 public abstract class Multiblock extends BlockEntity {
+    private static final Logger LOGGER = LogManager.getLogger("MGC2Multiblock");
     private final CustomBlockPattern pattern;
     private boolean isFormed;
     private List<BlockPos> replacedBlocks = new ArrayList<>();
@@ -48,6 +52,7 @@ public abstract class Multiblock extends BlockEntity {
 
         }
     }
+
     public abstract void assignID(Level world, BlockPos pos);
     @Override
     protected void saveAdditional(CompoundTag tag) {
@@ -58,7 +63,13 @@ public abstract class Multiblock extends BlockEntity {
             blockTag.putInt("x", blockPos.getX());
             blockTag.putInt("y", blockPos.getY());
             blockTag.putInt("z", blockPos.getZ());
-            NbtUtils.writeBlockState(replacedStates.get(i));
+            try{
+                NbtUtils.writeBlockState(replacedStates.get(i));
+
+            } catch (Exception e) {
+                LOGGER.error("Failed to save blockstate for multiblock at " + blockPos);
+            }
+
             blocksTag.add(blockTag);
         }
         super.saveAdditional(tag);
@@ -109,18 +120,23 @@ public abstract class Multiblock extends BlockEntity {
         replacedStates.clear();
     }
 
+
     public abstract Block getReplacementBlock();
-    public abstract <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState state, E e);
 
     public void tick(Level world) {
         if (world != null && !world.isClientSide) {
-            handleMultiblock(level, worldPosition, getBlockState());
+            handleMultiblock(level, this.worldPosition, getBlockState());
         }
     }
 
     private void handleMultiblock(Level world, BlockPos pos, BlockState state) {
+        if (!isValidMultiblockStructure(world, pos)) {
+            pattern.markInvalidBlocks(world, pos);
+        }
         if (isValidMultiblockStructure(world, pos)) {
+            LOGGER.info("Multiblock is valid");
             if (!isFormed()) {
+                LOGGER.info("Multiblock is not formed");
                 setFormed(true);
                 replaceBlocks(world, pos, Blocks.STONE);
             }
@@ -138,7 +154,7 @@ public abstract class Multiblock extends BlockEntity {
         isFormed = formed;
     }
 
-    public abstract Identifier getID();
+    public abstract ResourceLocation getID();
 
     public abstract boolean canBeRotated();
 

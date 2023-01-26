@@ -1,8 +1,10 @@
 package com.magneticraft2.client;
 
+import com.magneticraft2.client.render.OutlineRender;
 import com.magneticraft2.client.render.blocks.WireRender;
 import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.registry.FinalRegistry;
+import com.magneticraft2.common.systems.multiblock.Multiblock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -29,12 +31,15 @@ public class Clientsetup {
     private static final Logger LOGGER = LogManager.getLogger("magneticraft2_clientsetup");
     public static void init(FMLClientSetupEvent e){
         ItemBlockRenderTypes.setRenderLayer(FinalRegistry.rice_plant.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(FinalRegistry.primitive_furnace_Block.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(FinalRegistry.Block_Multiblock_filler.get(), RenderType.cutout());
     }
 
     @SubscribeEvent
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event){
         LOGGER.info("Renders are being registered!");
         event.registerBlockEntityRenderer(FinalRegistry.Tile_HVConnector_Base.get(), WireRender::new);
+        //event.registerBlockEntityRenderer(Multiblock, OutlineRender::new);
         //event.registerBlockEntityRenderer(FinalRegistry.Tile_HVConnector_Base.get(), WireRender::new);
 
     }

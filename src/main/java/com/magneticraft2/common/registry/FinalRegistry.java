@@ -5,7 +5,10 @@ import com.magneticraft2.common.block.block_testblock;
 import com.magneticraft2.common.block.crops.RicePlantBlock;
 import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
+import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import com.magneticraft2.common.block.wires.BlockTransformerHV;
+import com.magneticraft2.common.systems.multiblock.Multiblock;
+import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
 import com.magneticraft2.common.tile.testblock;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
 import com.magneticraft2.common.tile.wire.BlockEntityTransformerHV;
@@ -223,8 +226,10 @@ public class FinalRegistry {
     public static final RegistryObject<BlockHVConnectorBase> Block_HVConnector_Base = BLOCKS.register("hvconnector_base", BlockHVConnectorBase::new);
     public static final RegistryObject<BlockTransformerHV> Block_Transformer_HV = BLOCKS.register("transformer_hv", BlockTransformerHV::new);
     public static final RegistryObject<solarblock> Block_Solar = BLOCKS.register("solar_block", solarblock::new);
-    public static final RegistryObject<block_testblock> Block_testblock = BLOCKS.register("testblock", block_testblock::new);
+//    public static final RegistryObject<block_testblock> Block_testblock = BLOCKS.register("testblock", block_testblock::new);
     public static final RegistryObject<Multiblockfiller> Block_Multiblock_filler = BLOCKS.register("multiblock_filler", Multiblockfiller::new);
+
+    public static final RegistryObject<primitive_furnace_block> primitive_furnace_Block = BLOCKS.register("primitive_furnace_block", primitive_furnace_block::new);
 
     /**
      * Block-Items
@@ -273,12 +278,14 @@ public class FinalRegistry {
     public static final RegistryObject<Item> SPHALERITE_ITEM = fromBlockOre(SPHALERITE_ORE);
     public static final RegistryObject<Item> ANTHRACITE_ITEM = fromBlockOre(ANTHRACITE_ORE);
 
-
+    public static final RegistryObject<Item> primitive_furnace_block_core = fromBlock(primitive_furnace_Block);
     public static final RegistryObject<Item> HEAT_ITEM = fromBlock(Block_Heat_Generator);
     public static final RegistryObject<Item> CRUCIBLE_HEATER_ITEM = fromBlock(Block_Crucible_Heater);
     public static final RegistryObject<Item> HVConnector_Base = fromBlock(Block_HVConnector_Base);
     public static final RegistryObject<Item> HV_CABLE = fromBlock(Block_Transformer_HV);
     public static final RegistryObject<Item> Block_solar_item = fromBlock(Block_Solar);
+//    public static final RegistryObject<Item> Block_testblock_item = fromBlock(Block_testblock);
+    public static final RegistryObject<Item> Block_multiblock_filler_item = fromBlock(Block_Multiblock_filler);
     public static final RegistryObject<Item> rice_seed = ITEMS.register("rice_seed", () -> new ItemNameBlockItem(rice_plant.get(), new Item.Properties().tab(MC2Plants)));
     public static final RegistryObject<Item> rice = ITEMS.register("rice", () -> new Item(new Item.Properties().tab(MC2Plants).food(ModFoods.rice)));
     public static final RegistryObject<itemWireCoil> Item_Wire_Coil = ITEMS.register("wirecoil", itemWireCoil::new);
@@ -287,12 +294,16 @@ public class FinalRegistry {
      * Block-Entities
      **/
 
+    public static final RegistryObject<BlockEntityType<primitive_furnace_tile>> primitive_furnace_Tile = TILE_ENTITIES.register("primitive_furnace_tile", () -> BlockEntityType.Builder.of(primitive_furnace_tile::new, primitive_furnace_Block.get()).build(null));
+
+
     public static final RegistryObject<BlockEntityType<HeatGeneratorTile>> Tile_Heat_Generator = TILE_ENTITIES.register("heat_generator", () -> BlockEntityType.Builder.of(HeatGeneratorTile::new, Block_Heat_Generator.get()).build(null));
     public static final RegistryObject<BlockEntityType<CrucibleHeaterTile>> Tile_Crucible_Heater = TILE_ENTITIES.register("crucible_heater", () -> BlockEntityType.Builder.of(CrucibleHeaterTile::new, Block_Crucible_Heater.get()).build(null));
     public static final RegistryObject<BlockEntityType<BlockEntityHVConnectorBase>> Tile_HVConnector_Base = TILE_ENTITIES.register("hvconnector_base", () -> BlockEntityType.Builder.of(BlockEntityHVConnectorBase::new, Block_HVConnector_Base.get()).build(null));
+
     public static final RegistryObject<BlockEntityType<BlockEntityTransformerHV>> Tile_HVTransformer = TILE_ENTITIES.register("transformer_hv", () -> BlockEntityType.Builder.of(BlockEntityTransformerHV::new, Block_Transformer_HV.get()).build(null));
     public static final RegistryObject<BlockEntityType<solatesttile>> Tile_solarBlock = TILE_ENTITIES.register("solar_block", () -> BlockEntityType.Builder.of(solatesttile::new, Block_Solar.get()).build(null));
-    public static final RegistryObject<BlockEntityType<testblock>> Tile_testblock = TILE_ENTITIES.register("testblock", () -> BlockEntityType.Builder.of(testblock::new, Block_testblock.get()).build(null));
+//    public static final RegistryObject<BlockEntityType<testblock>> Tile_testblock = TILE_ENTITIES.register("testblock", () -> BlockEntityType.Builder.of(testblock::new, Block_testblock.get()).build(null));
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event)
     {
