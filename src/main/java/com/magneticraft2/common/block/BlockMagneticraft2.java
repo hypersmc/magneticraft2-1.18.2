@@ -2,6 +2,7 @@ package com.magneticraft2.common.block;
 
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.systems.heat.CapabilityHeat;
+import com.magneticraft2.common.systems.multiblock.CustomBlockPattern;
 import com.magneticraft2.common.systems.multiblock.Multiblock;
 import com.magneticraft2.common.systems.pressure.CapabilityPressure;
 import com.magneticraft2.common.systems.watt.CapabilityWatt;
@@ -73,7 +74,8 @@ public abstract class BlockMagneticraft2 extends BaseEntityBlock implements TOPD
         if (!pState.is(pNewState.getBlock())) {
             BlockEntity blockentity = pLevel.getBlockEntity(pPos);
             if (blockentity instanceof Multiblock) {
-                LOGGER.info("onRemove");
+                LOGGER.info("Multiblock removed");
+                CustomBlockPattern.posrender = null;
                 ((Multiblock) blockentity).onRemoval(pLevel, pPos, FinalRegistry.Block_Multiblock_filler.get());
             }
         }

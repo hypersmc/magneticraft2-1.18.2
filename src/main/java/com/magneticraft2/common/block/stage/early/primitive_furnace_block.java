@@ -48,6 +48,7 @@ public class primitive_furnace_block extends BlockMagneticraft2 {
     }
 
 
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {

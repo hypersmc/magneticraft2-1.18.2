@@ -132,6 +132,7 @@ public abstract class Multiblock extends BlockEntity {
     private void handleMultiblock(Level world, BlockPos pos, BlockState state) {
         if (!isValidMultiblockStructure(world, pos)) {
             pattern.markInvalidBlocks(world, pos);
+            return;
         }
         if (isValidMultiblockStructure(world, pos)) {
             LOGGER.info("Multiblock is valid");

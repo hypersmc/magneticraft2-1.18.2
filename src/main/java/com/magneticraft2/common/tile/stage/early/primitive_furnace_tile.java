@@ -19,7 +19,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
+import net.minecraft.world.level.block.state.predicate.BlockMaterialPredicate;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
+import net.minecraft.world.level.material.Material;
 import org.intellij.lang.annotations.Identifier;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,11 +38,12 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
     private ResourceLocation  id;
     public primitive_furnace_tile(BlockPos pos, BlockState state) {
         super(FinalRegistry.primitive_furnace_Tile.get(), pos, state, CustomBlockPattern.builder()
-                .row("c")
-                .row("   ")
-                .row("   ")
+                .row("   ", " s ", "   ")
+                .row("   ", " c ", "   ")
+                .row("   ", " s ", "   ")
                 .where('s', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.STONE)))
-                .where('c', BlockInWorld.hasState(BlockStatePredicate.forBlock(FinalRegistry.primitive_furnace_Block.get())))
+                .where('c', BlockInWorld.hasState(BlockStatePredicate.forBlock(FinalRegistry.primitive_furnace_Block.get().defaultBlockState().getBlock())))
+                .where('a', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR)))
                 .build());
         menuProvider = this;
         self = this;
