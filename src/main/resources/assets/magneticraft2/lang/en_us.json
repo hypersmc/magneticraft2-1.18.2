@@ -4,24 +4,14 @@
   "itemGroup.Magneticraft2.Plants": "Magneticraft2 Plants & Foods",
   "itemGroup.Magneticraft2.Items": "Magneticraft2 Items",
   "itemGroup.Magneticraft2.Ores": "Magneticraft2 Ores",
-  "multiblock.error.mgc2.invalid_block.frame": "Invalid block (%s) for frame at %s",
-  "multiblock.error.mgc2.invalid_block.exterior": "Invalid block (%s) for exterior at %s",
-  "multiblock.error.mgc2.invalid_block.interior": "Invalid block (%s) for interior at %s",
-  "multiblock.error.mgc2.invalid_block.corner": "Invalid block (%s) for corner at %s",
-  "multiblock.error.mgc2.invalid_block.generic": "Invalid block (%s) at %s",
-  "multiblock.error.mgc2.unknown": "An unknown multiblock error has occurred, report to mod author",
-  "multiblock.error.mgc2.null_controller": "The multiblock system has experienced an unknown internal error, report to Magneticraft2",
-  "multiblock.error.mgc2.no.controller": "%s require at least one controller.",
-  "multiblock.error.mgc2.no.powerport": "%s require at least one power port.",
-  "multiblock.error.mgc2.no.heatport": "%s require at least one heat port.",
-  "multiblock.error.mgc2.no.scaffolding": "%s require at least one scaffolding.",
-  "multiblock.error.mgc2.dimensions": "Dimensions not allowed \nActual: %d, %d, %d, \nMin allowed: %d, %d, %d, \nMax allowed: %d, %d, %d,",
-  "multiblock.error.mgc2.dangling_internal_part": "There appears to be another %s inside this one, is something wrong? (%d, %d, %d).",
-  "message.mgc2.multiblock.invalid_place": "There isn't enough space to place this!",
+  "tooltip.magneticraft2.how": "This block is unobtainable in survival so how did you get it?",
+  "tooltip.magneticraft2.press_shift": "§7Press §eSHIFT§r §7for more Information!",
+  "tooltip.mgc2.multiblock.tooltip.shift1": "§7Multiblock: %s",
+  "tooltip.mgc2.multiblock.tooltip.shift2": "§7Size: %s",
+  "tooltip.mgc2.multiblock.tooltip.shift3": "§7Place block to build!",
+  "tooltip.magneticraft2.copper_ingot_low": "§7Grade: §eLow",
+
   "message.magneticraft2.notdirect": "There is blocks: %s between %s, %s, %s and %s, %s, %s",
-  "message.magneticraft2.blocks": "Blocks: %s",
-
-
   "message.magneticraft2.multiblock.Debug": "Multiblock debug info: isformed %s,  ",
   "message.magneticraft2.connecteddistance": "Connected distance: %s",
   "message.magneticraf2.toofar": "Far away from each other, Distance: %s",
@@ -31,13 +21,18 @@
   "message.magneticraft2.distance": "Current Wire Distance is:  %s",
   "message.magneticraft2.connection_start_coords": "Connection start at: %s, %s, %s",
 
-  "tooltip.mgc2.multiblock.tooltip": "§7Press §eSHIFT§r §7for more Information!",
-  "tooltip.mgc2.multiblock.tooltip.shift1": "§7Multiblock: %s",
-  "tooltip.mgc2.multiblock.tooltip.shift2": "§7Size: %s",
-  "tooltip.mgc2.multiblock.tooltip.shift3": "§7Place block to build!",
+
+
+  "container.magneticraft2.primitive_furnace": "Primitive Furnace",
+  "container.magneticraft2.inventory": "Inventory",
+
+
   "block.magneticraft2.cruciblemb": "§7Crucible",
   "block.magneticraft2.hvconnector_base": "HV Connector",
+  "block.magneticraft2.multiblock_filler": "Multiblock Filler",
+
   "item.magneticraft2.wirecoil": "Wire Coil",
   "item.magneticraft2.rice_seed": "Rice Seed",
-  "item.magneticraft2.rice": "Rice"
+  "item.magneticraft2.rice": "Rice",
+  "item.magneticraft2.copper_ingot_low": "Copper Ingot"
 }

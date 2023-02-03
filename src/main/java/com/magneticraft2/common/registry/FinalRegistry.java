@@ -7,7 +7,10 @@ import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
 import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import com.magneticraft2.common.block.wires.BlockTransformerHV;
+import com.magneticraft2.common.item.multiblock_filler_item;
+import com.magneticraft2.common.item.stage.early.copper_ingots.copper_ingot_low;
 import com.magneticraft2.common.systems.multiblock.Multiblock;
+import com.magneticraft2.common.tile.Multiblockfiller_tile;
 import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
 import com.magneticraft2.common.tile.testblock;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
@@ -285,17 +288,18 @@ public class FinalRegistry {
     public static final RegistryObject<Item> HV_CABLE = fromBlock(Block_Transformer_HV);
     public static final RegistryObject<Item> Block_solar_item = fromBlock(Block_Solar);
 //    public static final RegistryObject<Item> Block_testblock_item = fromBlock(Block_testblock);
-    public static final RegistryObject<Item> Block_multiblock_filler_item = fromBlock(Block_Multiblock_filler);
+    public static final RegistryObject<multiblock_filler_item> multiblock_filler_item = ITEMS.register("multiblock_filler_item", multiblock_filler_item::new);
     public static final RegistryObject<Item> rice_seed = ITEMS.register("rice_seed", () -> new ItemNameBlockItem(rice_plant.get(), new Item.Properties().tab(MC2Plants)));
     public static final RegistryObject<Item> rice = ITEMS.register("rice", () -> new Item(new Item.Properties().tab(MC2Plants).food(ModFoods.rice)));
     public static final RegistryObject<itemWireCoil> Item_Wire_Coil = ITEMS.register("wirecoil", itemWireCoil::new);
+    public static final RegistryObject<copper_ingot_low> item_copper_ingot_low = ITEMS.register("copper_ingot_low", copper_ingot_low::new);
 
     /**
      * Block-Entities
      **/
 
     public static final RegistryObject<BlockEntityType<primitive_furnace_tile>> primitive_furnace_Tile = TILE_ENTITIES.register("primitive_furnace_tile", () -> BlockEntityType.Builder.of(primitive_furnace_tile::new, primitive_furnace_Block.get()).build(null));
-
+    public static final RegistryObject<BlockEntityType<Multiblockfiller_tile>> Multiblockfiller_tile = TILE_ENTITIES.register("multiblockfiller_tile", () -> BlockEntityType.Builder.of(Multiblockfiller_tile::new, Block_Multiblock_filler.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<HeatGeneratorTile>> Tile_Heat_Generator = TILE_ENTITIES.register("heat_generator", () -> BlockEntityType.Builder.of(HeatGeneratorTile::new, Block_Heat_Generator.get()).build(null));
     public static final RegistryObject<BlockEntityType<CrucibleHeaterTile>> Tile_Crucible_Heater = TILE_ENTITIES.register("crucible_heater", () -> BlockEntityType.Builder.of(CrucibleHeaterTile::new, Block_Crucible_Heater.get()).build(null));

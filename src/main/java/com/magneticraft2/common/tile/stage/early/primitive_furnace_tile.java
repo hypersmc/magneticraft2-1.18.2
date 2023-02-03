@@ -1,5 +1,6 @@
 package com.magneticraft2.common.tile.stage.early;
 
+import com.magneticraft2.client.gui.container.primitive_furnace.containerPrimitive_Furnace;
 import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.systems.multiblock.CustomBlockPattern;
@@ -7,6 +8,7 @@ import com.magneticraft2.common.systems.multiblock.Multiblock;
 import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -38,16 +40,16 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
     private ResourceLocation  id;
     public primitive_furnace_tile(BlockPos pos, BlockState state) {
         super(FinalRegistry.primitive_furnace_Tile.get(), pos, state, CustomBlockPattern.builder()
-                .row("   ", " s ", "   ")
-                .row("   ", " c ", "   ")
-                .row("   ", " s ", "   ")
+                .row(" s ")
+                .row(" C ")
+                .row(" s ")
                 .where('s', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.STONE)))
-                .where('c', BlockInWorld.hasState(BlockStatePredicate.forBlock(FinalRegistry.primitive_furnace_Block.get().defaultBlockState().getBlock())))
-                .where('a', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR)))
+                .where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(FinalRegistry.primitive_furnace_Block.get().defaultBlockState().getBlock())))
                 .build());
         menuProvider = this;
         self = this;
     }
+
 
     public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState estate, E e) {
         if (!level.isClientSide()) {
@@ -62,6 +64,18 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
             level.setBlockAndUpdate(pos, estate);
         }
 
+    }
+
+
+
+    @Override
+    public int invsize() {
+        return 3;
+    }
+
+    @Override
+    public boolean itemcape() {
+        return true;
     }
 
     @Override
@@ -81,7 +95,7 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
 
     @Override
     public boolean canBeRotated() {
-        return false;
+        return true;
     }
 
     @Override
@@ -94,12 +108,12 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return null;
+        return new TranslatableComponent("screen.magneticraft2.primitive_furnace");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return null;
+        return new containerPrimitive_Furnace(pContainerId, level, getBlockPos(), pPlayerInventory, pPlayer);
     }
 }

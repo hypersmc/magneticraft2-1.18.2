@@ -1,6 +1,7 @@
 package com.magneticraft2.common.block.stage.early;
 
 import com.magneticraft2.common.block.BlockMagneticraft2;
+import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.systems.multiblock.Multiblock;
 import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
@@ -10,6 +11,7 @@ import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -52,12 +55,19 @@ public class primitive_furnace_block extends BlockMagneticraft2 {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
-            if (pPlayer.getItemInHand(pHand).is(Items.STICK)){
-                BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-                if (blockEntity instanceof Multiblock) {
-                    pPlayer.sendMessage(new TranslatableComponent("message.magneticraft2.multiblock.Debug", ((Multiblock) blockEntity).isFormed()), Util.NIL_UUID);
+            BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
+            if (magneticraft2.devmode) {
+                if (pPlayer.getItemInHand(pHand).is(Items.STICK)) {
+                    if (blockEntity instanceof Multiblock) {
+                        pPlayer.sendMessage(new TranslatableComponent("message.magneticraft2.multiblock.Debug", ((Multiblock) blockEntity).isFormed()), Util.NIL_UUID);
+                    }
+                }else if (!pPlayer.getItemInHand(pHand).is(Items.STICK)) {
+                    if (blockEntity instanceof Multiblock) {
+                        NetworkHooks.openGui((ServerPlayer) pPlayer, ((primitive_furnace_tile) blockEntity).menuProvider, blockEntity.getBlockPos());
+                    }
                 }
             }
+
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }

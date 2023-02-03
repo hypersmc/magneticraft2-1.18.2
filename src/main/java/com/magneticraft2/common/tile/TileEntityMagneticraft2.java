@@ -292,7 +292,7 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
     }
 
     private ItemStackHandler createInv() {
-        if (energycape()) {
+        if (itemcape()) {
             return new ItemStackHandler(invsize()) {
                 @Override
                 protected void onContentsChanged(int slot) {

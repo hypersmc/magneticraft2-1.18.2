@@ -76,7 +76,7 @@ public abstract class BlockMagneticraft2 extends BaseEntityBlock implements TOPD
             if (blockentity instanceof Multiblock) {
                 LOGGER.info("Multiblock removed");
                 CustomBlockPattern.posrender = null;
-                ((Multiblock) blockentity).onRemoval(pLevel, pPos, FinalRegistry.Block_Multiblock_filler.get());
+                ((Multiblock) blockentity).onRemoval(pLevel);
             }
         }
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);

@@ -1,22 +1,15 @@
 package com.magneticraft2.client;
 
-import com.magneticraft2.client.render.OutlineRender;
 import com.magneticraft2.client.render.blocks.WireRender;
 import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.registry.FinalRegistry;
-import com.magneticraft2.common.systems.multiblock.Multiblock;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -25,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import static com.magneticraft2.client.render.blocks.WireRender.BLOCK_ATLAS;
 import static com.magneticraft2.client.render.blocks.WireRender.TEXTURE;
+import static com.magneticraft2.common.systems.multiblock.CustomBlockPattern.TEXTURE_LINE;
 
 @Mod.EventBusSubscriber(modid = magneticraft2.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Clientsetup {
@@ -57,6 +51,7 @@ public class Clientsetup {
         if (event.getAtlas().location().equals(BLOCK_ATLAS))
         {
             event.addSprite(TEXTURE);
+            event.addSprite(TEXTURE_LINE);
         }
 
     }
