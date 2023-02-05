@@ -24,10 +24,14 @@ import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.predicate.BlockMaterialPredicate;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.material.Material;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.intellij.lang.annotations.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
+
+import static com.magneticraft2.common.tile.Multiblockfiller_tile.setMulitblockListener;
 
 
 /**
@@ -37,7 +41,8 @@ import java.util.UUID;
  */
 public class primitive_furnace_tile extends Multiblock implements MenuProvider {
     private static primitive_furnace_tile self;
-    private ResourceLocation  id;
+    private static ResourceLocation  id;
+    private static final Logger LOGGER = LogManager.getLogger(id);
     public primitive_furnace_tile(BlockPos pos, BlockState state) {
         super(FinalRegistry.primitive_furnace_Tile.get(), pos, state, CustomBlockPattern.builder()
                 .row(" s ")
@@ -61,6 +66,7 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
                 estate = estate.setValue(primitive_furnace_block.isFormed, true);
 
             }
+//            level.addParticle(primitive_furnace_block.particle, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
             level.setBlockAndUpdate(pos, estate);
         }
 
@@ -70,7 +76,7 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
 
     @Override
     public int invsize() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -80,7 +86,8 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
 
     @Override
     public void assignID(Level world, BlockPos pos) {
-        id = new ResourceLocation(magneticraft2.MOD_ID, "primitive_furnace_tile_" + UUID.randomUUID());
+        id = new ResourceLocation(magneticraft2.MOD_ID, "primitive_furnace_tile_" + UUID.randomUUID().toString());
+        LOGGER.info("ID: " + id);
     }
 
     @Override

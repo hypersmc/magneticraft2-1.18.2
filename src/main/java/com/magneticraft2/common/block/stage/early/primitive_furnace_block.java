@@ -4,12 +4,14 @@ import com.magneticraft2.common.block.BlockMagneticraft2;
 import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.systems.multiblock.Multiblock;
+import com.magneticraft2.common.tile.Multiblockfiller_tile;
 import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
 
 import com.magneticraft2.common.tile.testblock;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;

@@ -20,7 +20,7 @@
   "message.magneticraft2.cannot_connect": "Cannot connect",
   "message.magneticraft2.distance": "Current Wire Distance is:  %s",
   "message.magneticraft2.connection_start_coords": "Connection start at: %s, %s, %s",
-
+  "message.magneticraft2.feature_not_ready_yet": "Multiblock GUI interaction feature not ready yet",
 
 
   "container.magneticraft2.primitive_furnace": "Primitive Furnace",

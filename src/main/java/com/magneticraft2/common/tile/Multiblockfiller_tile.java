@@ -8,6 +8,11 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author JumpWatch on 03-02-2023
@@ -19,18 +24,38 @@ public class Multiblockfiller_tile extends BlockEntity {
     public static double y = -3000;
     public static double z = -3000;
     public static BlockState blockState = null;
-    public static Multiblock multiblock;
+    private static Multiblockfiller_tile self;
+    private Multiblock multiblock = null;
+    private static final Logger LOGGER = LogManager.getLogger("MGC2Multiblock");
+
+
     public static void setMulitblockListener(Multiblock Multiblock) {
-        multiblock = Multiblock;
+        if (getMultiblockListener() == null) {
+            self.multiblock = Multiblock;
+        }else if (Multiblock == null){
+            self.multiblock = null;
+        }
+
+    }
+    public static Multiblock getMultiblockListener() {
+        LOGGER.info("Multiblock is " + self.multiblock);
+        return self.multiblock;
     }
     public Multiblockfiller_tile(BlockPos pos, BlockState state) {
         super(FinalRegistry.Multiblockfiller_tile.get(), pos, state);
+        self = this;
     }
+
     public static void setX(double x) {
         Multiblockfiller_tile.x = x;
     }
     public static void setBlockat(Level world){
+        LOGGER.info("setting block at " + x + " " + y + " " + z + " with " + GetBlockState());
         world.setBlockAndUpdate(new BlockPos(x, y, z), blockState);
+        blockState = null;
+        x = -3000;
+        y = -3000;
+        z = -3000;
     }
     public static void setY(double y) {
         Multiblockfiller_tile.y = y;
@@ -42,7 +67,7 @@ public class Multiblockfiller_tile extends BlockEntity {
         return blockState;
     }
     public static BlockPos GetBlockPos() {
-        return new BlockPos(multiblock.getBlockPos());
+        return new BlockPos(self.multiblock.getBlockPos());
     }
     public static void SetBlockState(BlockState blockState) {
         Multiblockfiller_tile.blockState = blockState;

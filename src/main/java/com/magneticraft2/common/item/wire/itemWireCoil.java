@@ -5,6 +5,7 @@ import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
 import com.magneticraft2.common.tile.wire.BlockEntityTransformerHV;
+import com.magneticraft2.common.utils.BlockPosUtils;
 import com.magneticraft2.common.utils.IConnectorHV;
 import com.magneticraft2.common.utils.Magneticraft2ConfigCommon;
 import com.magneticraft2.common.utils.generalUtils;
@@ -95,17 +96,19 @@ public class itemWireCoil extends Item {
                         int distance = generalUtils.getDistancePointToPoint(firstConnectionPos, pContext.getClickedPos());
                         if (teT.getConnectorPos() != firstConnectionPos && teT.canConnect(pContext.getClickedPos()) && distance > 0 && distance <= Magneticraft2ConfigCommon.GENERAL.MaxWireLenght.get())
                         {
-//                            for (BlockPos pos: BlockPos.betweenClosed(pContext.getClickedPos(), firstConnectionPos)
-//                                 ) {
-//                                Block block = pContext.getLevel().getBlockState(pos).getBlock();
-//                                BlockEntity blockEntity = pContext.getLevel().getBlockEntity(pos);
-//                                if ((block != Blocks.AIR) && (block != FinalRegistry.Block_HVConnector_Base.get()) && !(blockEntity instanceof BlockEntityTransformerHV) ){
-//                                    String bname = block.getDescriptionId().replace("[", "").replace("[", "").replace("block.minecraft.", "").replace("]", "").replace("]", "");
-//                                    if (blocks.size() < 5) {
-//                                        blocks.add(bname);
-//                                    }
-//                                }
-//                            }
+                            for (BlockPos pos: BlockPosUtils.getBetweenPoints(pContext.getClickedPos(), firstConnectionPos)
+                                 ) {
+
+                                Block block = pContext.getLevel().getBlockState(pos).getBlock();
+
+                                BlockEntity blockEntity = pContext.getLevel().getBlockEntity(pos);
+                                if ((block != Blocks.AIR) && (block != FinalRegistry.Block_HVConnector_Base.get()) && !(blockEntity instanceof BlockEntityTransformerHV) ){
+                                    String bname = block.getDescriptionId().replace("[", "").replace("[", "").replace("block.minecraft.", "").replace("]", "").replace("]", "");
+                                    if (blocks.size() < 5) {
+                                        blocks.add(bname);
+                                    }
+                                }
+                            }
                             if (blocks.size() > 0){
                                 pContext.getPlayer().sendMessage(new TranslatableComponent("message.magneticraft2.notdirect", blocks.toString(), firstConnectionPos.getX(), firstConnectionPos.getY(), firstConnectionPos.getZ(), pContext.getClickedPos().getX(), pContext.getClickedPos().getY(), pContext.getClickedPos().getZ()), Util.NIL_UUID);
                                 cleanConnection(pContext.getPlayer());
@@ -152,16 +155,19 @@ public class itemWireCoil extends Item {
 
                         if (teT.getBlockPos() != firstConnectionPos && teT.canConnect() && distance > 0 && distance <= Magneticraft2ConfigCommon.GENERAL.MaxWireLenght.get())
                         {
-//                            for (BlockPos pos: BlockPos.betweenClosed(pContext.getClickedPos(), firstConnectionPos)) {
-//                                Block block = pContext.getLevel().getBlockState(pos).getBlock();
-//                                BlockEntity blockEntity = pContext.getLevel().getBlockEntity(pos);
-//                                if ((block != Blocks.AIR) && (block != FinalRegistry.Block_HVConnector_Base.get()) && !(blockEntity instanceof BlockEntityTransformerHV) ){
-//                                    String bname = block.getDescriptionId().replace("[", "").replace("[", "").replace("block.minecraft.", "").replace("]", "").replace("]", "");
-//                                    if (blocks.size() < 5) {
-//                                        blocks.add(bname);
-//                                    }
-//                                }
-//                            }
+                            for (BlockPos pos: BlockPosUtils.getBetweenPoints(pContext.getClickedPos(), firstConnectionPos)
+                            ) {
+                                LOGGER.info(pos);
+                                Block block = pContext.getLevel().getBlockState(pos).getBlock();
+                                LOGGER.info(block);
+                                BlockEntity blockEntity = pContext.getLevel().getBlockEntity(pos);
+                                if ((block != Blocks.AIR) && (block != FinalRegistry.Block_HVConnector_Base.get()) && !(blockEntity instanceof BlockEntityTransformerHV) ){
+                                    String bname = block.getDescriptionId().replace("[", "").replace("[", "").replace("block.minecraft.", "").replace("]", "").replace("]", "");
+                                    if (blocks.size() < 5) {
+                                        blocks.add(bname);
+                                    }
+                                }
+                            }
                             if (blocks.size() > 0){
                                 pContext.getPlayer().sendMessage(new TranslatableComponent("message.magneticraft2.notdirect", blocks.toString(), firstConnectionPos.getX(), firstConnectionPos.getY(), firstConnectionPos.getZ(), pContext.getClickedPos().getX(), pContext.getClickedPos().getY(), pContext.getClickedPos().getZ()), Util.NIL_UUID);
                                 cleanConnection(pContext.getPlayer());

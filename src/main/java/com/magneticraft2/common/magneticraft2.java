@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.magneticraft2.client.Clientsetup;
 import com.magneticraft2.common.registry.ContainerAndScreenRegistry;
 import com.magneticraft2.common.registry.FinalRegistry;
+import com.magneticraft2.common.systems.OreGen;
 import com.magneticraft2.common.systems.heat.CapabilityHeat;
 import com.magneticraft2.common.systems.mgc2Network;
 import com.magneticraft2.common.systems.pressure.CapabilityPressure;
@@ -84,6 +85,7 @@ public class magneticraft2 {
         LOGGER.error("No core yet.");
         //end of fun and giggles
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus bus = MinecraftForge.EVENT_BUS;
         GeckoLib.initialize();
         FinalRegistry.register();
         modEventBus.addListener(this::preinit);
@@ -93,6 +95,7 @@ public class magneticraft2 {
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modEventBus.addListener(Clientsetup::init));
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Magneticraft2ConfigCommon.SPEC, "magneticraft2-common.toml");
         modEventBus.addListener(FinalRegistry::gatherData);
+//        bus.addListener(OreGen::onBiomeLoadingEvent);
     }
 
 
@@ -103,6 +106,7 @@ public class magneticraft2 {
             TOPCompatibility.register();
             LOGGER.info("The one probe compatibility done!");
         }
+//        event.enqueueWork(OreGen::registerConfiguredFeatures);
     }
     public void registerCapabilities(RegisterCapabilitiesEvent event){
         CapabilityHeat.register(event);

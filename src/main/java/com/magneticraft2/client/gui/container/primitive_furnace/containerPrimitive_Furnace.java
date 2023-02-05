@@ -30,10 +30,13 @@ public class containerPrimitive_Furnace extends AbstractContainerMenu {
         tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-        layoutPlayerInventorySlots(12, 96);
+        layoutPlayerInventorySlots(8, 84);
         if (tileEntity != null){
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                this.addSlot(new SlotItemHandler(h, 0, 28, 12)); //1
+                this.addSlot(new SlotItemHandler(h, 0, 53, 12)); //Slot 1
+                this.addSlot(new SlotItemHandler(h, 1, 53, 54)); //Slot 2
+                this.addSlot(new SlotItemHandler(h, 2, 107, 33)); //Slot 3
+                this.addSlot(new SlotItemHandler(h, 3, 107, 54)); //Slot 4
             });
         }
 

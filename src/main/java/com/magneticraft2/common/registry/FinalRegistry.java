@@ -1,7 +1,6 @@
 package com.magneticraft2.common.registry;
 
 import com.magneticraft2.common.block.Multiblockfiller;
-import com.magneticraft2.common.block.block_testblock;
 import com.magneticraft2.common.block.crops.RicePlantBlock;
 import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
@@ -9,10 +8,8 @@ import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import com.magneticraft2.common.block.wires.BlockTransformerHV;
 import com.magneticraft2.common.item.multiblock_filler_item;
 import com.magneticraft2.common.item.stage.early.copper_ingots.copper_ingot_low;
-import com.magneticraft2.common.systems.multiblock.Multiblock;
 import com.magneticraft2.common.tile.Multiblockfiller_tile;
 import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
-import com.magneticraft2.common.tile.testblock;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
 import com.magneticraft2.common.tile.wire.BlockEntityTransformerHV;
 import com.magneticraft2.common.block.machines.solarblock;
@@ -58,7 +55,6 @@ import net.minecraftforge.registries.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -71,7 +67,6 @@ import com.google.common.collect.ImmutableList;
 import static com.magneticraft2.common.magneticraft2.MOD_ID;
 @Mod.EventBusSubscriber(modid = magneticraft2.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FinalRegistry {
-    public static List<Item> BLOCK_ITEMS_LIST = new ArrayList<Item>();
 
     private static final Logger LOGGER = LogManager.getLogger("MGC2Registry");
     private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID);
@@ -206,7 +201,7 @@ public class FinalRegistry {
     public static final RegistryObject<Osmiridium> OSMIRIDIUM_ORE = BLOCKS.register("osmiridium_ore", Osmiridium::new);
     public static final RegistryObject<Platinium> PLATINIUM_ORE = BLOCKS.register("platinium_ore", Platinium::new);
     public static final RegistryObject<Quartz> QUARTZ_ORE = BLOCKS.register("quartz_ore", Quartz::new);
-    public static final RegistryObject<Quartz_deepslate> QUARTZ_DEEPSLATE_ORE = BLOCKS.register("quartz", Quartz_deepslate::new);
+    public static final RegistryObject<Quartz_deepslate> QUARTZ_DEEPSLATE_ORE = BLOCKS.register("quartz_deepslate_ore", Quartz_deepslate::new);
     public static final RegistryObject<Saltpeter> SALTPETER_ORE = BLOCKS.register("saltpeter_ore", Saltpeter::new);
     public static final RegistryObject<Silicium> SILICIUM_ORE = BLOCKS.register("silicium_ore", Silicium::new);
     public static final RegistryObject<Silicium_deepslate> SILICIUM_DEEPSLATE_ORE = BLOCKS.register("silicium_deepslate_ore", Silicium_deepslate::new);
@@ -229,7 +224,6 @@ public class FinalRegistry {
     public static final RegistryObject<BlockHVConnectorBase> Block_HVConnector_Base = BLOCKS.register("hvconnector_base", BlockHVConnectorBase::new);
     public static final RegistryObject<BlockTransformerHV> Block_Transformer_HV = BLOCKS.register("transformer_hv", BlockTransformerHV::new);
     public static final RegistryObject<solarblock> Block_Solar = BLOCKS.register("solar_block", solarblock::new);
-//    public static final RegistryObject<block_testblock> Block_testblock = BLOCKS.register("testblock", block_testblock::new);
     public static final RegistryObject<Multiblockfiller> Block_Multiblock_filler = BLOCKS.register("multiblock_filler", Multiblockfiller::new);
 
     public static final RegistryObject<primitive_furnace_block> primitive_furnace_Block = BLOCKS.register("primitive_furnace_block", primitive_furnace_block::new);
@@ -287,7 +281,6 @@ public class FinalRegistry {
     public static final RegistryObject<Item> HVConnector_Base = fromBlock(Block_HVConnector_Base);
     public static final RegistryObject<Item> HV_CABLE = fromBlock(Block_Transformer_HV);
     public static final RegistryObject<Item> Block_solar_item = fromBlock(Block_Solar);
-//    public static final RegistryObject<Item> Block_testblock_item = fromBlock(Block_testblock);
     public static final RegistryObject<multiblock_filler_item> multiblock_filler_item = ITEMS.register("multiblock_filler_item", multiblock_filler_item::new);
     public static final RegistryObject<Item> rice_seed = ITEMS.register("rice_seed", () -> new ItemNameBlockItem(rice_plant.get(), new Item.Properties().tab(MC2Plants)));
     public static final RegistryObject<Item> rice = ITEMS.register("rice", () -> new Item(new Item.Properties().tab(MC2Plants).food(ModFoods.rice)));
@@ -307,7 +300,6 @@ public class FinalRegistry {
 
     public static final RegistryObject<BlockEntityType<BlockEntityTransformerHV>> Tile_HVTransformer = TILE_ENTITIES.register("transformer_hv", () -> BlockEntityType.Builder.of(BlockEntityTransformerHV::new, Block_Transformer_HV.get()).build(null));
     public static final RegistryObject<BlockEntityType<solatesttile>> Tile_solarBlock = TILE_ENTITIES.register("solar_block", () -> BlockEntityType.Builder.of(solatesttile::new, Block_Solar.get()).build(null));
-//    public static final RegistryObject<BlockEntityType<testblock>> Tile_testblock = TILE_ENTITIES.register("testblock", () -> BlockEntityType.Builder.of(testblock::new, Block_testblock.get()).build(null));
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event)
     {

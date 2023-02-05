@@ -4,6 +4,7 @@ import com.magneticraft2.common.systems.multiblock.Multiblock;
 import com.magneticraft2.common.tile.Multiblockfiller_tile;
 import com.magneticraft2.common.tile.machines.heat.HeatGeneratorTile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -21,7 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
-import static com.magneticraft2.common.tile.Multiblockfiller_tile.multiblock;
+import static com.magneticraft2.common.tile.Multiblockfiller_tile.getMultiblockListener;
 
 /**
  * @author JumpWatch on 25-01-2023
@@ -38,16 +39,18 @@ public class Multiblockfiller extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
-            if (multiblock == null) {
-                LOGGER.error("Multiblock is null");
+            if (getMultiblockListener() == null) {
+                pPlayer.displayClientMessage(new TranslatableComponent("message.magneticraft2.feature_not_ready_yet"), true);
+//                LOGGER.error("Multiblock is null");
                 return InteractionResult.FAIL;
             }
-            if (multiblock.isFormed()) {
-                BlockPos corePos = multiblock.getpos();
+            if (getMultiblockListener().isFormed()) {
+                BlockPos corePos = getMultiblockListener().getpos();
                 BlockEntity coreBlockEntity = pLevel.getBlockEntity(corePos);
                 if (coreBlockEntity != null) {
                     try {
-                        NetworkHooks.openGui((ServerPlayer) pPlayer, ((Multiblock) coreBlockEntity).menuProvider, coreBlockEntity.getBlockPos());
+                        pPlayer.displayClientMessage(new TranslatableComponent("message.magneticraft2.feature_not_ready_yet"), true);
+//                        NetworkHooks.openGui((ServerPlayer) pPlayer, ((Multiblock) coreBlockEntity).menuProvider, coreBlockEntity.getBlockPos());
                     } catch (Exception ignored) {
                     }
                 }

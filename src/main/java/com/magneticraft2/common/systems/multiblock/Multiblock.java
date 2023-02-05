@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.magneticraft2.common.tile.Multiblockfiller_tile.*;
@@ -41,8 +42,6 @@ public abstract class Multiblock extends BlockEntity {
     private static final Logger LOGGER = LogManager.getLogger("MGC2Multiblock");
     private final CustomBlockPattern pattern;
     private boolean isFormed;
-    private List<BlockPos> replacedBlocks = new ArrayList<>();
-    private List<BlockState> replacedStates = new ArrayList<>();
     public MenuProvider menuProvider;
 
     public Multiblock(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, CustomBlockPattern pattern) {
@@ -55,15 +54,16 @@ public abstract class Multiblock extends BlockEntity {
     public void add(Level world, BlockPos pos, Block blockToReplace) {
         if (pattern.matches(world, pos)) {
             isFormed = true;
+            setMulitblockListener(this);
             replaceBlocks(world, pos, blockToReplace);
             assignID(world, pos);
             setChanged();
-            setMulitblockListener(this);
         }
     }
 
     public void remove(Level world) {
         if (isFormed) {
+            setMulitblockListener(null);
             isFormed = false;
             restoreBlocks(world);
         }
@@ -166,17 +166,10 @@ public abstract class Multiblock extends BlockEntity {
 
 
     private void restoreBlocks(Level world) {
-        if (Multiblockfiller_tile.blockState == null || Multiblockfiller_tile.x == -3000 || Multiblockfiller_tile.y == -3000 || Multiblockfiller_tile.z == -3000) {
+        if (blockState == null || x == -3000 || y == -3000 || z == -3000) {
             return;
         }
-
-        world.setBlockAndUpdate(new BlockPos(Multiblockfiller_tile.x, Multiblockfiller_tile.y, Multiblockfiller_tile.z), Multiblockfiller_tile.blockState);
-        world.setBlockAndUpdate(new BlockPos(Multiblockfiller_tile.x, Multiblockfiller_tile.y, Multiblockfiller_tile.z), Multiblockfiller_tile.blockState);
-
-        Multiblockfiller_tile.blockState = null;
-        Multiblockfiller_tile.x = -3000;
-        Multiblockfiller_tile.y = -3000;
-        Multiblockfiller_tile.z = -3000;
+        setBlockat(world);
     }
 
 
