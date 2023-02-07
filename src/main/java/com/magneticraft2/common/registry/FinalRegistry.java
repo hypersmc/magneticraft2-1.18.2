@@ -8,6 +8,7 @@ import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import com.magneticraft2.common.block.wires.BlockTransformerHV;
 import com.magneticraft2.common.item.multiblock_filler_item;
 import com.magneticraft2.common.item.stage.early.copper_ingots.copper_ingot_low;
+import com.magneticraft2.common.recipe.RecipeRegistry;
 import com.magneticraft2.common.tile.Multiblockfiller_tile;
 import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
@@ -69,7 +70,6 @@ import static com.magneticraft2.common.magneticraft2.MOD_ID;
 public class FinalRegistry {
 
     private static final Logger LOGGER = LogManager.getLogger("MGC2Registry");
-    private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MOD_ID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
     private static final DeferredRegister<BlockEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, MOD_ID);
@@ -85,10 +85,16 @@ public class FinalRegistry {
         TILE_ENTITIES.register(bus);
         ENTITIES.register(bus);
         STRUCTURES.register(bus);
-        RECIPE_SERIALIZERS.register(bus);
+        RecipeRegistry.registerRecipes(bus);
         ContainerAndScreenRegistry.containerRegistry();
 
     }
+
+    /**
+     * GuideBook
+     */
+
+
     private static <T extends IForgeRegistryEntry<T>> DeferredRegister<T> create(IForgeRegistry<T> registry) {
         return DeferredRegister.create(registry, magneticraft2.MOD_ID);
     }

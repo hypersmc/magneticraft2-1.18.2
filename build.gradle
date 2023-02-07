@@ -181,6 +181,7 @@ dependencies {
     implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.18:3.0.55')
     implementation fg.deobf("curse.maven:the-one-probe-245211:3965688")
     implementation fg.deobf("curse.maven:jei-238222:4062344")
+    implementation fg.deobf("curse.maven:patchouli-306770:3846086")
     //implementation fg.deobf("curse.maven:roughly-enough-items-310111:4168764")
 
 }

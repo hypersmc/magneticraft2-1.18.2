@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.magneticraft2.client.Clientsetup;
 import com.magneticraft2.common.registry.ContainerAndScreenRegistry;
 import com.magneticraft2.common.registry.FinalRegistry;
+import com.magneticraft2.common.systems.ConfiguredFeatureMGC2;
 import com.magneticraft2.common.systems.OreGen;
 import com.magneticraft2.common.systems.heat.CapabilityHeat;
 import com.magneticraft2.common.systems.mgc2Network;
@@ -106,7 +107,10 @@ public class magneticraft2 {
             TOPCompatibility.register();
             LOGGER.info("The one probe compatibility done!");
         }
-//        event.enqueueWork(OreGen::registerConfiguredFeatures);
+        event.enqueueWork(() -> {
+            OreGen.registerPlacedFeatures();
+            ConfiguredFeatureMGC2.registerConfiguredFeatures();
+        });
     }
     public void registerCapabilities(RegisterCapabilitiesEvent event){
         CapabilityHeat.register(event);
