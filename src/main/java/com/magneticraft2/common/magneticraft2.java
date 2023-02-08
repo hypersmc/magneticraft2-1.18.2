@@ -1,64 +1,31 @@
 package com.magneticraft2.common;
 
 
-import com.google.common.collect.ImmutableList;
 import com.magneticraft2.client.Clientsetup;
 import com.magneticraft2.common.registry.ContainerAndScreenRegistry;
 import com.magneticraft2.common.registry.FinalRegistry;
-import com.magneticraft2.common.systems.ConfiguredFeatureMGC2;
-import com.magneticraft2.common.systems.OreGen;
+import com.magneticraft2.common.world.ore.ConfiguredFeatureMGC2;
+import com.magneticraft2.common.world.ore.OreGen;
 import com.magneticraft2.common.systems.heat.CapabilityHeat;
 import com.magneticraft2.common.systems.mgc2Network;
 import com.magneticraft2.common.systems.pressure.CapabilityPressure;
 import com.magneticraft2.common.systems.watt.CapabilityWatt;
 import com.magneticraft2.common.utils.Magneticraft2ConfigCommon;
 import com.magneticraft2.compatibility.TOP.TOPCompatibility;
-import com.mojang.datafixers.util.Pair;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.loot.BlockLoot;
-import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
-import net.minecraft.world.level.storage.loot.ValidationContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import software.bernie.geckolib3.GeckoLib;
-
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-
-import static com.magneticraft2.common.registry.FinalRegistry.*;
 
 @Mod(magneticraft2.MOD_ID)
 public class magneticraft2 {
@@ -101,15 +68,16 @@ public class magneticraft2 {
 
 
 
-    public void preinit(FMLCommonSetupEvent event){
+    public void preinit(final FMLCommonSetupEvent event){
         mgc2Network.init();
         if (ModList.get().isLoaded("theoneprobe")){
             TOPCompatibility.register();
             LOGGER.info("The one probe compatibility done!");
         }
-        event.enqueueWork(() -> {
-            OreGen.registerPlacedFeatures();
+        event.enqueueWork(() ->
+        {
             ConfiguredFeatureMGC2.registerConfiguredFeatures();
+            OreGen.registerPlacedFeatures();
         });
     }
     public void registerCapabilities(RegisterCapabilitiesEvent event){

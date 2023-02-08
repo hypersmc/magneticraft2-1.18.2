@@ -1,4 +1,4 @@
-package com.magneticraft2.common.systems;
+package com.magneticraft2.common.world.ore;
 
 import com.magneticraft2.common.registry.FinalRegistry;
 import net.minecraft.core.Holder;
@@ -54,7 +54,7 @@ public class ConfiguredFeatureMGC2 {
         overworld_CHROMITE_ORE_CONFIGURED = FeatureUtils.register("chromite_ore", Feature.ORE, new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES,
                 FinalRegistry.CHROMITE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES,
-                        FinalRegistry.CHROMITE_ORE.get().defaultBlockState())), 8));
+                        FinalRegistry.CHROMITE_DEEPSLATE_ORE.get().defaultBlockState())), 8));
         overworld_CINNABAR_ORE_CONFIGURED = FeatureUtils.register("cinnabar_ore", Feature.ORE, new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES,
                 FinalRegistry.CINNABAR_ORE.get().defaultBlockState()),
                 OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES,

@@ -1,4 +1,4 @@
-package com.magneticraft2.common.systems;
+package com.magneticraft2.common.world.ore;
 
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -46,9 +46,7 @@ public class OreGen {
     public static Holder<PlacedFeature> overworld_ANTHRACITE_ORE_PLACED;
 
     public static void registerPlacedFeatures(){
-        overworld_CHROMITE_ORE_PLACED = PlacementUtils.register("chromite_ore",
-                ConfiguredFeatureMGC2.overworld_CHROMITE_ORE_CONFIGURED, commonOrePlacement(35,
-                        HeightRangePlacement.uniform(VerticalAnchor.absolute(-40), VerticalAnchor.absolute(380))));
+        overworld_CHROMITE_ORE_PLACED = PlacementUtils.register("chromite_ore", ConfiguredFeatureMGC2.overworld_CHROMITE_ORE_CONFIGURED, commonOrePlacement(35, HeightRangePlacement.uniform(VerticalAnchor.absolute(-40), VerticalAnchor.absolute(380))));
         overworld_COBALTITE_DEEPSLATE_ORE_PLACED = PlacementUtils.register("cobaltite_ore", ConfiguredFeatureMGC2.overworld_COBALTITE_DEEPSLATE_ORE_CONFIGURED, commonOrePlacement(35, HeightRangePlacement.uniform(VerticalAnchor.absolute(-40), VerticalAnchor.absolute(380))));
         overworld_KIMBERLITE_DEEPSLATE_ORE_PLACED = PlacementUtils.register("kimberlite_ore", ConfiguredFeatureMGC2.overworld_KIMBERLITE_DEEPSLATE_ORE_CONFIGURED, commonOrePlacement(35, HeightRangePlacement.uniform(VerticalAnchor.absolute(-40), VerticalAnchor.absolute(380))));
         overworld_OSMIRIDIUM_DEEPSLATE_ORE_PLACED = PlacementUtils.register("osmiridium_ore", ConfiguredFeatureMGC2.overworld_OSMIRIDIUM_DEEPSLATE_ORE_CONFIGURED, commonOrePlacement(35, HeightRangePlacement.uniform(VerticalAnchor.absolute(-40), VerticalAnchor.absolute(380))));

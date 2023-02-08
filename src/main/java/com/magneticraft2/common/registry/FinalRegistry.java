@@ -8,6 +8,9 @@ import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import com.magneticraft2.common.block.wires.BlockTransformerHV;
 import com.magneticraft2.common.item.multiblock_filler_item;
 import com.magneticraft2.common.item.stage.early.copper_ingots.copper_ingot_low;
+import com.magneticraft2.common.item.stage.early.pots.ceramicPot;
+import com.magneticraft2.common.item.stage.early.pots.clayPot;
+import com.magneticraft2.common.item.stage.early.tools.stoneKnife;
 import com.magneticraft2.common.recipe.RecipeRegistry;
 import com.magneticraft2.common.tile.Multiblockfiller_tile;
 import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
@@ -90,6 +93,7 @@ public class FinalRegistry {
 
     }
 
+
     /**
      * GuideBook
      */
@@ -143,6 +147,14 @@ public class FinalRegistry {
     };
 
     /**
+     * Premade properties for items
+     **/
+    public static final Item.Properties ITEM_PROPERTIES = new Item.Properties().tab(MC2Blocks);
+    public static final Item.Properties ITEMTAB_PROPERTIES = new Item.Properties().tab(MC2Blocks);
+    public static final Item.Properties ORE_PROPERTIES = new Item.Properties().tab(MC2Ores);
+
+
+    /**
      * Mining levels
      */
     /* Copper */
@@ -170,10 +182,12 @@ public class FinalRegistry {
             List.of(Tiers.DIAMOND), List.of(Tiers.NETHERITE)
     );
     /**
-     * Premade properties for items
-     **/
-    public static final Item.Properties ITEM_PROPERTIES = new Item.Properties().tab(MC2Blocks);
-    public static final Item.Properties ORE_PROPERTIES = new Item.Properties().tab(MC2Ores);
+     * Mining tools for levels
+     */
+
+    public static final RegistryObject<Item> stone_knife = ITEMS.register("stone_knife", () -> new stoneKnife(Tiers.WOOD, 0, 0, ITEMTAB_PROPERTIES));
+
+
 
 
     /**
@@ -292,6 +306,10 @@ public class FinalRegistry {
     public static final RegistryObject<Item> rice = ITEMS.register("rice", () -> new Item(new Item.Properties().tab(MC2Plants).food(ModFoods.rice)));
     public static final RegistryObject<itemWireCoil> Item_Wire_Coil = ITEMS.register("wirecoil", itemWireCoil::new);
     public static final RegistryObject<copper_ingot_low> item_copper_ingot_low = ITEMS.register("copper_ingot_low", copper_ingot_low::new);
+    public static final RegistryObject<clayPot> item_clay_pot = ITEMS.register("clay_pot", clayPot::new);
+    public static final RegistryObject<ceramicPot> item_ceramic_pot = ITEMS.register("ceramic_pot", ceramicPot::new);
+
+
 
     /**
      * Block-Entities
