@@ -6,6 +6,8 @@ import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
 import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import com.magneticraft2.common.block.wires.BlockTransformerHV;
+import com.magneticraft2.common.item.general_items.hammer;
+import com.magneticraft2.common.item.general_items.wrench;
 import com.magneticraft2.common.item.multiblock_filler_item;
 import com.magneticraft2.common.item.stage.early.copper_ingots.copper_ingot_low;
 import com.magneticraft2.common.item.stage.early.pots.ceramicPot;
@@ -308,6 +310,8 @@ public class FinalRegistry {
     public static final RegistryObject<copper_ingot_low> item_copper_ingot_low = ITEMS.register("copper_ingot_low", copper_ingot_low::new);
     public static final RegistryObject<clayPot> item_clay_pot = ITEMS.register("clay_pot", clayPot::new);
     public static final RegistryObject<ceramicPot> item_ceramic_pot = ITEMS.register("ceramic_pot", ceramicPot::new);
+    public static final RegistryObject<wrench> item_wrench = ITEMS.register("wrench", wrench::new);
+    public static final RegistryObject<hammer> item_hammer = ITEMS.register("hammer", hammer::new);
 
 
 

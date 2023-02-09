@@ -57,18 +57,18 @@ public abstract class BlockMagneticraft2 extends BaseEntityBlock implements TOPD
         }
     }
 
-    @Override
-    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
-        if (!pState.is(pOldState.getBlock())) {
-            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof Multiblock) {
-                LOGGER.info("Multiblock placed");
-                ((Multiblock) blockentity).onPlacement(pLevel, pPos, Blocks.STONE);
-            }
-        }
-        super.onPlace(pState, pLevel, pPos, pOldState, pIsMoving);
-    }
-
+//    @Override
+//    public void onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving) {
+//        if (!pState.is(pOldState.getBlock())) {
+//            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+//            if (blockentity instanceof Multiblock) {
+//                LOGGER.info("Multiblock placed");
+//                ((Multiblock) blockentity).onPlacement(pLevel, pPos, Blocks.STONE);
+//            }
+//        }
+//        super.onPlace(pState, pLevel, pPos, pOldState, pIsMoving);
+//    }
+//
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         if (!pState.is(pNewState.getBlock())) {

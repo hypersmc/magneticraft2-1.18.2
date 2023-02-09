@@ -45,9 +45,9 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
     private static final Logger LOGGER = LogManager.getLogger(id);
     public primitive_furnace_tile(BlockPos pos, BlockState state) {
         super(FinalRegistry.primitive_furnace_Tile.get(), pos, state, CustomBlockPattern.builder()
-                .row(" s ")
-                .row(" C ")
-                .row(" s ")
+                .row("s")
+                .row("C")
+                .row("s")
                 .where('s', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.STONE)))
                 .where('C', BlockInWorld.hasState(BlockStatePredicate.forBlock(FinalRegistry.primitive_furnace_Block.get().defaultBlockState().getBlock())))
                 .build());
@@ -59,15 +59,15 @@ public class primitive_furnace_tile extends Multiblock implements MenuProvider {
     public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState estate, E e) {
         if (!level.isClientSide()) {
 
-            if (!self.isFormed()) {
-                self.tick(level);
-                estate = estate.setValue(primitive_furnace_block.isFormed, false);
-            }else{
-                estate = estate.setValue(primitive_furnace_block.isFormed, true);
-
-            }
-//            level.addParticle(primitive_furnace_block.particle, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
-            level.setBlockAndUpdate(pos, estate);
+//            if (!self.isFormed()) {
+//                self.tick(level);
+//                estate = estate.setValue(primitive_furnace_block.isFormed, false);
+//            }else{
+//                estate = estate.setValue(primitive_furnace_block.isFormed, true);
+//
+//            }
+////            level.addParticle(primitive_furnace_block.particle, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+//            level.setBlockAndUpdate(pos, estate);
         }
 
     }

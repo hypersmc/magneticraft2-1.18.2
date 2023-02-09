@@ -65,7 +65,10 @@ public class primitive_furnace_block extends BlockMagneticraft2 {
                     }
                 }else if (!pPlayer.getItemInHand(pHand).is(Items.STICK)) {
                     if (blockEntity instanceof Multiblock) {
-                        NetworkHooks.openGui((ServerPlayer) pPlayer, ((primitive_furnace_tile) blockEntity).menuProvider, blockEntity.getBlockPos());
+                        if (((Multiblock) blockEntity).isFormed()) {
+                            LOGGER.info("Opening GUI");
+                            NetworkHooks.openGui((ServerPlayer) pPlayer, ((primitive_furnace_tile) blockEntity).menuProvider, blockEntity.getBlockPos());
+                        }
                     }
                 }
             }

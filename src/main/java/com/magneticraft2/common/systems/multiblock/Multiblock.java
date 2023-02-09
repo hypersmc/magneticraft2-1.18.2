@@ -1,5 +1,6 @@
 package com.magneticraft2.common.systems.multiblock;
 
+import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import com.magneticraft2.common.tile.Multiblockfiller_tile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -8,6 +9,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,7 +43,7 @@ public abstract class Multiblock extends BlockEntity {
 
     private static final Logger LOGGER = LogManager.getLogger("MGC2Multiblock");
     private final CustomBlockPattern pattern;
-    private boolean isFormed;
+    private boolean isFormed = false;
     public MenuProvider menuProvider;
 
     public Multiblock(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState, CustomBlockPattern pattern) {
@@ -139,6 +141,7 @@ public abstract class Multiblock extends BlockEntity {
                     BlockPos newPos = pos.offset(x, y, z);
                     BlockState state = world.getBlockState(newPos);
                     if (state.getBlock() == blockToReplace) {
+                        LOGGER.info("Replacing block at " + newPos + " with " + getReplacementBlock().getRegistryName());
                         setX(newPos.getX());
                         setY(newPos.getY());
                         setZ(newPos.getZ());
@@ -160,6 +163,7 @@ public abstract class Multiblock extends BlockEntity {
 
     @Override
     public void onLoad() {
+
         tick(level);
         super.onLoad();
     }
@@ -187,16 +191,25 @@ public abstract class Multiblock extends BlockEntity {
             if (!isFormed()) {
                 LOGGER.info("Multiblock is valid and not formed");
                 setFormed(true);
+                setMulitblockListener(this);
+
+                assignID(world, pos);
+                BlockState state = world.getBlockState(pos);
+                level.setBlockAndUpdate(pos, state.setValue(primitive_furnace_block.isFormed, true));
+                replaceBlocks(world, pos, Blocks.STONE);
+
+                int middleRowIndex = (pattern.getRows().size() - 1) / 2;
+                int middleRowLength = (pattern.getRows().get(middleRowIndex).size() - 1) / 2;
                 for (int y = 0; y < pattern.getRows().size(); y++) {
-                    List<String> layer = pattern.getRows().get(y);
-                    for (int x = 0; x < layer.size(); x++) {
-                        String row = layer.get(x);
-                        for (int z = 0; z < row.length(); z++) {
-                            char c = row.charAt(z);
-                            if (c == 'c') {
+                    List<String> rowList = pattern.getRows().get(y);
+                    for (int z = 0; z < rowList.size(); z++) {
+                        String row = rowList.get(z);
+                        for (int x = 0; x < row.length(); x++) {
+                            char c = row.charAt(x);
+                            if (c == ' ') {
                                 continue;
                             }
-                            BlockPos offsetPos = pos.offset(x - (layer.size() - 1) / 2, y - (pattern.getRows().size() - 1) / 2, z - (row.length() - 1) / 2);
+                            BlockPos offsetPos = pos.offset(x - middleRowLength, y - middleRowIndex, z - middleRowLength);
                             BlockState blockToReplace = world.getBlockState(offsetPos);
                             world.setBlockAndUpdate(offsetPos, blockToReplace);
                         }

@@ -91,6 +91,8 @@ public class CustomBlockPattern {
         renderedBlocks.clear();
     }
     public boolean matches(Level world, BlockPos pos) {
+        int middleRowIndex = (rows.size() - 1) / 2;
+        int middleRowLength = (rows.get(middleRowIndex).size() - 1) / 2;
         for (int y = 0; y < rows.size(); y++) {
             List<String> rowList = rows.get(y);
             for (int z = 0; z < rowList.size(); z++) {
@@ -100,16 +102,19 @@ public class CustomBlockPattern {
                     if (c == ' ') {
                         continue;
                     }
-                    BlockPos offsetPos = pos.offset(x - (row.length() - 1) / 2, y - (rowList.size() - 1) / 2, z + 1 - (rows.size() - 1) / 2);
+                    BlockPos offsetPos = pos.offset(x - middleRowLength, y - middleRowIndex, z - middleRowLength);
                     BlockInWorld blockInWorld = new BlockInWorld(world, offsetPos, true);
-                    //LOGGER.info("checking " + offsetPos + " for " + c + " should be " + predicates.get(c).test(blockInWorld) + " is " + world.getBlockState(offsetPos));
 
                     if (!(world.getBlockEntity(blockInWorld.getPos()) instanceof Multiblock)) {
                         if (!predicates.containsKey(c) || !predicates.get(c).test(blockInWorld)) {
+                            LOGGER.info("failed at " + offsetPos + " for " + c + " should be " + predicates.get(c).test(blockInWorld) + " is " + world.getBlockState(offsetPos));
                             return false;
                         }
-                    }else {
-                        return true;
+                    } else {
+                        if (!predicates.containsKey(c) || !predicates.get(c).test(blockInWorld)) {
+                            LOGGER.info("failed at " + offsetPos + " for " + c + " should be " + predicates.get(c).test(blockInWorld) + " is " + world.getBlockState(offsetPos));
+                            return false;
+                        }
                     }
                 }
             }
