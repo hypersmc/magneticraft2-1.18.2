@@ -4,6 +4,7 @@ import com.magneticraft2.common.block.Multiblockfiller;
 import com.magneticraft2.common.block.crops.RicePlantBlock;
 import com.magneticraft2.common.block.machines.heat.CrucibleHeaterBlock;
 import com.magneticraft2.common.block.machines.heat.HeatGeneratorBlock;
+import com.magneticraft2.common.block.stage.early.PitKilnBlock;
 import com.magneticraft2.common.block.stage.early.primitive_furnace_block;
 import com.magneticraft2.common.block.wires.BlockTransformerHV;
 import com.magneticraft2.common.item.general_items.hammer;
@@ -15,6 +16,7 @@ import com.magneticraft2.common.item.stage.early.pots.clayPot;
 import com.magneticraft2.common.item.stage.early.tools.stoneKnife;
 import com.magneticraft2.common.recipe.RecipeRegistry;
 import com.magneticraft2.common.tile.Multiblockfiller_tile;
+import com.magneticraft2.common.tile.stage.early.PitKilnBlockEntity;
 import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
 import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
 import com.magneticraft2.common.tile.wire.BlockEntityTransformerHV;
@@ -34,6 +36,7 @@ import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
@@ -92,6 +95,8 @@ public class FinalRegistry {
         STRUCTURES.register(bus);
         RecipeRegistry.registerRecipes(bus);
         ContainerAndScreenRegistry.containerRegistry();
+
+
 
     }
 
@@ -156,6 +161,7 @@ public class FinalRegistry {
     public static final Item.Properties ORE_PROPERTIES = new Item.Properties().tab(MC2Ores);
 
 
+    public static final TagKey<Item> clayitem = ItemTags.create(new ResourceLocation(MOD_ID, "clay_items"));
     /**
      * Mining levels
      */
@@ -247,7 +253,7 @@ public class FinalRegistry {
     public static final RegistryObject<BlockTransformerHV> Block_Transformer_HV = BLOCKS.register("transformer_hv", BlockTransformerHV::new);
     public static final RegistryObject<solarblock> Block_Solar = BLOCKS.register("solar_block", solarblock::new);
     public static final RegistryObject<Multiblockfiller> Block_Multiblock_filler = BLOCKS.register("multiblock_filler", Multiblockfiller::new);
-
+    public static final RegistryObject<PitKilnBlock> PitKilnblock = BLOCKS.register("pitkilnblock", PitKilnBlock::new);
     public static final RegistryObject<primitive_furnace_block> primitive_furnace_Block = BLOCKS.register("primitive_furnace_block", primitive_furnace_block::new);
 
     /**
@@ -297,6 +303,7 @@ public class FinalRegistry {
     public static final RegistryObject<Item> SPHALERITE_ITEM = fromBlockOre(SPHALERITE_ORE);
     public static final RegistryObject<Item> ANTHRACITE_ITEM = fromBlockOre(ANTHRACITE_ORE);
 
+    public static final RegistryObject<Item> pitkilnitem = fromBlock(PitKilnblock);
     public static final RegistryObject<Item> primitive_furnace_block_core = fromBlock(primitive_furnace_Block);
     public static final RegistryObject<Item> HEAT_ITEM = fromBlock(Block_Heat_Generator);
     public static final RegistryObject<Item> CRUCIBLE_HEATER_ITEM = fromBlock(Block_Crucible_Heater);
@@ -318,6 +325,7 @@ public class FinalRegistry {
     /**
      * Block-Entities
      **/
+    public static final RegistryObject<BlockEntityType<PitKilnBlockEntity>> PitKilnblockEntity = TILE_ENTITIES.register("pitkilnblockentity", () -> BlockEntityType.Builder.of(PitKilnBlockEntity::new, PitKilnblock.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<primitive_furnace_tile>> primitive_furnace_Tile = TILE_ENTITIES.register("primitive_furnace_tile", () -> BlockEntityType.Builder.of(primitive_furnace_tile::new, primitive_furnace_Block.get()).build(null));
     public static final RegistryObject<BlockEntityType<Multiblockfiller_tile>> Multiblockfiller_tile = TILE_ENTITIES.register("multiblockfiller_tile", () -> BlockEntityType.Builder.of(Multiblockfiller_tile::new, Block_Multiblock_filler.get()).build(null));

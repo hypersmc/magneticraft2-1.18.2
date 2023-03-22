@@ -38,7 +38,7 @@ public class Multiblockfiller_tile extends BlockEntity {
 
     }
     public static Multiblock getMultiblockListener() {
-        LOGGER.info("Multiblock is " + self.multiblock);
+//        LOGGER.info("Multiblock is " + self.multiblock);
         return self.multiblock;
     }
     public Multiblockfiller_tile(BlockPos pos, BlockState state) {

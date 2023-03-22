@@ -12,4 +12,5 @@ public class clayPot extends Item {
     public clayPot() {
         super(new Properties().stacksTo(1).setNoRepair().tab(FinalRegistry.MC2Items));
     }
+
 }
