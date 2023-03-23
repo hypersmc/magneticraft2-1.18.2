@@ -45,7 +45,6 @@ public class PitKilnBlockEntity extends BlockEntity {
     private int burnTime = 0;
     private static final Logger LOGGER = LogManager.getLogger("Pitkiln");
     private int totalTime = 0;
-    private List<ItemStack> clayItems = new ArrayList<>();
     public final ItemStackHandler itemHandler = createInv(); //Item
     public final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler); //Creating LazyOptional for Item
 
@@ -121,27 +120,38 @@ public class PitKilnBlockEntity extends BlockEntity {
                 // Check if the firing process is complete
                 if (self.totalTime >= 202) {
                     LOGGER.info("finished2");
-                    for (ItemStack clayItem : self.clayItems) {
-                        ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, clayItem);
-                        level.addFreshEntity(itemEntity);
-                    }
+
                     BlockPos upPos = pos.above();
                     BlockState upState = level.getBlockState(upPos);
                     if (upState.getBlock() == Blocks.FIRE) {
                         level.setBlockAndUpdate(upPos, Blocks.AIR.defaultBlockState());
                     }
-                    self.clayItems.clear();
                     self.burnTime = 0;
                     self.totalTime = 0;
                     self.isBurning = false;
                     BlockState currentState = level.getBlockState(pos);
                     BlockState newState = currentState.setValue(PitKilnBlock.LOG_COUNT, self.getLogCount()).setValue(PitKilnBlock.WHEAT_COUNT, self.getWheatCount()).setValue(PitKilnBlock.ACTIVATED, false);
                     level.setBlock(pos, newState, 3);
+                    //Convert clay to ceramic
+                    for (int i = 2; i <= 5; i++) {
+                        if (!self.itemHandler.getStackInSlot(i).isEmpty()) {
+                            ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), self.convertClayToCeramic(self.itemHandler.getStackInSlot(i)).getItem().getDefaultInstance());
+                            level.addFreshEntity(itemEntity);
+                            LOGGER.info("Item that should have been dropped: " + self.convertClayToCeramic(self.itemHandler.getStackInSlot(i)));
+                            self.itemHandler.setStackInSlot(i, ItemStack.EMPTY);
+                            LOGGER.info("ran for slot: " + i);
+                        }
+                    }
+                    if (self.itemHandler.getStackInSlot(2).isEmpty() && self.itemHandler.getStackInSlot(3).isEmpty() && self.itemHandler.getStackInSlot(4).isEmpty() && self.itemHandler.getStackInSlot(5).isEmpty()) {
+                        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+                    }
                 }
             }
-            BlockState currentState = level.getBlockState(pos);
-            BlockState newState = currentState.setValue(PitKilnBlock.LOG_COUNT, self.getLogCount()).setValue(PitKilnBlock.WHEAT_COUNT, self.getWheatCount());
-            level.setBlock(pos, newState, 3);
+            if (level.getBlockState(pos).getBlock() == FinalRegistry.PitKilnblock.get()) {
+                BlockState currentState = level.getBlockState(pos);
+                BlockState newState = currentState.setValue(PitKilnBlock.LOG_COUNT, self.getLogCount()).setValue(PitKilnBlock.WHEAT_COUNT, self.getWheatCount());
+                level.setBlock(pos, newState, 3);
+            }
         }
     }
 
@@ -151,43 +161,23 @@ public class PitKilnBlockEntity extends BlockEntity {
         isBurning = tag.getBoolean("IsBurning");
         burnTime = tag.getInt("BurnTime");
         totalTime = tag.getInt("TotalTime");
-        clayItems.clear();
-        int count = tag.getInt("ClayItemCount");
-        for (int i = 0; i < count; i++) {
-            CompoundTag clayItemTag = tag.getCompound("ClayItem" + i);
-            clayItems.add(ItemStack.of(clayItemTag));
-        }
+        itemHandler.deserializeNBT(tag.getCompound("inv"));
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
+
         tag.putBoolean("IsBurning", isBurning);
         tag.putInt("BurnTime", burnTime);
         tag.putInt("TotalTime", totalTime);
 
         // Save the clay items to NBT
-        tag.putInt("ClayItemCount", clayItems.size());
-        for (int i = 0; i < clayItems.size(); i++) {
-            CompoundTag clayItemTag = new CompoundTag();
-            clayItems.get(i).setTag(clayItemTag);
-            tag.put("ClayItem" + i, clayItemTag);
-        }
+        tag.put("inv", itemHandler.serializeNBT());
     }
 
-    // This method is called to add a clay item to the kiln's inventory
-    public void addClayItem(ItemStack clayItem) {
-        clayItems.add(clayItem);
-    }
 
-    // This method is called to remove a clay item from the kiln's inventory
-    public ItemStack removeClayItem(int index) {
-        if (index >= 0 && index < clayItems.size()) {
-            return clayItems.remove(index);
-        } else {
-            return ItemStack.EMPTY;
-        }
-    }
+
     private ItemStackHandler createInv() {
         return new ItemStackHandler(6) {
 
@@ -218,14 +208,15 @@ public class PitKilnBlockEntity extends BlockEntity {
         return itemHandler.getStackInSlot(1).getCount();
     }
 
-
-    // This method is called to check if the kiln is currently burning
-    public boolean isBurning() {
-        return isBurning;
+    /**
+     * Since I didn't bother doing a recipe handler
+     */
+    private ItemStack convertClayToCeramic(ItemStack itemStack){
+        LOGGER.info(itemStack.getItem());
+        if (itemStack.getItem().equals(FinalRegistry.item_clay_pot.get().asItem())) {
+            return FinalRegistry.item_ceramic_pot.get().getDefaultInstance();
+        }
+        return Items.AIR.getDefaultInstance();
     }
 
-    // This method is called to set the burn state of the kiln
-    public void setBurning(boolean isBurning) {
-        this.isBurning = isBurning;
-    }
 }

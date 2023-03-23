@@ -27,16 +27,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.stream.Stream;
 public class BlockHVConnectorBase extends BlockMagneticraft2 {
 
-    private static final VoxelShape shape_down = Stream.of(
-            Block.box(7.5, 6.25, 7.5, 8.5, 8.5, 8.5),
-            Block.box(7, 1, 7, 9, 6, 9),
-            Block.box(6.5, 6, 6.5, 9.5, 6.5, 9.5),
-            Block.box(6.5, 5, 6.5, 9.5, 5.5, 9.5),
-            Block.box(6.5, 4, 6.5, 9.5, 4.5, 9.5),
-            Block.box(6.5, 3, 6.5, 9.5, 3.5, 9.5),
-            Block.box(6.5, 2, 6.5, 9.5, 2.5, 9.5),
-            Block.box(6.5, 1, 6.5, 9.5, 1.5, 9.5),
-            Block.box(5, 0, 5, 11, 1, 11)
+    private static final VoxelShape shape_down = Stream.of(Block.box(7.5, 6.25, 7.5, 8.5, 8.5, 8.5), Block.box(7, 1, 7, 9, 6, 9), Block.box(6.5, 6, 6.5, 9.5, 6.5, 9.5), Block.box(6.5, 5, 6.5, 9.5, 5.5, 9.5), Block.box(6.5, 4, 6.5, 9.5, 4.5, 9.5), Block.box(6.5, 3, 6.5, 9.5, 3.5, 9.5), Block.box(6.5, 2, 6.5, 9.5, 2.5, 9.5), Block.box(6.5, 1, 6.5, 9.5, 1.5, 9.5), Block.box(5, 0, 5, 11, 1, 11)
     ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
     protected static final VoxelShape NORTH_AABB = Block.box(0.3125D, 0.3125D, 0.0D, 0.6875D, 0.6875D, 0.5D);
     protected static final VoxelShape SOUTH_AABB = Block.box(0.3125D, 0.3125D, 0.5D, 0.6875D, 0.6875D, 1.0);
