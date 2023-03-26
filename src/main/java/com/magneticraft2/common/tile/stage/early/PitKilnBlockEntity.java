@@ -2,10 +2,14 @@ package com.magneticraft2.common.tile.stage.early;
 
 import com.magneticraft2.common.block.stage.early.PitKilnBlock;
 import com.magneticraft2.common.registry.FinalRegistry;
+import com.magneticraft2.common.utils.Magneticraft2ConfigCommon;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -13,9 +17,9 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -27,11 +31,6 @@ import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.magneticraft2.common.block.stage.early.PitKilnBlock.LOG_COUNT;
-import static com.magneticraft2.common.block.stage.early.PitKilnBlock.WHEAT_COUNT;
 
 /**
  * @author JumpWatch on 20-03-2023
@@ -63,6 +62,46 @@ public class PitKilnBlockEntity extends BlockEntity {
     }
 
 
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket()
+    {
+        return ClientboundBlockEntityDataPacket.create( this );
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        handleUpdateTag( pkt.getTag() );
+    }
+
+    @Override
+    public CompoundTag getUpdateTag()
+    {
+        CompoundTag nbtTagCompound = new CompoundTag();
+        saveAdditional(nbtTagCompound);
+        return nbtTagCompound;
+    }
+
+    @Override
+    public void handleUpdateTag(CompoundTag parentNBTTagCompound)
+    {
+        load(parentNBTTagCompound);
+    }
+    public CompoundTag sync() {
+        level.sendBlockUpdated( worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL );
+        CompoundTag tag = super.getUpdateTag();
+        loadClientData(tag);
+        return null;
+    }
+    private void loadClientData(CompoundTag tag) {
+        tag.putBoolean("IsBurning", isBurning);
+        tag.putInt("BurnTime", burnTime);
+        tag.putInt("TotalTime", totalTime);
+
+        // Save the clay items to NBT
+        tag.put("inv", itemHandler.serializeNBT());
+    }
+
+
 
     public void activate(BlockState state, Level world, BlockPos pos) {
         this.level = world;
@@ -82,31 +121,31 @@ public class PitKilnBlockEntity extends BlockEntity {
             BlockState newState = currentState.setValue(PitKilnBlock.LOG_COUNT, self.getLogCount()).setValue(PitKilnBlock.WHEAT_COUNT, self.getWheatCount()).setValue(PitKilnBlock.ACTIVATED, true);
             level.setBlock(pos, newState, 3);
             isBurning = true;
-            burnTime = 200;
+            burnTime = Magneticraft2ConfigCommon.GENERAL.PitKilnTime.get();
             world.playSound(null, pos, SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS, 1.0F, 1.0F);
             setChanged();
         }
     }
     public static <E extends BlockEntity> void serverTick(Level level, BlockPos pos, BlockState estate, E e) {
         if (!level.isClientSide()) {
-
+            self.sync();
             if (self.isBurning) {
                 // Decrease the burn time and increase the total time
                 if (self.burnTime > 0) {
-                    LOGGER.info(self.burnTime);
+//                    LOGGER.info(self.burnTime);
                     self.burnTime--;
                 }
                 self.totalTime++;
-                LOGGER.info(self.totalTime);
+//                LOGGER.info(self.totalTime);
 
                 // Update the fire and smoke based on the burn time
-                if (self.burnTime == 0 && self.totalTime <= 202) {
+                if (self.burnTime == 0 && self.totalTime <= Magneticraft2ConfigCommon.GENERAL.PitKilnTime.get() + 2) {
                     BlockPos upPos = pos.above();
                     BlockState upState = level.getBlockState(upPos);
                     if (upState.getBlock() == Blocks.FIRE) {
                         level.setBlockAndUpdate(upPos, Blocks.FIRE.defaultBlockState());
                     }
-                    LOGGER.info("finished");
+                    //LOGGER.info("finished");
                     SoundEvent soundEvent = SoundEvents.FIRE_EXTINGUISH;
                     level.playSound(null, pos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
 
@@ -119,7 +158,7 @@ public class PitKilnBlockEntity extends BlockEntity {
 
                 // Check if the firing process is complete
                 if (self.totalTime >= 202) {
-                    LOGGER.info("finished2");
+//                    LOGGER.info("finished2");
 
                     BlockPos upPos = pos.above();
                     BlockState upState = level.getBlockState(upPos);
@@ -137,9 +176,9 @@ public class PitKilnBlockEntity extends BlockEntity {
                         if (!self.itemHandler.getStackInSlot(i).isEmpty()) {
                             ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), self.convertClayToCeramic(self.itemHandler.getStackInSlot(i)).getItem().getDefaultInstance());
                             level.addFreshEntity(itemEntity);
-                            LOGGER.info("Item that should have been dropped: " + self.convertClayToCeramic(self.itemHandler.getStackInSlot(i)));
+//                            LOGGER.info("Item that should have been dropped: " + self.convertClayToCeramic(self.itemHandler.getStackInSlot(i)));
                             self.itemHandler.setStackInSlot(i, ItemStack.EMPTY);
-                            LOGGER.info("ran for slot: " + i);
+//                            LOGGER.info("ran for slot: " + i);
                         }
                     }
                     if (self.itemHandler.getStackInSlot(2).isEmpty() && self.itemHandler.getStackInSlot(3).isEmpty() && self.itemHandler.getStackInSlot(4).isEmpty() && self.itemHandler.getStackInSlot(5).isEmpty()) {
@@ -178,6 +217,7 @@ public class PitKilnBlockEntity extends BlockEntity {
 
 
 
+
     private ItemStackHandler createInv() {
         return new ItemStackHandler(6) {
 
@@ -212,7 +252,7 @@ public class PitKilnBlockEntity extends BlockEntity {
      * Since I didn't bother doing a recipe handler
      */
     private ItemStack convertClayToCeramic(ItemStack itemStack){
-        LOGGER.info(itemStack.getItem());
+//        LOGGER.info(itemStack.getItem());
         if (itemStack.getItem().equals(FinalRegistry.item_clay_pot.get().asItem())) {
             return FinalRegistry.item_ceramic_pot.get().getDefaultInstance();
         }

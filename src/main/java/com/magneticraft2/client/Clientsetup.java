@@ -1,5 +1,6 @@
 package com.magneticraft2.client;
 
+import com.magneticraft2.client.render.blocks.PitKilnBlockEntityRenderer;
 import com.magneticraft2.client.render.blocks.WireRender;
 import com.magneticraft2.common.magneticraft2;
 import com.magneticraft2.common.registry.FinalRegistry;
@@ -33,8 +34,7 @@ public class Clientsetup {
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event){
         LOGGER.info("Renders are being registered!");
         event.registerBlockEntityRenderer(FinalRegistry.Tile_HVConnector_Base.get(), WireRender::new);
-        //event.registerBlockEntityRenderer(Multiblock, OutlineRender::new);
-        //event.registerBlockEntityRenderer(FinalRegistry.Tile_HVConnector_Base.get(), WireRender::new);
+        event.registerBlockEntityRenderer(FinalRegistry.PitKilnblockEntity.get(), PitKilnBlockEntityRenderer::new);
 
     }
 
