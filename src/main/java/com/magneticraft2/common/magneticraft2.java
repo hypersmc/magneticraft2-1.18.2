@@ -63,7 +63,6 @@ public class magneticraft2 {
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modEventBus.addListener(Clientsetup::init));
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Magneticraft2ConfigCommon.SPEC, "magneticraft2-common.toml");
         modEventBus.addListener(FinalRegistry::gatherData);
-//        bus.addListener(OreGen::onBiomeLoadingEvent);
     }
 
 

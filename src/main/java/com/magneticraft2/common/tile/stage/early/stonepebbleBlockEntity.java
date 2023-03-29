@@ -3,6 +3,7 @@ package com.magneticraft2.common.tile.stage.early;
 import com.magneticraft2.common.block.stage.early.stonepebble;
 import com.magneticraft2.common.registry.FinalRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,5 +32,18 @@ public class stonepebbleBlockEntity extends BlockEntity {
                 level.setBlock(pos, newState, 3);
             }
         }
+    }
+
+    @Override
+    public void load(CompoundTag pTag) {
+        this.getBlockState().setValue(stonepebble.TYPE, pTag.getInt("type"));
+        super.load(pTag);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag pTag) {
+        int state = this.getBlockState().getValue(stonepebble.TYPE);
+        pTag.putInt("type", state);
+        super.saveAdditional(pTag);
     }
 }

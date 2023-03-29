@@ -67,9 +67,10 @@ public class stonepebble extends BaseEntityBlock {
             return EMPTY;
         }
     }
+
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        ItemStack itemStack = new ItemStack(Items.STICK, 1);
+        ItemStack itemStack = new ItemStack(FinalRegistry.item_pebble.get(), 1);
         pPlayer.getInventory().add(itemStack);
         pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 3);
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
