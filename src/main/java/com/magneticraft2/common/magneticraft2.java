@@ -4,14 +4,16 @@ package com.magneticraft2.common;
 import com.magneticraft2.client.Clientsetup;
 import com.magneticraft2.common.registry.ContainerAndScreenRegistry;
 import com.magneticraft2.common.registry.FinalRegistry;
+import com.magneticraft2.common.systems.multiblock.json.MultiblockManager;
 import com.magneticraft2.common.world.ore.ConfiguredFeatureMGC2;
-import com.magneticraft2.common.world.ore.OreGen;
+import com.magneticraft2.common.world.ore.WorldGen;
 import com.magneticraft2.common.systems.heat.CapabilityHeat;
 import com.magneticraft2.common.systems.mgc2Network;
 import com.magneticraft2.common.systems.pressure.CapabilityPressure;
 import com.magneticraft2.common.systems.watt.CapabilityWatt;
 import com.magneticraft2.common.utils.Magneticraft2ConfigCommon;
 import com.magneticraft2.compatibility.TOP.TOPCompatibility;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -38,7 +40,7 @@ public class magneticraft2 {
     public magneticraft2(){
         if (devmode) {
             LOGGER.warn("WARNING DEV MODE ACTIVATED");
-            LOGGER.info("Please report to author!");
+            LOGGER.info("Please report as it could break stuff!");
         }
         //this is just for fun and giggles :)
         LOGGER.info("Do we have any core mod?");
@@ -69,6 +71,7 @@ public class magneticraft2 {
 
     public void preinit(final FMLCommonSetupEvent event){
         mgc2Network.init();
+        MultiblockManager.loadMultiblocks(MOD_ID, Minecraft.getInstance().getResourceManager());
         if (ModList.get().isLoaded("theoneprobe")){
             TOPCompatibility.register();
             LOGGER.info("The one probe compatibility done!");
@@ -76,7 +79,7 @@ public class magneticraft2 {
         event.enqueueWork(() ->
         {
             ConfiguredFeatureMGC2.registerConfiguredFeatures();
-            OreGen.registerPlacedFeatures();
+            WorldGen.registerPlacedFeatures();
         });
     }
     public void registerCapabilities(RegisterCapabilitiesEvent event){

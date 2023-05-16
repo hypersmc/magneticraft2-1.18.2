@@ -4,9 +4,15 @@ import com.magneticraft2.common.registry.FinalRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
@@ -19,6 +25,8 @@ import java.util.List;
 
 @Mod.EventBusSubscriber
 public class ConfiguredFeatureMGC2 {
+    public static Holder<ConfiguredFeature<RandomPatchConfiguration, ?>> overworld_pebble;
+
     public static Holder<ConfiguredFeature<OreConfiguration, ?>> overworld_CHROMITE_ORE_CONFIGURED;
     public static Holder<ConfiguredFeature<OreConfiguration, ?>> overworld_COBALTITE_DEEPSLATE_ORE_CONFIGURED;
     public static Holder<ConfiguredFeature<OreConfiguration, ?>> overworld_KIMBERLITE_DEEPSLATE_ORE_CONFIGURED;
@@ -51,6 +59,7 @@ public class ConfiguredFeatureMGC2 {
     public static Holder<ConfiguredFeature<OreConfiguration, ?>> overworld_ANTHRACITE_ORE_CONFIGURED;
 
     public static void registerConfiguredFeatures() {
+        overworld_pebble = FeatureUtils.register("stonepebble", Feature.FLOWER, new RandomPatchConfiguration(10, 40, 0, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(FinalRegistry.stonepebbleBlock.get())))));
         overworld_CHROMITE_ORE_CONFIGURED = FeatureUtils.register("chromite_ore", Feature.ORE, new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES,
                 FinalRegistry.CHROMITE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES,
@@ -95,6 +104,7 @@ public class ConfiguredFeatureMGC2 {
                 FinalRegistry.TANTALITE_ORE.get().defaultBlockState()),
                 OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES,
                         FinalRegistry.TANTALITE_DEEPSLATE_ORE.get().defaultBlockState())), 8));
+
 
         overworld_BAUXITE_ORE_CONFIGURED = FeatureUtils.register("bauxite_ore", Feature.ORE, new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES,
                 FinalRegistry.BAUXITE_ORE.get().defaultBlockState())), 8));

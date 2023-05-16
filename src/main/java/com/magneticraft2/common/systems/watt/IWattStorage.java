@@ -7,4 +7,8 @@ public interface IWattStorage {
     int getMaxWattStored();
     boolean canSend();
     boolean canReceive();
+
+    boolean setSend(boolean val);
+
+    boolean setReceive(boolean val);
 }

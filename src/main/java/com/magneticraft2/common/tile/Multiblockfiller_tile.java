@@ -1,18 +1,15 @@
 package com.magneticraft2.common.tile;
 
 import com.magneticraft2.common.registry.FinalRegistry;
-import com.magneticraft2.common.systems.multiblock.Multiblock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author JumpWatch on 03-02-2023
@@ -25,22 +22,33 @@ public class Multiblockfiller_tile extends BlockEntity {
     public static double z = -3000;
     public static BlockState blockState = null;
     private static Multiblockfiller_tile self;
-    private Multiblock multiblock = null;
+//    private Multiblock multiblock = null;
     private static final Logger LOGGER = LogManager.getLogger("MGC2Multiblock");
 
 
-    public static void setMulitblockListener(Multiblock Multiblock) {
-        if (getMultiblockListener() == null) {
-            self.multiblock = Multiblock;
-        }else if (Multiblock == null){
-            self.multiblock = null;
-        }
+    public static void setMulitblockListener(Level level, BlockPos pos) {
+//        if (getMultiblockListener() == null) {
+//            initremoval(pos, level);
+//        }else if (Multiblock == null){
+//            self.multiblock = null;
+//        }else {
+//            self.multiblock = Multiblock;
+//        }
 
     }
-    public static Multiblock getMultiblockListener() {
-//        LOGGER.info("Multiblock is " + self.multiblock);
-        return self.multiblock;
+
+    public static void initremoval(BlockPos pos, Level level) {
+        level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
     }
+
+//    public static Multiblock getMultiblockListener() {
+////        LOGGER.info("Multiblock is " + self.multiblock);
+//        try {
+//            return self.multiblock;
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
     public Multiblockfiller_tile(BlockPos pos, BlockState state) {
         super(FinalRegistry.Multiblockfiller_tile.get(), pos, state);
         self = this;
@@ -66,9 +74,9 @@ public class Multiblockfiller_tile extends BlockEntity {
     public static BlockState GetBlockState() {
         return blockState;
     }
-    public static BlockPos GetBlockPos() {
-        return new BlockPos(self.multiblock.getBlockPos());
-    }
+//    public static BlockPos GetBlockPos() {
+//        return new BlockPos(self.multiblock.getBlockPos());
+//    }
     public static void SetBlockState(BlockState blockState) {
         Multiblockfiller_tile.blockState = blockState;
     }
@@ -83,9 +91,9 @@ public class Multiblockfiller_tile extends BlockEntity {
         tag.putDouble("y", y);
         tag.putDouble("z", z);
         tag.put("blockState", NbtUtils.writeBlockState(blockState));
-        if (multiblock != null) {
-            tag.putString("multiblock", multiblock.toString());
-        }
+//        if (multiblock != null) {
+//            tag.put("multiblock", multiblock.getUpdateTag());
+//        }
 
         super.saveAdditional(tag);
     }
@@ -96,6 +104,8 @@ public class Multiblockfiller_tile extends BlockEntity {
         y = tag.getDouble("y");
         z = tag.getDouble("z");
         blockState = NbtUtils.readBlockState(tag.getCompound("blockState"));
+//        multiblock.deserializeNBT(tag.getCompound("multiblock"));
+
         super.load(tag);
     }
 }

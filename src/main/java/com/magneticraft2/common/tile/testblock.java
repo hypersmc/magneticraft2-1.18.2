@@ -1,29 +1,5 @@
 package com.magneticraft2.common.tile;
 
-import com.magneticraft2.common.registry.FinalRegistry;
-import com.magneticraft2.common.systems.multiblock.CustomBlockPattern;
-import com.magneticraft2.common.systems.multiblock.Multiblock;
-import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.pattern.BlockInWorld;
-import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
-import org.intellij.lang.annotations.Identifier;
-import org.jetbrains.annotations.Nullable;
-
 /**
  * @author JumpWatch on 23-01-2023
  * @Project magneticraft2-1.18.2

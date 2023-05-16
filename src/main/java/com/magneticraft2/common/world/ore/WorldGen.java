@@ -1,9 +1,14 @@
 package com.magneticraft2.common.world.ore;
 
+import com.magneticraft2.common.registry.FinalRegistry;
 import net.minecraft.core.Holder;
+import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,8 +17,8 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class OreGen {
-
+public class WorldGen {
+    public static Holder<PlacedFeature> overworld_stonepebble;
     public static Holder<PlacedFeature> overworld_CHROMITE_ORE_PLACED;
     public static Holder<PlacedFeature> overworld_COBALTITE_DEEPSLATE_ORE_PLACED;
     public static Holder<PlacedFeature> overworld_KIMBERLITE_DEEPSLATE_ORE_PLACED;
@@ -46,6 +51,7 @@ public class OreGen {
     public static Holder<PlacedFeature> overworld_ANTHRACITE_ORE_PLACED;
 
     public static void registerPlacedFeatures(){
+        overworld_stonepebble = PlacementUtils.register("stonepebble", ConfiguredFeatureMGC2.overworld_pebble, RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP, BiomeFilter.biome());
         overworld_CHROMITE_ORE_PLACED = PlacementUtils.register("chromite_ore", ConfiguredFeatureMGC2.overworld_CHROMITE_ORE_CONFIGURED, commonOrePlacement(35, HeightRangePlacement.uniform(VerticalAnchor.absolute(-40), VerticalAnchor.absolute(380))));
         overworld_COBALTITE_DEEPSLATE_ORE_PLACED = PlacementUtils.register("cobaltite_ore", ConfiguredFeatureMGC2.overworld_COBALTITE_DEEPSLATE_ORE_CONFIGURED, commonOrePlacement(35, HeightRangePlacement.uniform(VerticalAnchor.absolute(-40), VerticalAnchor.absolute(380))));
         overworld_KIMBERLITE_DEEPSLATE_ORE_PLACED = PlacementUtils.register("kimberlite_ore", ConfiguredFeatureMGC2.overworld_KIMBERLITE_DEEPSLATE_ORE_CONFIGURED, commonOrePlacement(35, HeightRangePlacement.uniform(VerticalAnchor.absolute(-40), VerticalAnchor.absolute(380))));
@@ -115,7 +121,9 @@ public class OreGen {
         event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(overworld_CASSITERITE_ORE_PLACED.value()));
         event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(overworld_SPHALERITE_ORE_PLACED.value()));
         event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(overworld_ANTHRACITE_ORE_PLACED.value()));
-
+        if (!event.getCategory().equals(Biome.BiomeCategory.OCEAN) && !event.getCategory().equals(Biome.BiomeCategory.RIVER)) {
+            event.getGeneration().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Holder.direct(overworld_stonepebble.value()));
+        }
     }
     // Just here because the vanilla ones are private
     private static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_) {

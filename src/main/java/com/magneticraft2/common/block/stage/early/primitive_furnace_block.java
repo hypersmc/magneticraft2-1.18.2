@@ -1,37 +1,19 @@
 package com.magneticraft2.common.block.stage.early;
 
 import com.magneticraft2.common.block.BlockMagneticraft2;
-import com.magneticraft2.common.magneticraft2;
-import com.magneticraft2.common.registry.FinalRegistry;
-import com.magneticraft2.common.systems.multiblock.Multiblock;
-import com.magneticraft2.common.tile.Multiblockfiller_tile;
-import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
-
-import com.magneticraft2.common.tile.testblock;
-import com.magneticraft2.common.tile.wire.BlockEntityHVConnectorBase;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -58,20 +40,20 @@ public class primitive_furnace_block extends BlockMagneticraft2 {
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide) {
             BlockEntity blockEntity = pLevel.getBlockEntity(pPos);
-            if (magneticraft2.devmode) {
-                if (pPlayer.getItemInHand(pHand).is(Items.STICK)) {
-                    if (blockEntity instanceof Multiblock) {
-                        pPlayer.sendMessage(new TranslatableComponent("message.magneticraft2.multiblock.Debug", ((Multiblock) blockEntity).isFormed()), Util.NIL_UUID);
-                    }
-                }else if (!pPlayer.getItemInHand(pHand).is(Items.STICK)) {
-                    if (blockEntity instanceof Multiblock) {
-                        if (((Multiblock) blockEntity).isFormed()) {
-                            LOGGER.info("Opening GUI");
-                            NetworkHooks.openGui((ServerPlayer) pPlayer, ((primitive_furnace_tile) blockEntity).menuProvider, blockEntity.getBlockPos());
-                        }
-                    }
-                }
-            }
+//            if (magneticraft2.devmode) {
+//                if (pPlayer.getItemInHand(pHand).is(Items.STICK)) {
+//                    if (blockEntity instanceof Multiblock) {
+//                        pPlayer.sendMessage(new TranslatableComponent("message.magneticraft2.multiblock.Debug", ((Multiblock) blockEntity).isFormed()), Util.NIL_UUID);
+//                    }
+//                }else if (!pPlayer.getItemInHand(pHand).is(Items.STICK)) {
+//                    if (blockEntity instanceof Multiblock) {
+//                        if (((Multiblock) blockEntity).isFormed()) {
+//                            LOGGER.info("Opening GUI");
+//                            NetworkHooks.openGui((ServerPlayer) pPlayer, ((primitive_furnace_tile) blockEntity).menuProvider, blockEntity.getBlockPos());
+//                        }
+//                    }
+//                }
+//            }
 
         }
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
@@ -86,13 +68,14 @@ public class primitive_furnace_block extends BlockMagneticraft2 {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new primitive_furnace_tile(pPos, pState);
+        return null;
+//        return new primitive_furnace_tile(pPos, pState);
     }
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        return pLevel.isClientSide() ? null : createTickerHelper(pBlockEntityType, FinalRegistry.primitive_furnace_Tile.get(), primitive_furnace_tile::serverTick);
-    }
+//    @Nullable
+//    @Override
+//    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+//        return pLevel.isClientSide() ? null : createTickerHelper(pBlockEntityType, FinalRegistry.primitive_furnace_Tile.get(), primitive_furnace_tile::serverTick);
+//    }
 
 }

@@ -19,7 +19,6 @@ import org.apache.logging.log4j.Logger;
 
 import static com.magneticraft2.client.render.blocks.WireRender.BLOCK_ATLAS;
 import static com.magneticraft2.client.render.blocks.WireRender.TEXTURE;
-import static com.magneticraft2.common.systems.multiblock.CustomBlockPattern.TEXTURE_LINE;
 
 @Mod.EventBusSubscriber(modid = magneticraft2.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class Clientsetup {
@@ -51,7 +50,7 @@ public class Clientsetup {
         if (event.getAtlas().location().equals(BLOCK_ATLAS))
         {
             event.addSprite(TEXTURE);
-            event.addSprite(TEXTURE_LINE);
+//            event.addSprite(TEXTURE_LINE);
         }
 
     }

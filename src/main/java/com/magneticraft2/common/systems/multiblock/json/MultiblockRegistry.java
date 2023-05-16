@@ -1,0 +1,31 @@
+package com.magneticraft2.common.systems.multiblock.json;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author JumpWatch on 13-05-2023
+ * @Project magneticraft2-1.18.2
+ * v1.0.0
+ */
+public class MultiblockRegistry {
+    private static final Map<String, Multiblock> registeredMultiblocks = new HashMap<>();
+
+    public static void registerMultiblock(String modid, Multiblock multiblock) {
+        String multiblockName = multiblock.getName();
+        String key = modid + ":" + multiblockName;
+        if (registeredMultiblocks.containsKey(key)) {
+            throw new IllegalArgumentException("Multiblock already registered: " + key);
+        }
+        registeredMultiblocks.put(key, multiblock);
+    }
+
+    public static Multiblock getRegisteredMultiblock(String modid, String name) {
+        String key = modid + ":" + name;
+        return registeredMultiblocks.get(key);
+    }
+
+    public static Map<String, Multiblock> getRegisteredMultiblocks() {
+        return registeredMultiblocks;
+    }
+}

@@ -1,28 +1,22 @@
 package com.magneticraft2.common.block;
 
-import com.magneticraft2.common.systems.multiblock.Multiblock;
 import com.magneticraft2.common.tile.Multiblockfiller_tile;
-import com.magneticraft2.common.tile.machines.heat.HeatGeneratorTile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
-import static com.magneticraft2.common.tile.Multiblockfiller_tile.getMultiblockListener;
 
 /**
  * @author JumpWatch on 25-01-2023
@@ -38,24 +32,24 @@ public class Multiblockfiller extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (!pLevel.isClientSide) {
-            if (getMultiblockListener() == null) {
-                pPlayer.displayClientMessage(new TranslatableComponent("message.magneticraft2.feature_not_ready_yet"), true);
-//                LOGGER.error("Multiblock is null");
-                return InteractionResult.FAIL;
-            }
-            if (getMultiblockListener().isFormed()) {
-                BlockPos corePos = getMultiblockListener().getpos();
-                BlockEntity coreBlockEntity = pLevel.getBlockEntity(corePos);
-                if (coreBlockEntity != null) {
-                    try {
-                        pPlayer.displayClientMessage(new TranslatableComponent("message.magneticraft2.feature_not_ready_yet"), true);
-//                        NetworkHooks.openGui((ServerPlayer) pPlayer, ((Multiblock) coreBlockEntity).menuProvider, coreBlockEntity.getBlockPos());
-                    } catch (Exception ignored) {
-                    }
-                }
-            }
-        }
+//        if (!pLevel.isClientSide) {
+//            if (getMultiblockListener() == null) {
+//                pPlayer.displayClientMessage(new TranslatableComponent("message.magneticraft2.feature_not_ready_yet"), true);
+////                LOGGER.error("Multiblock is null");
+//                return InteractionResult.FAIL;
+//            }
+//            if (getMultiblockListener().isFormed()) {
+//                BlockPos corePos = getMultiblockListener().getpos();
+//                BlockEntity coreBlockEntity = pLevel.getBlockEntity(corePos);
+//                if (coreBlockEntity != null) {
+//                    try {
+//                        pPlayer.displayClientMessage(new TranslatableComponent("message.magneticraft2.feature_not_ready_yet"), true);
+////                        NetworkHooks.openGui((ServerPlayer) pPlayer, ((Multiblock) coreBlockEntity).menuProvider, coreBlockEntity.getBlockPos());
+//                    } catch (Exception ignored) {
+//                    }
+//                }
+//            }
+//        }
 
         return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
     }

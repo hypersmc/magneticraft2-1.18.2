@@ -1,9 +1,6 @@
 package com.magneticraft2.common.block;
 
-import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.systems.heat.CapabilityHeat;
-import com.magneticraft2.common.systems.multiblock.CustomBlockPattern;
-import com.magneticraft2.common.systems.multiblock.Multiblock;
 import com.magneticraft2.common.systems.pressure.CapabilityPressure;
 import com.magneticraft2.common.systems.watt.CapabilityWatt;
 import com.magneticraft2.common.tile.TileEntityMagneticraft2;
@@ -11,10 +8,12 @@ import com.magneticraft2.compatibility.TOP.TOPDriver;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
@@ -69,18 +68,18 @@ public abstract class BlockMagneticraft2 extends BaseEntityBlock implements TOPD
 //        super.onPlace(pState, pLevel, pPos, pOldState, pIsMoving);
 //    }
 //
-    @Override
-    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
-        if (!pState.is(pNewState.getBlock())) {
-            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
-            if (blockentity instanceof Multiblock) {
-                LOGGER.info("Multiblock removed");
-                CustomBlockPattern.posrender = null;
-                ((Multiblock) blockentity).onRemoval(pLevel);
-            }
-        }
-        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
-    }
+//    @Override
+//    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
+//        if (!pState.is(pNewState.getBlock())) {
+//            BlockEntity blockentity = pLevel.getBlockEntity(pPos);
+//            if (blockentity instanceof Multiblock) {
+//                LOGGER.info("Multiblock removed");
+//                CustomBlockPattern.posrender = null;
+//                ((Multiblock) blockentity).onRemoval(pLevel);
+//            }
+//        }
+//        super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
+//    }
     @Override
     public RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;

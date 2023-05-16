@@ -23,27 +23,7 @@ public abstract class RenderBaseTile<T extends BlockEntity> implements BlockEnti
 
     @Override
     public abstract void render(T te, float pPartialTick, PoseStack pPoseStack, MultiBufferSource pBufferSource, int pPackedLight, int pPackedOverlay);
-    public void doTheMath(Direction facing, double x, double z, double offset, double sidePlus)
-    {
-        switch (facing)
-        {
-            case SOUTH:
-                xPos = x + (0.5 - sidePlus);
-                zPos = z + (1 - offset);
-                return;
-            case NORTH:
-                xPos = x + (0.5 + sidePlus);
-                zPos = z + offset;
-                return;
-            case EAST:
-                xPos = x + (1 - offset);
-                zPos = z + (0.5 + sidePlus);
-                return;
-            case WEST:
-                xPos = x + offset;
-                zPos = z + (0.5 - sidePlus);
-        }
-    }
+
     //@Override
     //public  void render(T te, double x, double y, double z, float pTicks, int destroyStage, float alpha);
 
