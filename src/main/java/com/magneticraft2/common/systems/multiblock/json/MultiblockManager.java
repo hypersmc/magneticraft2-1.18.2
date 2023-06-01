@@ -2,6 +2,7 @@ package com.magneticraft2.common.systems.multiblock.json;
 
 
 import com.google.gson.*;
+import com.magneticraft2.common.magneticraft2;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -55,12 +56,8 @@ public class MultiblockManager {
                         // Register the blocks used in the multiblock
                         Map<String, Block> blocks = new HashMap<>();
                         for (Map.Entry<String, Block> entry : multiblockData.getBlocks().entrySet()) {
-                            ResourceLocation blockRL = new ResourceLocation(entry.getKey());
-                            Block block = Registry.BLOCK.get(blockRL);
-                            if (block == null) {
-                                throw new IllegalArgumentException("Invalid block resource location: " + blockRL);
-                            }
-                            blocks.put(entry.getKey(), block);
+                            LOGGER.info("key: " + entry.getKey() + " and value: " + entry.getValue());
+                            blocks.put(entry.getKey(), entry.getValue());
                         }
 
                         LOGGER.info("Creating Multiblock Object for: " + jsonIdentifier);
@@ -75,6 +72,7 @@ public class MultiblockManager {
                             );
                             // Register the multiblock
                             MultiblockRegistry.registerMultiblock(modid, multiblock);
+                            LOGGER.info("Multiblocks found: " + MultiblockRegistry.getRegisteredMultiblockNames());
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

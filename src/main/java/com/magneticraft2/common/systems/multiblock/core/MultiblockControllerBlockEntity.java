@@ -11,20 +11,22 @@ import net.minecraft.world.level.block.state.BlockState;
  * @Project magneticraft2-1.18.2
  * v1.0.0
  */
-public class MultiblockControllerBlockEntity extends BlockEntity implements Tickable {
-//    private final MultiblockController multiblockController;
+public class MultiblockControllerBlockEntity extends BlockEntity  {
+    private MultiblockController multiblockController;
 
     public MultiblockControllerBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
+        this.multiblockController = null;
+    }
+    public MultiblockController getMultiblockController() {
+        return multiblockController;
     }
 
-//    public MultiblockControllerBlockEntity(BlockPos pPos, BlockState pBlockState) {
-//        super(pType, pPos, pBlockState);
-//        multiblockController = new MultiblockController()
-//    }
-
-    @Override
-    public void tick() {
-
+    public void setMultiblockController(MultiblockController multiblockController) {
+        this.multiblockController = multiblockController;
     }
+
+    // Override necessary block entity methods as per your requirements
+
+
 }

@@ -43,16 +43,45 @@ public class MultiblockDataCodec implements JsonSerializer<MultiblockData>, Json
         try {
             JsonObject jsonObject = json.getAsJsonObject();
             String name = jsonObject.get("name").getAsString();
-            MultiblockStructure structure = context.deserialize(jsonObject.get("structure"), MultiblockStructure.class);
-            Map<String, Block> blocks = context.deserialize(jsonObject.get("blocks"), new TypeToken<Map<String, Block>>() {
-            }.getType());
+            JsonObject structureObject = jsonObject.getAsJsonObject("structure");
+            MultiblockStructure structure = context.deserialize(structureObject, MultiblockStructure.class);
+
+            Map<String, Block> blocks = null;
+            try {
+                JsonObject blocksObject = structureObject.getAsJsonObject("blocks");
+                blocks = new HashMap<>();
+
+                for (Map.Entry<String, JsonElement> entry : blocksObject.entrySet()) {
+                    String key = entry.getKey();
+                    String blockIdentifier = entry.getValue().getAsString();
+
+                    // Perform validation to ensure blockIdentifier is a valid block
+                    Block value = validateAndGetBlock(blockIdentifier);
+
+                    blocks.put(key, value);
+                }
+            } catch (JsonParseException e) {
+                LOGGER.info("Error during blocks deserialization: " + e.getMessage());
+                throw e;
+            }
 
             MultiblockSettings settings = context.deserialize(jsonObject.get("settings"), MultiblockSettings.class);
             return new MultiblockData(name, structure, blocks, settings);
-        }catch (JsonParseException e) {
+        } catch (JsonParseException e) {
             LOGGER.info("Error during MultiblockData deserialize: " + e.getMessage());
             throw e;
         }
+    }
+    private Block validateAndGetBlock(String blockIdentifier) {
+        ResourceLocation blockId = new ResourceLocation(blockIdentifier);
+        Block block = Registry.BLOCK.get(blockId);
+
+        if (block != null) {
+            return block;
+        }
+
+        // If the block identifier is not found, you can throw an exception or handle it according to your requirements
+        throw new IllegalArgumentException("Block not found for identifier: " + blockIdentifier);
     }
 
     private static class MultiblockInputAdapter implements JsonSerializer<MultiblockInput>, JsonDeserializer<MultiblockInput> {
@@ -203,7 +232,7 @@ public class MultiblockDataCodec implements JsonSerializer<MultiblockData>, Json
 
                         // Perform validation to ensure blockIdentifier is a valid block
                         Block value = validateAndGetBlock(blockIdentifier);
-
+                        LOGGER.info(key + " " + value + " This may not work");
                         blocks.put(key, value);
                     }
                 } catch (JsonParseException e) {

@@ -1,6 +1,8 @@
 package com.magneticraft2.common.systems.multiblock.json;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,5 +29,13 @@ public class MultiblockRegistry {
 
     public static Map<String, Multiblock> getRegisteredMultiblocks() {
         return registeredMultiblocks;
+    }
+    public static List<String> getRegisteredMultiblockNames() {
+        List<String> multiblockNames = new ArrayList<>();
+        for (String key : registeredMultiblocks.keySet()) {
+            String multiblockName = key.substring(key.indexOf(':') + 1);
+            multiblockNames.add(multiblockName);
+        }
+        return multiblockNames;
     }
 }
