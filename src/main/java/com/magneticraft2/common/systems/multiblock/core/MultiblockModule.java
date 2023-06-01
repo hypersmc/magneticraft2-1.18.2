@@ -37,10 +37,10 @@ public class MultiblockModule implements IMultiblockModule {
 
         for (String layer : structure.getLayout().keySet()) {
             int layerIndex = Integer.parseInt(layer) - 1;
-            List<String> rowList = structure.getLayout().get(layer);
+            List<List<String>> rowList = structure.getLayout().get(layer);
 
             for (int rowIndex = 0; rowIndex < rowList.size(); rowIndex++) {
-                String row = rowList.get(rowIndex);
+                String row = rowList.get(rowIndex).toString();
 
                 for (int columnIndex = 0; columnIndex < row.length(); columnIndex++) {
                     String blockId = row.substring(columnIndex, columnIndex + 1);

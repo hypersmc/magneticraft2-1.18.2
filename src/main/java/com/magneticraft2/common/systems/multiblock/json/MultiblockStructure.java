@@ -15,12 +15,12 @@ import java.util.Map;
  */
 public class MultiblockStructure {
     private final int[] dimensions;
-    private final Map<String, List<String>> layout;
+    private final Map<String, List<List<String>>> layout;
     private final Map<String, Block> blocks;
     private final Map<String, MultiblockModule> modules;
 
 
-    public MultiblockStructure(int[] dimensions, Map<String, List<String>> layout, Map<String, Block> blocks) {
+    public MultiblockStructure(int[] dimensions, Map<String, List<List<String>>> layout, Map<String, Block> blocks) {
         this.dimensions = dimensions;
         this.layout = layout;
         this.blocks = blocks;
@@ -32,7 +32,7 @@ public class MultiblockStructure {
         return dimensions;
     }
 
-    public Map<String, List<String>> getLayout() {
+    public Map<String, List<List<String>>> getLayout() {
         return layout;
     }
 
