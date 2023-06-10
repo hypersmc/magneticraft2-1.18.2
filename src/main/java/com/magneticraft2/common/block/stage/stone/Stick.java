@@ -1,4 +1,4 @@
-package com.magneticraft2.common.block.stage.early;
+package com.magneticraft2.common.block.stage.stone;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;

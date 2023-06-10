@@ -1,6 +1,5 @@
 package com.magneticraft2.client.gui.screen.heat;
 
-import com.magneticraft2.client.gui.HideableSlot;
 import com.magneticraft2.client.gui.container.Heat.ContainerHeatGenerator;
 import com.magneticraft2.client.gui.screen.button.GenericButton;
 import com.magneticraft2.common.magneticraft2;
@@ -10,9 +9,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.items.CapabilityItemHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,8 +45,6 @@ public class ScreenHeatGenerator extends AbstractContainerScreen<ContainerHeatGe
         }else {
             this.menu.setParts(false);
         }
-//        this.minecraft.getTextureManager().bindForSetup(GUI);
-//        LOGGER.info(GUI);
         int relX = (this.width - this.imageWidth) / 2;
         int relY = (this.height - this.imageHeight) / 2;
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth + 4, this.imageHeight + 25);

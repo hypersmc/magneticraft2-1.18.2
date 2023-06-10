@@ -40,6 +40,7 @@ import javax.annotation.Nonnull;
 public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IAnimatable, MenuProvider, ISync {
     public static final Logger LOGGER = LogManager.getLogger();
     public MenuProvider menuProvider;
+    private boolean isController;
 
     //Biomes
     /* Energy */
@@ -126,8 +127,16 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
 
     public TileEntityMagneticraft2(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
+        this.isController = false;
     }
 
+    public boolean isController() {
+        return isController;
+    }
+
+    public void setController(boolean isController) {
+        this.isController = isController;
+    }
 
     @Nonnull
     @Override
@@ -374,6 +383,7 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
                 if (magneticraft2.devmode)e.printStackTrace();
             }
         }
+        tag.putBoolean("IsController", isController);
         super.saveAdditional(tag);
     }
 
@@ -417,6 +427,7 @@ public abstract class TileEntityMagneticraft2 extends BlockEntity implements  IA
             fluidHandler.deserializeNBT(tag.getCompound("fluidamount"));
             fluidHandler.deserializeNBT(tag.getCompound("fluidtype"));
         }
+        isController = tag.getBoolean("IsController");
         super.load(tag);
     }
 

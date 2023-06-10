@@ -1,8 +1,7 @@
-package com.magneticraft2.common.block.stage.early;
+package com.magneticraft2.common.block.stage.stone;
 
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.tile.stage.early.PitKilnBlockEntity;
-import com.magneticraft2.common.tile.stage.early.primitive_furnace_tile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -13,7 +12,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;

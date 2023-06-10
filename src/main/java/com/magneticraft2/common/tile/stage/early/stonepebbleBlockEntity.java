@@ -1,6 +1,6 @@
 package com.magneticraft2.common.tile.stage.early;
 
-import com.magneticraft2.common.block.stage.early.stonepebble;
+import com.magneticraft2.common.block.stage.stone.stonepebble;
 import com.magneticraft2.common.registry.FinalRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

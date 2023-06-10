@@ -1,4 +1,4 @@
-package com.magneticraft2.common.block.crops;
+package com.magneticraft2.common.block.stage.stone;
 
 import com.magneticraft2.common.registry.FinalRegistry;
 import net.minecraft.world.level.ItemLike;

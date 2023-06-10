@@ -1,6 +1,5 @@
 package com.magneticraft2.client.gui.container.Heat;
 
-import com.magneticraft2.client.gui.HideableSlot;
 import com.magneticraft2.client.gui.MoveableSlot;
 import com.magneticraft2.common.registry.ContainerAndScreenRegistry;
 import com.magneticraft2.common.registry.FinalRegistry;
@@ -9,7 +8,6 @@ import com.magneticraft2.common.systems.heat.IHeatStorage;
 import com.magneticraft2.common.utils.EnergyStorages;
 import com.magneticraft2.common.utils.HeatStorages;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -42,14 +40,6 @@ public class ContainerHeatGenerator extends AbstractContainerMenu {
         layoutPlayerInventorySlots(12, 96);
         trackPower();
         trackHeat();
-//        if (tileEntity != null) {
-//            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-//                this.addSlot(new SlotItemHandler(h, 0, 999999, 999999)); //1
-//                this.addSlot(new SlotItemHandler(h, 1, 999999, 999999)); //2
-//                this.addSlot(new SlotItemHandler(h, 2, 999999, 999999)); //3
-//                this.addSlot(new SlotItemHandler(h, 3, 999999, 999999)); //4
-//            });
-//        }
     }
     public BlockEntity getTile(){
         return tileEntity;

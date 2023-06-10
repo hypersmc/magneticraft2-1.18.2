@@ -26,7 +26,6 @@ public class Clientsetup {
     public static void init(FMLClientSetupEvent e){
         ItemBlockRenderTypes.setRenderLayer(FinalRegistry.rice_plant.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(FinalRegistry.primitive_furnace_Block.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(FinalRegistry.Block_Multiblock_filler.get(), RenderType.cutout());
     }
 
     @SubscribeEvent
@@ -50,13 +49,8 @@ public class Clientsetup {
         if (event.getAtlas().location().equals(BLOCK_ATLAS))
         {
             event.addSprite(TEXTURE);
-//            event.addSprite(TEXTURE_LINE);
         }
 
     }
-//    @SubscribeEvent
-//    public static void onRenderOverlay(RenderGameOverlayEvent.PostLayer event) {
-//        Player player = Minecraft.getInstance().player;
-//    }
 
 }

@@ -38,7 +38,7 @@ public class HeatGeneratorBlock extends BlockMagneticraft2 {
 
     public HeatGeneratorBlock() {
         super(BlockBehaviour.Properties.of(Material.METAL).strength(3.5F).noOcclusion().requiresCorrectToolForDrops().lightLevel(litBlockEmission(20)));
-        this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(FACING, Direction.NORTH).setValue(assembled, false).setValue(iscore, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(LIT, false).setValue(FACING, Direction.NORTH));
     }
     private static ToIntFunction<BlockState> litBlockEmission(int pLightValue) {
         return (p_50763_) -> {
@@ -54,25 +54,11 @@ public class HeatGeneratorBlock extends BlockMagneticraft2 {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
-        builder.add(FACING).add(LIT).add(assembled).add(iscore);
+        builder.add(FACING).add(LIT);
     }
 
 
 
-    public BlockPattern createpattern() {
-        if (pattern == null){
-            pattern = BlockPatternBuilder.start()
-                    .aisle("sss","sss","sgs")
-                    .aisle("bbb","bbb","bbb")
-                    .where('s', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.STONE)))
-                    .where('b', BlockInWorld.hasState(BlockStatePredicate.forBlock(Blocks.STONE_BRICKS)))
-                    .where('g', BlockInWorld.hasState(BlockStatePredicate.forBlock(FinalRegistry.Block_Heat_Generator.get())))
-                    .build();
-        }else {
-            LOGGER.info("Couldn't build pattern!");
-        }
-        return pattern;
-    }
 
     @Nullable
     @Override
@@ -87,33 +73,6 @@ public class HeatGeneratorBlock extends BlockMagneticraft2 {
         if (!world.isClientSide) {
 
             BlockEntity tileEntity = world.getBlockEntity(pos);
-            if (player.isCrouching()){
-                LOGGER.info("X: " + blockHitResult.getLocation().x());
-                LOGGER.info("Y: " + blockHitResult.getLocation().y());
-                LOGGER.info("Z: " + blockHitResult.getLocation().z());
-                LOGGER.info("");
-                try {
-                    BlockPattern.BlockPatternMatch matched = createpattern().find(world,pos);
-                    if (matched != null){
-                        for (int w = 0; w < createpattern().getWidth(); ++w){
-                            for (int h = 0; h < createpattern().getHeight(); ++h){
-                                for (int d = 0; d < createpattern().getDepth(); ++d){
-                                    LOGGER.info("Width: " + w);
-                                    LOGGER.info("Height: " + h);
-                                    LOGGER.info("Depth: " + d);
-                                    BlockInWorld biw = matched.getBlock(w, h, d);
-                                    biw.getState().setValue(assembled, true);
-                                    LOGGER.info("SUCCESS");
-                                }
-                            }
-                        }
-
-                    }
-                } catch (Exception e) {
-                    LOGGER.info("Failed!");
-                }
-                return InteractionResult.PASS;
-            }
             if (tileEntity instanceof TileEntityMagneticraft2) {
                 NetworkHooks.openGui((ServerPlayer) player, ((HeatGeneratorTile) tileEntity).menuProvider, tileEntity.getBlockPos());
             }

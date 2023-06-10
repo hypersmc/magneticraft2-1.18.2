@@ -55,7 +55,6 @@ public class BlockTransformerHV extends BlockMultiBlockBase<BlockEntityTransform
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        //        return pLevel.isClientSide() ? null : createTickerHelper(pBlockEntityType, FinalRegistry.Tile_Heat_Generator.get(), HeatGeneratorTile::serverTick);
         return pLevel.isClientSide() ? null : createTickerHelper(pBlockEntityType, FinalRegistry.Tile_HVTransformer.get(), BlockEntityTransformerHV::serverTick);
     }
 

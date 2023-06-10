@@ -55,7 +55,6 @@ public class magneticraft2 {
         LOGGER.error("No core yet.");
         //end of fun and giggles
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        IEventBus bus = MinecraftForge.EVENT_BUS;
         GeckoLib.initialize();
         FinalRegistry.register();
         modEventBus.addListener(this::preinit);

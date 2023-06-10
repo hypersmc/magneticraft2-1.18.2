@@ -1,6 +1,6 @@
 package com.magneticraft2.common.tile.stage.early;
 
-import com.magneticraft2.common.block.stage.early.PitKilnBlock;
+import com.magneticraft2.common.block.stage.stone.PitKilnBlock;
 import com.magneticraft2.common.registry.FinalRegistry;
 import com.magneticraft2.common.utils.Magneticraft2ConfigCommon;
 import net.minecraft.core.BlockPos;
